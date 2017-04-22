@@ -1,6 +1,9 @@
+<div fxLayout="row" fxLayoutAlign="center">
+  <app-drawboard fxFlex></app-drawboard>
+</div>
 <div fxLayout="row">
     <app-display-word fxFlex="80" [word]="guessingWord"></app-display-word>
-    <app-display-timer fxFlex time="8"></app-display-timer>
+    <app-display-timer fxFlex [endTimestamp]="endTimeStamp"></app-display-timer>
 </div>
 
 
