@@ -4,19 +4,18 @@ import {LoginComponent} from './login/login.component';
 import {PlayComponent} from './play/play.component';
 
 const routes: Routes = [
-
-    {
-        path: 'login',
-        component: LoginComponent
-    },
-    {
-        path: 'play',
-        component: PlayComponent
-    },
-    {
-        path: '**',
-        redirectTo: 'login'
-    }
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'play',
+    component: PlayComponent
+  },
+  {
+    path: '**',
+    redirectTo: 'login'
+  }
 ];
 
 @NgModule({

@@ -2,8 +2,7 @@ import {NgModule} from "@angular/core";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
     MdButtonModule,
-    MdCheckboxModule,
-    MdToolbarModule
+    MdCardModule
 } from '@angular/material';
 import 'hammerjs';
 
@@ -11,16 +10,11 @@ import 'hammerjs';
     imports: [
         BrowserAnimationsModule,
         MdButtonModule,
-        MdCheckboxModule,
-        MdToolbarModule,
-        MdButtonModule,
-        MdCheckboxModule,
-        MdToolbarModule
+        MdCardModule
     ],
     exports: [
         MdButtonModule,
-        MdCheckboxModule,
-        MdToolbarModule
+        MdCardModule
     ],
 })
 export class MaterialModule {

@@ -7,6 +7,7 @@ import { AngularFireModule } from 'angularfire2';
 import { MaterialModule } from '../material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppComponent } from './app.component';
+import { DrawboardComponent } from './play/drawboard/drawboard.component';
 import { DisplayWordComponent } from './play/display-word/display-word.component';
 import { PlayComponent } from './play/play.component';
 import { LoginComponent } from './login/login.component';
@@ -31,6 +32,8 @@ export const firebaseConfig = {
     LoginComponent,
     DisplayTimerComponent,
     GuessFormComponent
+    AppComponent,
+    DrawboardComponent
   ],
   imports: [
     BrowserModule,
