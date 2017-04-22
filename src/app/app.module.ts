@@ -9,6 +9,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppComponent } from './app.component';
 import { DisplayWordComponent } from './play-page/display-word/display-word.component';
 import { PlayPageComponent } from './play-page/play-page.component';
+import { DisplayTimerComponent } from './play-page/display-timer/display-timer.component';
 
 // Must export the config
 export const firebaseConfig = {
@@ -23,7 +24,8 @@ export const firebaseConfig = {
   declarations: [
     AppComponent,
     DisplayWordComponent,
-    PlayPageComponent
+    PlayPageComponent,
+    DisplayTimerComponent
   ],
   imports: [
     BrowserModule,
