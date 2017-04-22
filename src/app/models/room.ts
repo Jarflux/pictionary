@@ -1,26 +1,15 @@
-import {UserProfile} from "./user-profile";
+import {RoomPlayer} from "./players";
+
 export class Room {
   name: string;
-  players: UserProfile[];
+  artistUid: string;
+  winnerUid: string;
+  startRoundTimestamp: Date;
+
+  players: RoomPlayer[];
 
   currentGameDrawing: string[];
-  currentGameDrawer: UserProfile;
-  currentGameEndTimeStamp: Date;
 
   createdOn: Date;
-  createdBy: UserProfile;
-
-
-  constructor(){
-  }
-
-  static generateEmptyRoom(){
-    let emptyRoom = new Room();
-    emptyRoom.name = '';
-    emptyRoom.currentGameDrawing = [];
-    emptyRoom.createdOn = new Date();
-
-    return emptyRoom;
-  }
-
+  createdBy: string;
 }

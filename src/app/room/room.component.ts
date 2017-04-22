@@ -23,13 +23,13 @@ export class RoomComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private roomService: RoomService
   ) {
+
   }
 
   ngOnInit() {
     this.roomSubscription$ = this.route.params
       .switchMap((params: Params) => this.roomService.getRoomById(params['id']))
       .subscribe((room:Room) => this.room = room);
-
 
     this.endTimeStamp = this.getEndTimeStamp();
   }
