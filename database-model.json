@@ -14,6 +14,9 @@
   ],
   "rooms": {
     "$uid": {
+      "artistUid": 123456789,
+      "winnerUid": null,
+      "startRoundTimestamp": 222222,
       "players": {
         "$uid": {
           "lastGuess": "blowpipe",
@@ -25,11 +28,13 @@
         }
       },
       "secure": {
-        "wordUid": 123456789,
-        "artistUid": 123456789
+        "wordUid": 123456789
       }
     },
     "$uid2": {
+      "artistUid": 123456789,
+      "winnerUid": null,
+      "startRoundTimestamp": 222222,
       "players": {
         "$uid": {
           "lastGuess": "blowpipe",
@@ -41,8 +46,7 @@
         }
       },
       "secure": {
-        "wordUid": 123456789,
-        "artistUid": 123456789
+        "wordUid": 123456789
       }
     }
   },
