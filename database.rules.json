@@ -19,8 +19,12 @@
           }
         },
         "secure": {
-          ".read": "artistUid === auth.uid",
+          ".read": "$uid === auth.uid",
           ".write": false
+        },
+        "drawing": {
+          ".read": true,
+          ".write": "$uid === auth.uid"
         }
       }
     },
