@@ -6,9 +6,27 @@
     },
     "rooms": {
       ".read": true,
-      ".write": true
+      ".write": true,
+      "secure": {
+        ".read": false,
+        ".write": false
+      }
     },
-    ".read": "auth != null",
-    ".write": "auth != null"
+    "users": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "user-profiles": {
+      ".read": true,
+      ".write": true,
+      "secure": {
+        ".read": false,
+        ".write": false
+      }
+    },
+    ".read": false,
+    ".write": false
   }
 }
