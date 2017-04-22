@@ -6,7 +6,7 @@ import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/pairwise';
 import 'rxjs/add/operator/switchMapTo';
 import 'rxjs/add/operator/distinctUntilChanged';
-import {Line} from "../../models/line";
+import {DrawboardLine} from "../../models/drawboard-line";
 
 @Component({
   selector: 'app-drawboard',
@@ -54,11 +54,11 @@ export class DrawboardComponent implements OnInit {
       Observable.fromEvent(drawboardEl, 'touchmove').map((e: TouchEvent) => e.touches[0])
     )
       .takeUntil(inputUp$)
-      .map((event: MouseEvent | Touch): Line => this.generateLine(event));
+      .map((event: MouseEvent | Touch): DrawboardLine => this.generateLine(event));
 
     inputDown$
       .switchMapTo(inputMove$)
-      .subscribe((line: Line) => this.drawLine(line));
+      .subscribe((line: DrawboardLine) => this.drawLine(line));
 
     inputUp$
       .subscribe(() => this.createNewPolyLine());
@@ -83,14 +83,14 @@ export class DrawboardComponent implements OnInit {
     this.drawboardScaleFactor = drawboardEl.getBoundingClientRect().width / this.defaultViewBoxSize;
   }
 
-  private generateLine(event: MouseEvent | Touch): Line {
+  private generateLine(event: MouseEvent | Touch): DrawboardLine {
     let pointX = (event.clientX - this.drawboardOffsetLeft) / this.drawboardScaleFactor;
     let pointY = (event.clientY - this.drawboardOffsetTop) / this.drawboardScaleFactor;
 
-    return new Line(pointX, pointY);
+    return new DrawboardLine(pointX, pointY);
   }
 
-  private drawLine(line: Line) : void{
+  private drawLine(line: DrawboardLine) : void{
     let lastIndex = this.polyLines.length - 1;
     this.polyLines[lastIndex] = this.polyLines[lastIndex].concat(line.toSvgLine() + ' ');
   }

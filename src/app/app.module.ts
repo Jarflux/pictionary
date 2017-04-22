@@ -13,6 +13,9 @@ import { PlayComponent } from './play/play.component';
 import { LoginComponent } from './login/login.component';
 import { DisplayTimerComponent } from './play/display-timer/display-timer.component';
 import { environment } from '../environments/environment';
+import { RoomComponent } from './room/room.component';
+import { NavigationComponent } from './navigation/navigation.component';
+import { RoomCreateComponent } from './navigation/room-create/room-create.component';
 
 // Must export the config
 export const firebaseConfig = {
@@ -31,7 +34,10 @@ export const firebaseConfig = {
     LoginComponent,
     DisplayTimerComponent,
     AppComponent,
-    DrawboardComponent
+    DrawboardComponent,
+    RoomComponent,
+    NavigationComponent,
+    RoomCreateComponent
   ],
   imports: [
     BrowserModule,
