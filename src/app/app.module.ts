@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from 'angularfire2';
 import { MaterialModule } from '../material';
 import { AppComponent } from './app.component';
-import { DisplayWordComponent } from './display-word/display-word.component';
+import { DisplayWordComponent } from './play-page/display-word/display-word.component';
 import { PlayPageComponent } from './play-page/play-page.component';
 
 // Must export the config
