@@ -1,0 +1,5 @@
+<div class="drawboard">
+  <svg #drawboard class="drawboard__canvas" viewBox="0 0 1000 1000">
+    <svg:polyline *ngFor="let polyLine of polyLines" [attr.points]="polyLine" style="fill:none;stroke:black;stroke-width:3" ></svg:polyline>
+  </svg>
+</div>

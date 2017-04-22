@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from 'angularfire2';
 import { MaterialModule } from '../material';
 import { AppComponent } from './app.component';
+import { DrawboardComponent } from './drawboard/drawboard.component';
 
 // Must export the config
 export const firebaseConfig = {
@@ -18,7 +19,8 @@ export const firebaseConfig = {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DrawboardComponent
   ],
   imports: [
     BrowserModule,
