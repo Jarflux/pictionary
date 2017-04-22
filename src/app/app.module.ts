@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
-import { AngularFireModule, AuthProviders, AuthMethods } from "angularfire2";
+import { AngularFireModule, AuthMethods } from "angularfire2";
 import { MaterialModule } from '../material';
 import { FlexLayoutModule } from '@angular/flex-layout';
+
 import { AppComponent } from './app.component';
+import { AuthGuard } from './_auth/auth.guard';
 import { DrawboardComponent } from './play/drawboard/drawboard.component';
 import { DisplayWordComponent } from './play/display-word/display-word.component';
 import { PlayComponent } from './play/play.component';
@@ -14,6 +16,7 @@ import { LoginComponent } from './login/login.component';
 import { DisplayTimerComponent } from './play/display-timer/display-timer.component';
 import { environment } from '../environments/environment';
 import { GuessFormComponent } from './play/guess-form/guess-form.component';
+
 
 // Must export the config
 export const firebaseConfig = {
@@ -48,7 +51,7 @@ const firebaseAuthConfig = {
     MaterialModule,
     FlexLayoutModule
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
