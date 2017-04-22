@@ -26,7 +26,7 @@ function updateRoom(roomUid, isCorrectAnswer, playerUid) {
     let roomUpdates = {
       winnerUid: playerUid
     };
-    return admin.database().ref(`/rooms/${roomUid}/secure`).update(roomUpdates)
+    return admin.database().ref(`/rooms/${roomUid}`).update(roomUpdates)
       .then(() => {
         return Promise.resolve(true);
       });
