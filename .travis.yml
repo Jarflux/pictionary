@@ -17,7 +17,8 @@ script:
   - ng build --prod
 
 after_success:
-  - firebase use TRAVIS_BRANCH
+  - echo "Deploying to firebase project with alias $TRAVIS_BRANCH"
+  - firebase use $TRAVIS_BRANCH
   - firebase deploy --token $FIREBASE_TOKEN
 
 notifications:
