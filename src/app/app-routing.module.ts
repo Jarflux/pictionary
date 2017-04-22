@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {LoginComponent} from './login/login.component';
-import {PlayComponent} from './play/play.component';
 import {RoomComponent} from "./room/room.component";
+import {RoomListComponent} from "./room-list/room-list.component";
 
 const routes: Routes = [
 
@@ -11,8 +11,8 @@ const routes: Routes = [
         component: LoginComponent
     },
     {
-        path: 'play',
-        component: PlayComponent
+        path: 'room',
+        component: RoomListComponent
     },
     {
         path: 'room/:id',

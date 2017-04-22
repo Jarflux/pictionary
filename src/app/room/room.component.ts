@@ -11,8 +11,14 @@ import {Subscription} from "rxjs/Subscription";
   providers: [RoomService ]
 })
 export class RoomComponent implements OnInit, OnDestroy {
+
+  private isGuessing: boolean = false;
   private room: Room;
   private roomSubscription$: Subscription;
+
+  private guessingWord: string = 'banaan';
+  private endTimeStamp: number;
+
   constructor(
     private route: ActivatedRoute,
     private roomService: RoomService
@@ -24,9 +30,31 @@ export class RoomComponent implements OnInit, OnDestroy {
       .switchMap((params: Params) => this.roomService.getRoomById(params['id']))
       .subscribe((room:Room) => this.room = room);
 
+
+    this.endTimeStamp = this.getEndTimeStamp();
   }
 
   ngOnDestroy() {
     this.roomSubscription$.unsubscribe();
+  }
+
+
+  handleGuess(guess: string) {
+    console.log('someone guessed', guess);
+  }
+
+  handleTimerRanOut() {
+    console.log('timer has ended');
+  }
+
+
+  toggleGuessMode() {
+    this.isGuessing = !this.isGuessing;
+  }
+
+  private getEndTimeStamp() {
+    const date = new Date(Date.now());
+    date.setMinutes(date.getMinutes() + 1);
+    return date.getTime();
   }
 }

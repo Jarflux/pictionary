@@ -11,7 +11,7 @@ export class RoomService {
     this.rooms = this.af.database.list('/rooms');
   }
 
-  getRooms(){
+  getRooms() : FirebaseListObservable<Room[]>{
     return this.rooms;
   }
 

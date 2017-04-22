@@ -1,0 +1,3 @@
+<div fxLayout="row" fxLayoutWrap>
+  <app-room-item fxFlex="100" *ngFor="let room of rooms$ | async" [room]="room"></app-room-item>
+</div>
