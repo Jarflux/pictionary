@@ -1,0 +1,5 @@
+<app-room-create></app-room-create>
+
+<div fxLayout="row" fxLayoutWrap fxLayoutAlign="center">
+  <app-room-item fxFlex="60" *ngFor="let room of rooms$ | async" [room]="room"></app-room-item>
+</div>

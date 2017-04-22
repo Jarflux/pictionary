@@ -3,14 +3,13 @@ import {Observable, Subject} from 'rxjs';
 
 @Component({
     selector: 'app-display-timer',
-    templateUrl: 'display-timer.component.html',
-    styleUrls: ['display-timer.component.scss']
+    templateUrl: './display-timer.component.html',
+    styleUrls: ['./display-timer.component.scss']
 })
 export class DisplayTimerComponent implements OnChanges {
     @Input() endTimestamp: number = 0;
     @Output() onTimerEnded: EventEmitter<any> = new EventEmitter();
     timeLeft: number = 0;
-
 
     private timerObservable$: Observable<number>;
     private endTimerSubject$: Subject<boolean> = new Subject();

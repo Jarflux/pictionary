@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
       provider: authProvider
     })
       .then((success) => {
-        this.router.navigate(['/play']);
+        this.router.navigate(['/room']);
       })
       .catch((error:any) => {
         console.log("Firebase failure: ", error);

@@ -1,0 +1,53 @@
+{
+  "twitterApiKey":"wdeqw23473745bfdjw",
+  "words": [
+    {
+      "word": "battery"
+    },
+    {
+      "word": "television",
+      "synonyms": [
+        "tv",
+        "monitor"
+      ]
+    }
+  ],
+  "rooms": {
+    "uid": 1234567890,
+    "players": [
+      {
+        "uid": 1234567890,
+        "lastGuess": "blowpipe",
+        "lastActive": 123456
+      },
+      {
+        "uid": 1234567890,
+        "lastGuess": "blowpipe",
+        "lastActive": 123456
+      }
+    ],
+    "secure": {
+      "wordUid": 123456789,
+      "artistUid": 123456789
+    }
+  },
+  "users": {
+    "$uid": {
+      "uid": 1234567890,
+      "providerId": 1234567890,
+      "email": "user007@gmail.com",
+      "displayName": "User_007",
+      "photoURL": "htps://..."
+    }
+  },
+  "user-profiles": {
+    "customThemeColor": "#ffffff",
+    "secure": {
+      "score": 12345,
+      "amountGuess": 12,
+      "amountCaughtCheated": 0,
+      "amountCorrectyGuess": 12,
+      "drawHistory": null
+    }
+  }
+}
