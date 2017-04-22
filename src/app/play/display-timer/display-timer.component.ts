@@ -10,8 +10,8 @@ export class DisplayTimerComponent implements OnChanges {
     @Input() endTimestamp: number = 0;
     timeLeft: number = 0;
 
-    private timerObservable: Observable<number>;
-    private endTimerSubject: Subject<boolean> = new Subject();
+    private timerObservable$: Observable<number>;
+    private endTimerSubject$: Subject<boolean> = new Subject();
 
     /**
      * Assign time to public value
@@ -27,17 +27,17 @@ export class DisplayTimerComponent implements OnChanges {
      * @private
      */
     private _startTimer() {
-        if (this.timerObservable) {
-            this.endTimerSubject.next(false);
+        if (this.timerObservable$) {
+            this.endTimerSubject$.next(false);
         }
         if (this.endTimestamp > 0) {
             const offset = this._getOffset();
             if (offset > 0) {
-                this.timerObservable = Observable.timer(0, 1000)
-                    .takeUntil(this.endTimerSubject.asObservable())
+                this.timerObservable$ = Observable.timer(0, 1000)
+                    .takeUntil(this.endTimerSubject$.asObservable())
                     .takeUntil(Observable.timer((offset + 1) * 1000));
 
-                this.timerObservable.subscribe(() => {
+                this.timerObservable$.subscribe(() => {
                     this._setTimeLeft(this._getOffset());
                 });
             }
