@@ -10,14 +10,15 @@ import { AppComponent } from './app.component';
 import { DisplayWordComponent } from './play-page/display-word/display-word.component';
 import { PlayPageComponent } from './play-page/play-page.component';
 import { DisplayTimerComponent } from './play-page/display-timer/display-timer.component';
+import {environment} from '../environments/environment';
 
 // Must export the config
 export const firebaseConfig = {
-  apiKey: 'AIzaSyDlhRyWbIzZmO8LqhqQpAhg8jdBXhoM814',
-  authDomain: 'pictionary-9dca6.firebaseapp.com',
-  databaseURL: 'https://pictionary-9dca6.firebaseio.com',
-  storageBucket: 'pictionary-9dca6.appspot.com',
-  messagingSenderId: '1006398482597'
+  apiKey: environment.apiKey,
+  authDomain: environment.authDomain,
+  databaseURL: environment.databaseURL,
+  storageBucket: environment.storageBucket,
+  messagingSenderId: environment.messagingSenderId
 };
 
 @NgModule({
