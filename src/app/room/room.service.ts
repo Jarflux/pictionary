@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import {AngularFire, FirebaseListObservable, FirebaseObjectObservable} from "angularfire2";
 import {Room} from "../models/room";
+import {isNullOrUndefined} from "util";
 
 @Injectable()
 export class RoomService {
 
   currentUserId: string;
   rooms : FirebaseListObservable<Room[]>;
+
 
   constructor(private af: AngularFire) {
     this.rooms = this.af.database.list('/rooms');
@@ -26,12 +28,13 @@ export class RoomService {
     return this.af.database.object('/rooms/' + key);
   }
 
-  isCurrentUserTheArtist(room: Room): Boolean{
+
+  isCurrentUserTheArtist(room: Room): boolean{
     return room.artistUid === this.currentUserId;
   }
 
-  isRoomInPlayingMode(room: Room): Boolean {
-    return room.startRoundTimestamp !== null;
+  isRoomInPlayingMode(room: Room): boolean {
+    return !isNullOrUndefined(room) && !isNullOrUndefined(room.startRoundTimestamp);
   }
 
   private generateEmptyRoom(){

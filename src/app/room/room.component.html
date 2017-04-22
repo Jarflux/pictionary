@@ -1,6 +1,7 @@
 <div *ngIf="room">
   <div fxLayout="row" fxLayoutAlign="center">
     <app-drawboard fxFlex></app-drawboard>
+
   </div>
 
   <div fxLayout="row" fxLayoutWrap>
@@ -21,9 +22,11 @@
     </app-display-timer>
   </div>
 
-  <div>
-    <button (click)="toggleGuessMode()">debug: toggle guess</button>
-  </div>
+  <pre>
+    isGuessing: {{ isGuessing }}
+    isArtist: {{ isArtist }}
+    currentUserId: {{currentUserId}}
+  </pre>
 
 
 </div>
