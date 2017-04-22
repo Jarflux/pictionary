@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFire, AuthProviders } from 'angularfire2';
 import { MdSnackBar } from "@angular/material";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,7 @@ import { MdSnackBar } from "@angular/material";
 })
 export class LoginComponent implements OnInit {
 
-  constructor(public af: AngularFire, public snackBar: MdSnackBar) {
+  constructor(public af: AngularFire, public snackBar: MdSnackBar, private router: Router) {
   }
 
   login(platform) {
@@ -34,7 +35,7 @@ export class LoginComponent implements OnInit {
       provider: authProvider
     })
       .then((success) => {
-        console.log("Firebase success: " + JSON.stringify(success));
+        this.router.navigate(['/room']);
       })
       .catch((error:any) => {
         console.log("Firebase failure: ", error);

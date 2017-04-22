@@ -7,7 +7,7 @@
       </md-card-title>
       <md-card-subtitle align="center"
                         class="login-card-subtitle">
-        <div> {{ (af.auth | async)?.uid }} </div>
+        <span *ngIf="af.auth | async">Hello, {{ (af.auth | async)?.auth.displayName }}</span><br>
         <button (click)="logout()">Logout</button>
         <br>
         Play together with you friends and make custom rooms to compete with others.

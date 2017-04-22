@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
-import { AngularFireModule, AuthProviders, AuthMethods } from "angularfire2";
+import { AngularFireModule, AuthMethods } from "angularfire2";
 import { MaterialModule } from '../material';
 import { FlexLayoutModule } from '@angular/flex-layout';
+
 import { AppComponent } from './app.component';
+import { AuthGuard } from './_auth/auth.guard';
 import { DrawboardComponent } from './room/drawboard/drawboard.component';
 import { DisplayWordComponent } from './room/display-word/display-word.component';
 import { LoginComponent } from './login/login.component';
@@ -18,6 +20,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { RoomCreateComponent } from './navigation/room-create/room-create.component';
 import { RoomListComponent } from './room-list/room-list.component';
 import { RoomItemComponent } from './room-list/room-item/room-item.component';
+
 
 // Must export the config
 export const firebaseConfig = {
@@ -56,7 +59,7 @@ const firebaseAuthConfig = {
     MaterialModule,
     FlexLayoutModule
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
