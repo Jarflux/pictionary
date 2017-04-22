@@ -1,4 +1,5 @@
 export class UserProfile {
-  score: number;
-  displayName: string;
+  customThemeColor: string;
+  userUid: string;
+
 }

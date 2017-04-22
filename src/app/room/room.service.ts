@@ -5,18 +5,20 @@ import {Room} from "../models/room";
 @Injectable()
 export class RoomService {
 
+  currentUserId: string;
   rooms : FirebaseListObservable<Room[]>;
 
   constructor(private af: AngularFire) {
     this.rooms = this.af.database.list('/rooms');
+    this.currentUserId = this.af.auth.getAuth().uid;
   }
 
   getRooms() : FirebaseListObservable<Room[]>{
     return this.rooms;
   }
 
-  addRoom(){
-    const emptyRoom : Room = Room.generateEmptyRoom();
+  addNewRoom(){
+    const emptyRoom : Room = this.generateEmptyRoom();
     this.rooms.push(emptyRoom);
   }
 
@@ -24,8 +26,22 @@ export class RoomService {
     return this.af.database.object('/rooms/' + key);
   }
 
-  isDrawer(room: Room): Boolean{
-    return true;
+  isCurrentUserTheArtist(room: Room): Boolean{
+    return room.artistUid === this.currentUserId;
   }
 
+  isRoomInPlayingMode(room: Room): Boolean {
+    return room.startRoundTimestamp !== null;
+  }
+
+  private generateEmptyRoom(){
+    let emptyRoom = new Room();
+    emptyRoom.name = '-';
+    emptyRoom.currentGameDrawing = [];
+
+    emptyRoom.createdOn = new Date();
+    emptyRoom.createdBy = this.currentUserId;
+
+    return emptyRoom;
+  }
 }

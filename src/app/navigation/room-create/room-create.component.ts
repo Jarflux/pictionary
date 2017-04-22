@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AngularFire, FirebaseListObservable} from "angularfire2";
 import {RoomService} from "../../room/room.service";
-import {Room} from "../../models/room";
 
 
 @Component({
@@ -12,15 +10,13 @@ import {Room} from "../../models/room";
 })
 export class RoomCreateComponent implements OnInit {
 
-  constructor(private roomService: RoomService) { }
+  constructor(private roomService: RoomService) {
+  }
 
   ngOnInit() {
   }
 
   addRoom(){
-    this.roomService.addRoom();
-}
-
-
-
+    this.roomService.addNewRoom();
+  }
 }
