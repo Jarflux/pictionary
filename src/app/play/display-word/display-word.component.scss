@@ -1,12 +1,17 @@
-.display-word {
+:host {
     background: #f9f9f9;
     color: #8965AB;
     padding: 30px 10px;
+
+    display: flex;
+}
+
+.display-word {
+    align-self: center;
+    flex: 1;
+
     text-align: center;
     font-size: 2rem;
     font-weight: bold;
-
-    &__label {
-        text-transform: uppercase;
-    }
+    text-transform: uppercase;
 }

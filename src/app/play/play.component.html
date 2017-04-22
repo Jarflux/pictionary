@@ -1,3 +1,6 @@
-<p>
-  <app-display-word [word]="guessingWord"></app-display-word>
-</p>
+<div fxLayout="row">
+    <app-display-word fxFlex="80" [word]="guessingWord"></app-display-word>
+    <app-display-timer fxFlex time="8"></app-display-timer>
+</div>
+
+

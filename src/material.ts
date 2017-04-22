@@ -1,26 +1,27 @@
-import { NgModule } from "@angular/core";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {NgModule} from "@angular/core";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  MdButtonModule,
-  MdCheckboxModule,
-  MdToolbarModule
+    MdButtonModule,
+    MdCheckboxModule,
+    MdToolbarModule
 } from '@angular/material';
 import 'hammerjs';
 
 @NgModule({
-  imports: [
-    BrowserAnimationsModule,
-    MdButtonModule,
-    MdCheckboxModule,
-    MdToolbarModule,
-    MdButtonModule,
-    MdCheckboxModule,
-    MdToolbarModule
-  ],
-  exports: [
-    MdButtonModule,
-    MdCheckboxModule,
-    MdToolbarModule
-  ],
+    imports: [
+        BrowserAnimationsModule,
+        MdButtonModule,
+        MdCheckboxModule,
+        MdToolbarModule,
+        MdButtonModule,
+        MdCheckboxModule,
+        MdToolbarModule
+    ],
+    exports: [
+        MdButtonModule,
+        MdCheckboxModule,
+        MdToolbarModule
+    ],
 })
-export class MaterialModule { }
+export class MaterialModule {
+}

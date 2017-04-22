@@ -5,8 +5,8 @@ import { PlayComponent } from './play/play.component';
 
 const routes: Routes = [
   {
-    path: '',
-    children: []
+    path: '**',
+    redirectTo: 'login'
   },
   {
     path: 'login',
