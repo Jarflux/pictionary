@@ -1,4 +1,4 @@
-export class Line {
+export class DrawboardLine {
   constructor(private x : number,private y: number){}
 
 

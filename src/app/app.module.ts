@@ -7,13 +7,17 @@ import { AngularFireModule, AuthProviders, AuthMethods } from "angularfire2";
 import { MaterialModule } from '../material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppComponent } from './app.component';
-import { DrawboardComponent } from './play/drawboard/drawboard.component';
-import { DisplayWordComponent } from './play/display-word/display-word.component';
-import { PlayComponent } from './play/play.component';
+import { DrawboardComponent } from './room/drawboard/drawboard.component';
+import { DisplayWordComponent } from './room/display-word/display-word.component';
 import { LoginComponent } from './login/login.component';
-import { DisplayTimerComponent } from './play/display-timer/display-timer.component';
+import { DisplayTimerComponent } from './room/display-timer/display-timer.component';
 import { environment } from '../environments/environment';
-import { GuessFormComponent } from './play/guess-form/guess-form.component';
+import { GuessFormComponent } from './room/guess-form/guess-form.component';
+import { RoomComponent } from './room/room.component';
+import { NavigationComponent } from './navigation/navigation.component';
+import { RoomCreateComponent } from './navigation/room-create/room-create.component';
+import { RoomListComponent } from './room-list/room-list.component';
+import { RoomItemComponent } from './room-list/room-item/room-item.component';
 
 // Must export the config
 export const firebaseConfig = {
@@ -32,12 +36,16 @@ const firebaseAuthConfig = {
   declarations: [
     AppComponent,
     DisplayWordComponent,
-    PlayComponent,
     LoginComponent,
     DisplayTimerComponent,
     GuessFormComponent,
     AppComponent,
-    DrawboardComponent
+    DrawboardComponent,
+    RoomComponent,
+    NavigationComponent,
+    RoomCreateComponent,
+    RoomListComponent,
+    RoomItemComponent
   ],
   imports: [
     BrowserModule,
