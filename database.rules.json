@@ -1,6 +1,32 @@
 {
   "rules": {
-    ".read": "auth != null",
-    ".write": "auth != null"
+    "words": {
+      ".read": false,
+      ".write": false
+    },
+    "rooms": {
+      ".read": true,
+      ".write": true,
+      "secure": {
+        ".read": false,
+        ".write": false
+      }
+    },
+    "users": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "user-profiles": {
+      ".read": true,
+      ".write": true,
+      "secure": {
+        ".read": false,
+        ".write": false
+      }
+    },
+    ".read": false,
+    ".write": false
   }
 }

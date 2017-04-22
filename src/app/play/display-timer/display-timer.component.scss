@@ -4,6 +4,8 @@
     padding: 30px 10px;
     text-align: center;
 
+    flex-grow: 1;
+
     &__number {
         font-size: 3rem;
         font-weight: bold;

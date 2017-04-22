@@ -13,6 +13,7 @@ import { PlayComponent } from './play/play.component';
 import { LoginComponent } from './login/login.component';
 import { DisplayTimerComponent } from './play/display-timer/display-timer.component';
 import { environment } from '../environments/environment';
+import { GuessFormComponent } from './play/guess-form/guess-form.component';
 
 // Must export the config
 export const firebaseConfig = {
@@ -34,6 +35,7 @@ const firebaseAuthConfig = {
     PlayComponent,
     LoginComponent,
     DisplayTimerComponent,
+    GuessFormComponent,
     AppComponent,
     DrawboardComponent
   ],
