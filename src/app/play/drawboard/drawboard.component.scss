@@ -1,0 +1,13 @@
+.drawboard {
+  width: 100%;
+
+  &__canvas {
+    cursor: crosshair;
+
+    &__line {
+      fill:none;
+      stroke:black;
+      stroke-width:4px;
+    }
+  }
+}

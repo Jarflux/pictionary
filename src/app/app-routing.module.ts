@@ -1,20 +1,26 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import {PlayPageComponent} from './play-page/play-page.component';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+import {LoginComponent} from './login/login.component';
+import {PlayComponent} from './play/play.component';
 
 const routes: Routes = [
   {
-    path: '',
-    children: []
+    path: 'login',
+    component: LoginComponent
   },
   {
     path: 'play',
-    component: PlayPageComponent
+    component: PlayComponent
+  },
+  {
+    path: '**',
+    redirectTo: 'login'
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
