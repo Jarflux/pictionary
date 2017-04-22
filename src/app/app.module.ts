@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
-import { AngularFireModule } from 'angularfire2';
+import { AngularFireModule, AuthProviders, AuthMethods } from "angularfire2";
 import { MaterialModule } from '../material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppComponent } from './app.component';
@@ -28,6 +28,10 @@ export const firebaseConfig = {
   messagingSenderId: environment.messagingSenderId
 };
 
+const firebaseAuthConfig = {
+  method: AuthMethods.Popup
+};
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +52,7 @@ export const firebaseConfig = {
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
     MaterialModule,
     FlexLayoutModule
   ],
