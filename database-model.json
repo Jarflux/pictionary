@@ -1,5 +1,5 @@
 {
-  "twitterApiKey":"wdeqw23473745bfdjw",
+  "twitterApiKey": "wdeqw23473745bfdjw",
   "words": [
     {
       "word": "battery"
@@ -13,22 +13,37 @@
     }
   ],
   "rooms": {
-    "uid": 1234567890,
-    "players": [
-      {
-        "uid": 1234567890,
-        "lastGuess": "blowpipe",
-        "lastActive": 123456
+    "$uid": {
+      "players": {
+        "$uid": {
+          "lastGuess": "blowpipe",
+          "lastActive": 123456
+        },
+        "$uid2": {
+          "lastGuess": "blowpipe",
+          "lastActive": 123456
+        }
       },
-      {
-        "uid": 1234567890,
-        "lastGuess": "blowpipe",
-        "lastActive": 123456
+      "secure": {
+        "wordUid": 123456789,
+        "artistUid": 123456789
       }
-    ],
-    "secure": {
-      "wordUid": 123456789,
-      "artistUid": 123456789
+    },
+    "$uid2": {
+      "players": {
+        "$uid": {
+          "lastGuess": "blowpipe",
+          "lastActive": 123456
+        },
+        "$uid2": {
+          "lastGuess": "blowpipe",
+          "lastActive": 123456
+        }
+      },
+      "secure": {
+        "wordUid": 123456789,
+        "artistUid": 123456789
+      }
     }
   },
   "users": {
@@ -41,13 +56,15 @@
     }
   },
   "user-profiles": {
-    "customThemeColor": "#ffffff",
-    "secure": {
-      "score": 12345,
-      "amountGuess": 12,
-      "amountCaughtCheated": 0,
-      "amountCorrectyGuess": 12,
-      "drawHistory": null
+    "$uid": {
+      "customThemeColor": "#ffffff",
+      "secure": {
+        "score": 12345,
+        "amountGuess": 12,
+        "amountCaughtCheated": 0,
+        "amountCorrectyGuess": 12,
+        "drawHistory": null
+      }
     }
   }
 }
