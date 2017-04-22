@@ -7,8 +7,9 @@ import { AngularFireModule } from 'angularfire2';
 import { MaterialModule } from '../material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppComponent } from './app.component';
-import { DisplayWordComponent } from './play-page/display-word/display-word.component';
-import { PlayPageComponent } from './play-page/play-page.component';
+import { DisplayWordComponent } from './play/display-word/display-word.component';
+import { PlayComponent } from './play/play.component';
+import { LoginComponent } from './login/login.component';
 
 // Must export the config
 export const firebaseConfig = {
@@ -23,7 +24,8 @@ export const firebaseConfig = {
   declarations: [
     AppComponent,
     DisplayWordComponent,
-    PlayPageComponent
+    PlayComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

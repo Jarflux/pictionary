@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {PlayPageComponent} from './play-page/play-page.component';
+import { LoginComponent } from './login/login.component';
+import { PlayComponent } from './play/play.component';
 
 const routes: Routes = [
   {
@@ -8,8 +9,12 @@ const routes: Routes = [
     children: []
   },
   {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
     path: 'play',
-    component: PlayPageComponent
+    component: PlayComponent
   }
 ];
 
