@@ -3,5 +3,11 @@
 
   &__canvas {
     cursor: crosshair;
+
+    &__line {
+      fill:none;
+      stroke:black;
+      stroke-width:4px;
+    }
   }
 }
