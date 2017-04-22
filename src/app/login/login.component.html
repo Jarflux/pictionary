@@ -7,8 +7,6 @@
       </md-card-title>
       <md-card-subtitle align="center"
                         class="login-card-subtitle">
-        <!--<div> {{ (af.auth | async)?.uid }} </div>-->
-        <br>
         Play together with you friends and make custom rooms to compete with others.
       </md-card-subtitle>
     </md-card-header>
@@ -18,28 +16,28 @@
         <button md-raised-button
                 color="accent"
                 class="login-button"
-                (click)="login()">
+                (click)="login('twitter')">
           <i class="icon-twitter"></i>
           Login with Twitter
         </button>
         <button md-raised-button
                 color="accent"
                 class="login-button"
-                (click)="login()">
+                (click)="login('facebook')">
           <i class="icon-facebook"></i>
           Login with Facebook
         </button>
         <button md-raised-button
                 color="accent"
                 class="login-button"
-                (click)="login()">
+                (click)="login('google')">
           <i class="icon-google"></i>
           Login with Google
         </button>
         <button md-raised-button
                 color="accent"
                 class="login-button"
-                (click)="login()">
+                (click)="login('github')">
           <i class="icon-git"></i>
           Login with Github
         </button>

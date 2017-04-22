@@ -1,0 +1,37 @@
+<nav class="nav">
+  <ul class="nav-list">
+    <li class="nav-item">
+      <div class="avatar">
+        <img src="{{ (af.auth | async)?.auth.photoURL }}"
+             alt="{{ (af.auth | async)?.auth.displayName }}">
+      </div>
+    </li>
+    <li class="nav-item">
+      <button md-button
+              class="nav-button"
+              routerLink="account"
+              mdTooltip="Account"
+              mdTooltipPosition="after">
+        <md-icon>person</md-icon>
+      </button>
+    </li>
+    <li class="nav-item">
+      <button md-button
+              class="nav-button"
+              routerLink="room"
+              mdTooltip="Rooms"
+              mdTooltipPosition="after">
+        <md-icon>people</md-icon>
+      </button>
+    </li>
+    <li class="nav-item">
+      <button md-button
+              class="nav-button"
+              (click)="logout()"
+              mdTooltip="Sign Out"
+              mdTooltipPosition="after">
+        <md-icon>exit_to_app</md-icon>
+      </button>
+    </li>
+  </ul>
+</nav>

@@ -1,1 +1,8 @@
-<router-outlet></router-outlet>
+<md-sidenav-container>
+  <md-sidenav *ngIf="af.auth | async" #sidenav
+              mode="side"
+              opened="true">
+    <app-navigation></app-navigation>
+  </md-sidenav>
+  <router-outlet></router-outlet>
+</md-sidenav-container>

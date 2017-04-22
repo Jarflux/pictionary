@@ -1,13 +1,14 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges, EventEmitter, Output} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 
 @Component({
     selector: 'app-display-timer',
-    templateUrl: 'display-timer.component.html',
-    styleUrls: ['display-timer.component.scss']
+    templateUrl: './display-timer.component.html',
+    styleUrls: ['./display-timer.component.scss']
 })
 export class DisplayTimerComponent implements OnChanges {
     @Input() endTimestamp: number = 0;
+    @Output() onTimerEnded: EventEmitter<any> = new EventEmitter();
     timeLeft: number = 0;
 
     private timerObservable$: Observable<number>;
@@ -38,8 +39,13 @@ export class DisplayTimerComponent implements OnChanges {
                     .takeUntil(Observable.timer((offset + 1) * 1000));
 
                 this.timerObservable$.subscribe(() => {
-                    this._setTimeLeft(this._getOffset());
-                });
+                        this._setTimeLeft(this._getOffset());
+                    },
+                    console.error,
+                    () => {
+                        this.onTimerEnded.emit();
+                    }
+                );
             }
         }
     }

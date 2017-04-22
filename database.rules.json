@@ -7,9 +7,25 @@
     "rooms": {
       ".read": true,
       ".write": true,
-      "secure": {
-        ".read": false,
-        ".write": false
+      "$uid": {
+        ".read": true,
+        ".write": false,
+        "players": {
+          ".read": true,
+          ".write": false,
+          "$uid": {
+            ".read": true,
+            ".write": "$uid === auth.uid"
+          }
+        },
+        "secure": {
+          ".read": "$uid === auth.uid",
+          ".write": false
+        },
+        "drawing": {
+          ".read": true,
+          ".write": "$uid === auth.uid"
+        }
       }
     },
     "users": {
@@ -19,14 +35,17 @@
       }
     },
     "user-profiles": {
-      ".read": true,
-      ".write": true,
-      "secure": {
-        ".read": false,
-        ".write": false
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid",
+        "secure": {
+          ".read": false,
+          ".write": false
+        }
       }
     },
     ".read": false,
     ".write": false
   }
 }
+
