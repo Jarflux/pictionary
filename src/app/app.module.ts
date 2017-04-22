@@ -5,20 +5,31 @@ import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from 'angularfire2';
 import { MaterialModule } from '../material';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppComponent } from './app.component';
-import { DrawboardComponent } from './drawboard/drawboard.component';
+import { DrawboardComponent } from './play/drawboard/drawboard.component';
+import { DisplayWordComponent } from './play/display-word/display-word.component';
+import { PlayComponent } from './play/play.component';
+import { LoginComponent } from './login/login.component';
+import { DisplayTimerComponent } from './play/display-timer/display-timer.component';
+import { environment } from '../environments/environment';
 
 // Must export the config
 export const firebaseConfig = {
-  apiKey: 'AIzaSyDlhRyWbIzZmO8LqhqQpAhg8jdBXhoM814',
-  authDomain: 'pictionary-9dca6.firebaseapp.com',
-  databaseURL: 'https://pictionary-9dca6.firebaseio.com',
-  storageBucket: 'pictionary-9dca6.appspot.com',
-  messagingSenderId: '1006398482597'
+  apiKey: environment.apiKey,
+  authDomain: environment.authDomain,
+  databaseURL: environment.databaseURL,
+  storageBucket: environment.storageBucket,
+  messagingSenderId: environment.messagingSenderId
 };
 
 @NgModule({
   declarations: [
+    AppComponent,
+    DisplayWordComponent,
+    PlayComponent,
+    LoginComponent,
+    DisplayTimerComponent,
     AppComponent,
     DrawboardComponent
   ],
@@ -28,7 +39,8 @@ export const firebaseConfig = {
     HttpModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    MaterialModule
+    MaterialModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

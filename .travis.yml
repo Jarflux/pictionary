@@ -1,0 +1,30 @@
+#.travis.yml
+
+language: node_js
+node_js:
+  - "6.9"
+
+branches:
+  only:
+    - master
+    - develop
+
+before_script:
+  - npm install -g firebase-tools
+  - npm install -g @angular/cli
+  - cd functions
+  - npm install
+  - cd ..
+
+script:
+  - ng build --$TRAVIS_BRANCH
+
+after_success:
+  - echo "Deploying to firebase project with alias '$TRAVIS_BRANCH'"
+  - firebase use $TRAVIS_BRANCH
+  - firebase deploy --token $FIREBASE_TOKEN
+
+notifications:
+  email:
+    on_failure: change
+    on_success: change

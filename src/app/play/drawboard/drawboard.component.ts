@@ -6,7 +6,7 @@ import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/pairwise';
 import 'rxjs/add/operator/switchMapTo';
 import 'rxjs/add/operator/distinctUntilChanged';
-import {Line} from "../models/line";
+import {Line} from "../../models/line";
 
 @Component({
   selector: 'app-drawboard',

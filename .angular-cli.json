@@ -20,7 +20,7 @@
       "prefix": "app",
       "styles": [
         "styles.scss",
-        "pictionary.theme.scss"
+        "theme/pictionary.theme.scss"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
