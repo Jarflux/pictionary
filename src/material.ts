@@ -3,7 +3,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MdButtonModule,
   MdCardModule,
-  MdSnackBarModule
+  MdSnackBarModule,
+  MdIconModule,
+  MdTooltipModule,
+  MdSidenavModule
 } from '@angular/material';
 import 'hammerjs';
 
@@ -12,12 +15,18 @@ import 'hammerjs';
     BrowserAnimationsModule,
     MdButtonModule,
     MdCardModule,
-    MdSnackBarModule
+    MdSnackBarModule,
+    MdIconModule,
+    MdTooltipModule,
+    MdSidenavModule
   ],
   exports: [
     MdButtonModule,
     MdCardModule,
-    MdSnackBarModule
+    MdSnackBarModule,
+    MdIconModule,
+    MdTooltipModule,
+    MdSidenavModule
   ],
 })
 export class MaterialModule {

@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
       provider: authProvider
     })
       .then((success) => {
-        this.router.navigate(['/room']);
+        this.router.navigate(['/home']);
       })
       .catch((error:any) => {
         console.log("Firebase failure: ", error);
@@ -50,10 +50,6 @@ export class LoginComponent implements OnInit {
           });
         }
       });
-  }
-
-  logout() {
-    this.af.auth.logout();
   }
 
   ngOnInit() {

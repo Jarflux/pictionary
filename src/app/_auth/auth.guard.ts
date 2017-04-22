@@ -14,7 +14,6 @@ export class AuthGuard implements CanActivate {
     this.af.auth.subscribe(auth => {
       if (auth) {
         isAuthenticated = true;
-        console.log('user is logged in', auth);
       } else {
         this.router.navigate(['/login']);
         isAuthenticated = false;

@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import { AngularFire } from 'angularfire2';
+
 
 @Component({
   selector: 'app-root',
@@ -7,5 +9,7 @@ import {Component, OnInit} from '@angular/core';
 })
 export class AppComponent{
 
+  constructor(public af: AngularFire) {
+  }
 
 }
