@@ -22,6 +22,14 @@ export class PlayComponent implements OnInit {
         this.endTimeStamp = this.getEndTimeStamp();
     }
 
+    handleGuess(guess: string) {
+        console.log('someone guessed', guess);
+    }
+
+    handleTimerRanOut() {
+        console.log('timer has ended');
+    }
+
     private getEndTimeStamp() {
         const date = new Date(Date.now());
         date.setMinutes(date.getMinutes() + 1);

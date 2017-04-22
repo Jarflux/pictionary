@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges, EventEmitter, Output} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 
 @Component({
@@ -8,7 +8,9 @@ import {Observable, Subject} from 'rxjs';
 })
 export class DisplayTimerComponent implements OnChanges {
     @Input() endTimestamp: number = 0;
+    @Output() onTimerEnded: EventEmitter<any> = new EventEmitter();
     timeLeft: number = 0;
+
 
     private timerObservable$: Observable<number>;
     private endTimerSubject$: Subject<boolean> = new Subject();
@@ -38,8 +40,13 @@ export class DisplayTimerComponent implements OnChanges {
                     .takeUntil(Observable.timer((offset + 1) * 1000));
 
                 this.timerObservable$.subscribe(() => {
-                    this._setTimeLeft(this._getOffset());
-                });
+                        this._setTimeLeft(this._getOffset());
+                    },
+                    console.error,
+                    () => {
+                        this.onTimerEnded.emit();
+                    }
+                );
             }
         }
     }

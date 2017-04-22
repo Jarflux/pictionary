@@ -5,7 +5,8 @@
 <div fxLayout="row" fxLayoutWrap>
     <app-guess-form fxFlex="80"
                     fxFlex.xs="100%"
-                    *ngIf="isGuessing">
+                    *ngIf="isGuessing"
+                    (onGuess)="handleGuess($event)">
     </app-guess-form>
     <app-display-word fxFlex="80"
                       fxFlex.xs="100%"
@@ -14,7 +15,8 @@
     </app-display-word>
     <app-display-timer fxFlex
                        fxFlex.xs="100%"
-                       [endTimestamp]="endTimeStamp">
+                       [endTimestamp]="endTimeStamp"
+                       (onTimerEnded)="handleTimerRanOut()">
     </app-display-timer>
 </div>
 
