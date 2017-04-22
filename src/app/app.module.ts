@@ -31,7 +31,7 @@ export const firebaseConfig = {
     PlayComponent,
     LoginComponent,
     DisplayTimerComponent,
-    GuessFormComponent
+    GuessFormComponent,
     AppComponent,
     DrawboardComponent
   ],
