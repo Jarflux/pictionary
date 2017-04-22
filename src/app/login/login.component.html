@@ -1,0 +1,49 @@
+<div class="login pictionary-bg">
+  <md-card class="login-card">
+    <md-card-header class="login-card-header">
+      <md-card-title align="center"
+                     class="login-card-title">
+        Sign In
+      </md-card-title>
+      <md-card-subtitle align="center"
+                        class="login-card-subtitle">
+        <!--<div> {{ (af.auth | async)?.uid }} </div>-->
+        <br>
+        Play together with you friends and make custom rooms to compete with others.
+      </md-card-subtitle>
+    </md-card-header>
+    <md-card-content class="login-card-content">
+      <div fxLayout="column"
+           fxLayoutGap="30px">
+        <button md-raised-button
+                color="accent"
+                class="login-button"
+                (click)="login()">
+          <i class="icon-twitter"></i>
+          Login with Twitter
+        </button>
+        <button md-raised-button
+                color="accent"
+                class="login-button"
+                (click)="login()">
+          <i class="icon-facebook"></i>
+          Login with Facebook
+        </button>
+        <button md-raised-button
+                color="accent"
+                class="login-button"
+                (click)="login()">
+          <i class="icon-google"></i>
+          Login with Google
+        </button>
+        <button md-raised-button
+                color="accent"
+                class="login-button"
+                (click)="login()">
+          <i class="icon-git"></i>
+          Login with Github
+        </button>
+      </div>
+    </md-card-content>
+  </md-card>
+</div>

@@ -1,0 +1,17 @@
+.display-timer {
+    background: #c5a2e2;
+    color: #fbfffa;
+    padding: 30px 10px;
+    text-align: center;
+
+    flex-grow: 1;
+
+    &__number {
+        font-size: 3rem;
+        font-weight: bold;
+    }
+    &__unit {
+        font-size: 1rem;
+        color: #f3e3ff;
+    }
+}
