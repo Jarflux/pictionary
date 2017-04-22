@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from 'angularfire2';
 import { MaterialModule } from '../material';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppComponent } from './app.component';
 
 // Must export the config
@@ -26,7 +27,8 @@ export const firebaseConfig = {
     HttpModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    MaterialModule
+    MaterialModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]
