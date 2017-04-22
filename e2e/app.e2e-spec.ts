@@ -1,10 +1,10 @@
-import { MyNewAppPage } from './app.po';
+import { PictionaryPage } from './app.po';
 
-describe('my-new-app App', () => {
-  let page: MyNewAppPage;
+describe('pictionary App', () => {
+  let page: PictionaryPage;
 
   beforeEach(() => {
-    page = new MyNewAppPage();
+    page = new PictionaryPage();
   });
 
   it('should display message saying app works', () => {
