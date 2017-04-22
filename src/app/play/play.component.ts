@@ -7,10 +7,15 @@ import {Component, OnInit} from '@angular/core';
 })
 export class PlayComponent implements OnInit {
 
+    isGuessing: boolean = true;
     guessingWord: string = 'banaan';
     endTimeStamp: number;
 
     constructor() {
+    }
+
+    toggleGuessMode() {
+        this.isGuessing = !this.isGuessing;
     }
 
     ngOnInit() {
