@@ -4,6 +4,10 @@
       ".read": false,
       ".write": false
     },
+    "rooms": {
+      ".read": true,
+      ".write": true
+    },
     ".read": "auth != null",
     ".write": "auth != null"
   }
