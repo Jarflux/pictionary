@@ -12,12 +12,16 @@ branches:
 before_script:
   - npm install -g firebase-tools
   - npm install -g @angular/cli
+  - cd functions
+  - npm install
+  - cd ..
 
 script:
-  - ng build --prod
+  - ng build --$TRAVIS_BRANCH
 
 after_success:
-  - firebase use TRAVIS_BRANCH
+  - echo "Deploying to firebase project with alias '$TRAVIS_BRANCH'"
+  - firebase use $TRAVIS_BRANCH
   - firebase deploy --token $FIREBASE_TOKEN
 
 notifications:
