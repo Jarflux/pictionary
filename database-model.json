@@ -17,36 +17,28 @@
       "artistUid": 123456789,
       "winnerUid": null,
       "startRoundTimestamp": 222222,
-      "players": {
-        "$uid": {
-          "lastGuess": "blowpipe",
-          "lastActive": 123456
-        },
-        "$uid2": {
-          "lastGuess": "blowpipe",
-          "lastActive": 123456
-        }
+      "wordUid": 123456789,
+      "guesses": {
+        "$uid": "blaaspijp",
+        "$2uid": "blabla"
       },
-      "secure": {
-        "wordUid": 123456789
+      "players": {
+        "$uid": "$uid",
+        "$2uid": "$2uid"
       }
     },
     "$uid2": {
       "artistUid": 123456789,
       "winnerUid": null,
       "startRoundTimestamp": 222222,
-      "players": {
-        "$uid": {
-          "lastGuess": "blowpipe",
-          "lastActive": 123456
-        },
-        "$uid2": {
-          "lastGuess": "blowpipe",
-          "lastActive": 123456
-        }
+      "wordUid": 123456789,
+      "guesses": {
+        "$uid": "blaaspijp",
+        "$2uid": "blabla"
       },
-      "secure": {
-        "wordUid": 123456789
+      "players": {
+        "$uid": "$uid",
+        "$2uid": "$2uid"
       }
     }
   },

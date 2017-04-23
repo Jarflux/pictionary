@@ -1,7 +1,7 @@
 {
   "rules": {
     "words": {
-      ".read": false,
+      ".read": true,
       ".write": false
     },
     "rooms": {
@@ -17,14 +17,6 @@
             ".read": true,
             ".write": "$uid === auth.uid"
           }
-        },
-        "secure": {
-          ".read": "$uid === auth.uid",
-          ".write": false
-        },
-        "drawing": {
-          ".read": true,
-          ".write": "$uid === auth.uid"
         }
       }
     },
@@ -34,7 +26,7 @@
         ".write": "$uid === auth.uid"
       }
     },
-    "user-profiles": {
+    "playerInfo": {
       "$uid": {
         ".read": "$uid === auth.uid",
         ".write": "$uid === auth.uid",

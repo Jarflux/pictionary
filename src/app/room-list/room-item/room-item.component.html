@@ -1,8 +1,8 @@
 <md-card>
-  <md-card-header>
-    <md-card-title>{{room.name}}</md-card-title>
+  <md-card-header fxFlexLayout="row" fxLayoutWrap>
+    <div fxFlex="35" fxFlex.lt-sm="100">{{room.$key}}</div>
+    <div fxFlex="45" fxFlex.lt-sm="100">{{playerCount}} / 10</div>
+    <a fxFlex fxFlex.lt-sm="100" md-raised-button color="accent" [routerLink]="['/room', room.$key]">Join room</a>
   </md-card-header>
-  <md-card-actions>
-    <a md-button [routerLink]="['/room', room.$key]">Join room</a>
-  </md-card-actions>
 </md-card>
+

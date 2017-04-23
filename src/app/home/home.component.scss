@@ -1,3 +1,31 @@
+@import '~@angular/material/theming';
+
 .home {
   height: 100vh;
+
+  &-row {
+    height: 100vh;
+    padding: 0 50px;
+  }
+
+  &-button {
+    min-width: inherit;
+    width: 100%;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    padding: 26px;
+
+    &-label {
+      display: block;
+    }
+
+    &-icon {
+      display: block;
+      text-align: center;
+      width: auto;
+      height: auto;
+      font-size: rem(6.0);
+    }
+  }
+
 }

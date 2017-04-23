@@ -1,76 +1,179 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Params} from "@angular/router";
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {RoomService} from "./room.service";
 import {Room} from "../models/room";
-import {Subscription} from "rxjs/Subscription";
 import {FirebaseObjectObservable} from "angularfire2";
 import {isNullOrUndefined} from "util";
+import {DrawLine} from "../models/draw-line";
+import {RecognitionComponent} from "./recognition/recognition.component";
+import {Word} from "../models/word";
+import {WordService} from "./word.service";
+import {MdSnackBar} from "@angular/material";
 
 @Component({
-  selector: 'app-room',
-  templateUrl: './room.component.html',
-  styleUrls: ['./room.component.scss'],
-  providers: [RoomService]
+    selector: 'app-room',
+    templateUrl: './room.component.html',
+    styleUrls: ['./room.component.scss'],
+    providers: [RoomService, WordService]
 })
-export class RoomComponent implements OnInit{
-  private isGuessing: boolean = false;
-  private isArtist: boolean = false;
-  private drawLines: string[];
+export class RoomComponent implements OnInit {
+    private isArtist: boolean = false;
+    private gameIsStopped: boolean = false;
+    private gameIsRunning: boolean = false;
+    private gameIsWaiting: boolean = true;
 
-  private room: Room;
-  private room$: FirebaseObjectObservable<Room>;
+    private drawLines: DrawLine[];
 
-  private guessingWord: string = 'banaan';
-  private endTimeStamp: number;
-  private currentUserId: string = "";
+    private roomUid: string;
+    private room: Room;
+    private room$: FirebaseObjectObservable<Room>;
+    private word$: FirebaseObjectObservable<Word>;
 
-  constructor(private route: ActivatedRoute,
-              private roomService: RoomService) {
-  }
+    private guessingWord: string;
+    private endTimeStamp: number;
+    private currentUserId: string = "";
 
-  ngOnInit() {
-    this.room$ = this.roomService.getRoomById(this.route.snapshot.params['id']);
-    this.room$
-      .subscribe((room: Room) => {
-        this.checkIfRoomStartsGame(room);
-        this.room = room;
-      });
-  }
+    @ViewChild(RecognitionComponent)
+    private recognitionComponent: RecognitionComponent;
 
-
-  handleDrawing(drawLines: string[]) {
-    this.roomService.updateDrawings(this.room$, drawLines);
-  }
-
-  handleGuess(guess: string) {
-    console.log('someone guessed', guess);
-  }
-
-  handleTimerRanOut() {
-    console.log('timer has ended');
-  }
-
-  private checkIfRoomStartsGame(newRoom: Room) {
-    this.currentUserId = this.roomService.currentUserId;
-
-    if ((isNullOrUndefined(this.room) || !this.roomService.isRoomInPlayingMode(this.room)) && this.roomService.isRoomInPlayingMode(newRoom)) {
-      this.isGuessing = true;
-      this.isArtist = this.roomService.isCurrentUserTheArtist(newRoom);
-
-      newRoom.startRoundTimestamp = new Date();
-      this.endTimeStamp = this.getEndTimeStamp(newRoom.startRoundTimestamp).getTime();
-    } else {
-      console.log("Nope...");
-      this.isGuessing = false;
-      this.isArtist = false;
-      this.endTimeStamp = undefined;
+    constructor(private snackBar: MdSnackBar,
+                private route: ActivatedRoute,
+                private roomService: RoomService,
+                private wordService: WordService,
+                private router: Router) {
     }
-  }
 
-  private getEndTimeStamp(startTimestamp: Date) {
-    let endTimestamp = new Date(startTimestamp.getTime());
-    endTimestamp.setMinutes(startTimestamp.getMinutes() + 1);
+    ngOnInit() {
+        this.roomUid = this.route.snapshot.params['id'];
+        this.enterRoom(this.roomUid);
+        this.room$ = this.roomService.getRoomById(this.roomUid);
+        this.room$
+            .subscribe((room: Room) => {
+                this.checkIfRoomStartsGame(room);
 
-    return endTimestamp;
-  }
+                if (!isNullOrUndefined(room.currentGameDrawing)) {
+                    this.drawLines = room.currentGameDrawing.map((rawDrawLine) => {
+                        let drawLine: DrawLine = new DrawLine();
+                        Object.assign(drawLine, rawDrawLine);
+
+                        return drawLine;
+                    });
+                } else {
+                    this.drawLines = [];
+                }
+
+                this.room = room;
+                this.setCorrectGameState(this.room);
+                this.checkWinner(this.room);
+            });
+
+
+    }
+
+    handleLineDrawn() {
+        if (this.isArtist) {
+            this.recognitionComponent.processDrawing(this.drawLines);
+        }
+    }
+
+    handleDrawing(drawLines: DrawLine[]) {
+        this.roomService.updateCurrentGameDrawing(this.room$, drawLines);
+    }
+
+    handleClearDrawingboard() {
+        this.roomService.clearCurrentGameDrawing(this.room$);
+    }
+
+    handleGuess(guess: string) {
+        console.log('someone guessed', guess);
+        this.roomService.guess(this.roomUid, guess)
+            .then(
+                (result) => {
+                    if (result.status === 204) {
+                        this.snackBar.open('Wrong, You guessed ' + guess + ' but it wasn\'t correct.', null, {
+                            duration: 5000
+                        });
+                    } else {
+                        this.snackBar.open('AWESOME, You guessed ' + guess + ' and it was correct!!', null, {
+                            duration: 5000
+                        });
+                    }
+                },
+                () => {
+                    this.snackBar.open('Wrong, You guessed ' + guess + ' but it wasn\'t correct.', null, {
+                        duration: 5000
+                    });
+                }
+            );
+    }
+
+    handleTimerRanOut() {
+        console.log('timer has ended');
+    }
+
+    leaveRoom() {
+        this.roomService.leaveRoom(this.roomUid);
+
+        let detailUrl = this.router.createUrlTree(['/room']);
+        this.router.navigateByUrl(detailUrl);
+    }
+
+    private getToGuessWord(wordUid: string) {
+        this.word$ = this.wordService.getWordById(wordUid);
+        this.word$.subscribe((word: Word) => {
+            this.guessingWord = word.word;
+        });
+    }
+
+    private enterRoom(roomUid: string) {
+        this.roomService.enterRoom(roomUid);
+
+
+    }
+
+    private setCorrectGameState(room: Room) {
+        this.gameIsRunning = this.roomService.isRoomInPlayingMode(room);
+        this.gameIsStopped = this.roomService.isRoomInStoppedMode(room);
+        this.gameIsWaiting = this.roomService.isRoomInWaitingMode(room);
+    }
+
+    private checkIfRoomStartsGame(newRoom: Room) {
+        this.currentUserId = this.roomService.currentUserId;
+
+        if ((isNullOrUndefined(this.room) || !this.roomService.isRoomInPlayingMode(this.room)) && this.roomService.isRoomInPlayingMode(newRoom)) {
+            this.isArtist = this.roomService.isCurrentUserTheArtist(newRoom);
+            if (this.isArtist) {
+                this.getToGuessWord(newRoom.wordUid);
+            }
+            this.endTimeStamp = this.getEndTimeStamp(new Date(newRoom.startRoundTimestamp)).getTime();
+        } else if (!this.roomService.isRoomInPlayingMode(newRoom)) {
+            this.isArtist = false;
+            this.endTimeStamp = undefined;
+            this.drawLines = [];
+        }
+    }
+
+    private getEndTimeStamp(startTimestamp: Date) {
+        let endTimestamp = new Date(startTimestamp.getTime());
+        endTimestamp.setMinutes(startTimestamp.getMinutes() + 1);
+
+        return endTimestamp;
+    }
+
+    private checkWinner(room: Room) {
+        if (room.winnerUid && room.winnerUid !== this.roomService.currentUserId) {
+            this.word$ = this.wordService.getWordById(room.wordUid);
+            this.word$.subscribe((word: Word) => {
+                this.snackBar.open('You are out of luck, the word was ' + word.word + '!', null, {
+                    duration: 5000
+                });
+            });
+        }
+
+        if (this.roomService.isCurrentUserTheArtist(room)) {
+            setTimeout(() => {
+                this.roomService.startNextRound(this.roomUid);
+            }, 10000);
+        }
+    }
 }

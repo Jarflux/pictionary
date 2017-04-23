@@ -1,34 +1,44 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const user = require('./user');
+const cors = require('cors')({origin: true});
 
-exports.guess = functions.database.ref('/rooms/{roomUid}/players/{playerUid}/lastGuess').onWrite(event => {
-  const guess = event.data.val();
-  console.log('Retrieved guess: ', guess);
+exports.guessHttp = functions.https.onRequest((request, response) => {
+  let roomUid = request.query.roomUid;
+  let playerUid = request.query.playerUid;
+  let guess = request.query.guess;
 
-  const roomUid = event.params.roomUid;
-  const playerUid = event.params.playerUid;
+  console.log(`Recieved guess: ${guess} ${roomUid} ${playerUid}`);
 
-  return admin.database().ref(`/rooms/${roomUid}`).once('value')
-    .then(snapshot => snapshot.val())
-    .then(value => {
-      return isCorrectAnswer(value.secure.wordUid, guess);
-    }).then((isCorrectAnswer) => {
-      return updateRoom(roomUid, isCorrectAnswer, playerUid)
-        .then(() => {
-          return updateUser(playerUid, isCorrectAnswer)
-        });
-    });
-})
-;
+  cors(request, response, () => {
+    return admin.database().ref(`/rooms/${roomUid}`).once('value')
+      .then(snapshot => snapshot.val())
+      .then(value => {
+        return isCorrectAnswer(value.wordUid, guess);
+      }).then((isCorrectAnswer) => {
+        return updateRoom(roomUid, isCorrectAnswer, playerUid)
+          .then(() => {
+            return updateUser(playerUid, isCorrectAnswer).then(() => {
+              if (isCorrectAnswer) {
+                response.status(200).send();
+              } else {
+                response.status(204).send();
+              }
+            });
+          });
+      });
+  });
+});
 
 function updateRoom(roomUid, isCorrectAnswer, playerUid) {
   if (isCorrectAnswer) {
     let roomUpdates = {
-      winnerUid: playerUid
+      winnerUid: playerUid,
+      gameState: "STOPPED"
     };
     return admin.database().ref(`/rooms/${roomUid}`).update(roomUpdates)
       .then(() => {
-        return Promise.resolve(true);
+        return room.start()
       });
   }
   return Promise.resolve(false);
@@ -40,18 +50,13 @@ function updateUser(playerUid, isCorrectAnswer) {
     .once('value')
     .then(snapshot => snapshot.val())
     .then(userObject => {
-
-      let userUpdates = {
-        guessCount: userObject.guessCount + 1
-      };
-
+      let score = 50;
+      let guessCountIncrease = 1;
+      let correctGuessCountIncrease = 0;
       if (isCorrectAnswer) {
-        userUpdates.correctGuessCount = userObject.correctGuessCount + 1;
+        correctGuessCountIncrease = correctGuessCountIncrease + 1;
       }
-
-      return admin.database()
-        .ref(`/playerInfo/${playerUid}/secure`)
-        .update(userUpdates);
+      return user.update(playerUid, guessCountIncrease, correctGuessCountIncrease, score);
     });
 }
 
@@ -63,10 +68,12 @@ function isCorrectAnswer(wordUid, guess) {
     if (guess === "blaaspijp" || guess === wordObject.word) {
       isCorrect = true;
     } else {
-      for (let key of Object.keys(wordObject.synonyms)) {
-        if (wordObject.synonyms[key] === guess) {
-          isCorrect = true;
-          break;
+      if (wordObject.synonyms) {
+        for (let key of Object.keys(wordObject.synonyms)) {
+          if (wordObject.synonyms[key] === guess) {
+            isCorrect = true;
+            break;
+          }
         }
       }
     }
@@ -88,7 +95,6 @@ function isCorrectAnswer(wordUid, guess) {
   // words ending with y als accept 'word' -y +ies
   // words not ending with o, fe, f also accept 'word' + s
 }
-
 
 
 

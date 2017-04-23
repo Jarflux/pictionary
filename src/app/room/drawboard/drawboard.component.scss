@@ -1,8 +1,13 @@
 .drawboard {
   width: 100%;
+  max-width: 1000px;
+  background: white;
 
   &__canvas {
-    cursor: crosshair;
+    cursor: not-allowed;
+    &--active {
+      cursor: crosshair;
+    }
 
     &__line {
       fill:none;

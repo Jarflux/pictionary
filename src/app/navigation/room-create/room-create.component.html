@@ -1,1 +1,7 @@
-<button md-raised-button color="accent" (click)="addRoom()">Create room</button>
+<md-card>
+  <md-card-header fxLayout="row" fxLayoutWrap>
+    <div fxFlex="35" fxFlex.lt-sm="100">Room ID</div>
+    <div fxFlex="45" fxFlex.lt-sm="100">Players</div>
+    <a md-raised-button fxFlex fxFlex.lt-sm="100" color="secondary" (click)="addRoom()">Create room</a>
+  </md-card-header>
+</md-card>
