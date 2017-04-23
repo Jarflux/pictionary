@@ -1,6 +1,13 @@
 <div *ngIf="room">
+
+  <app-recognition></app-recognition>
+
   <div fxLayout="row" fxLayoutAlign="center">
-    <app-drawboard fxFlex [inDrawingMode]="isArtist" [drawnLines]="drawLines" (onDrawing)="handleDrawing($event)"></app-drawboard>
+    <app-drawboard fxFlex
+                   [inDrawingMode]="isArtist"
+                   [drawnLines]="drawLines"
+                   (onDrawing)="handleDrawing($event)"
+                   (onLineDrawn)="handleLineDrawn($event)"></app-drawboard>
 
   </div>
 

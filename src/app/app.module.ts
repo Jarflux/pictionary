@@ -22,6 +22,7 @@ import { RoomCreateComponent } from './navigation/room-create/room-create.compon
 import { RoomListComponent } from './room-list/room-list.component';
 import { RoomItemComponent } from './room-list/room-item/room-item.component';
 import { HomeComponent } from './home/home.component';
+import { RecognitionComponent } from './room/recognition/recognition.component';
 
 
 // Must export the config
@@ -51,7 +52,8 @@ const firebaseAuthConfig = {
     RoomCreateComponent,
     RoomListComponent,
     RoomItemComponent,
-    HomeComponent
+    HomeComponent,
+    RecognitionComponent
   ],
   imports: [
     BrowserModule,

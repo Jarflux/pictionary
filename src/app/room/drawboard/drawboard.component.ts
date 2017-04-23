@@ -31,7 +31,9 @@ export class DrawboardComponent implements OnInit {
   }
 
   @Input() drawnLines: DrawLine[];
+
   @Output() onDrawing: EventEmitter<DrawLine[]> = new EventEmitter();
+  @Output() onLineDrawn: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('drawboard') drawboardRef: ElementRef;
 
@@ -80,6 +82,7 @@ export class DrawboardComponent implements OnInit {
 
     inputUp$
     //.skipWhile(() => this._inDrawingMode.getValue() === false)
+      .do(event => this.onLineDrawn.emit(null))
       .subscribe(() => this.createNewPolyLine());
   }
 
