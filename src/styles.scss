@@ -20,6 +20,11 @@ body {
   background-repeat: repeat;
 }
 
+/**
+Animations
+*/
+
+// Loader
 .folding-cube {
   position: absolute;
   left: calc(50% - 20px);
@@ -78,4 +83,51 @@ body {
         transform: perspective(140px) rotateY(180deg);
         opacity: 0;
       }
+}
+
+%animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+// bounceInDown
+@keyframes bounceInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-2000px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(30px);
+  }
+  80% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.bounceInDown {
+  @extend %animated;
+  animation-name: bounceInDown;
+}
+
+// bounceOutDown
+@keyframes bounceOutDown {
+  0% {
+    transform: translateY(0);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(2000px);
+  }
+}
+.bounceOutDown {
+  @extend %animated;
+  animation-name: bounceOutDown;
 }
