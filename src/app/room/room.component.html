@@ -5,7 +5,6 @@
            fxFlex.xs="100%">
 
         <pre>
-          isGuessing: {{ isGuessing }}
           isArtist: {{ isArtist }}
           currentUserId: {{currentUserId}}
         </pre>
@@ -17,7 +16,7 @@
 
       <div fxFlex="33"
            fxFlex.xs="100%">
-        <app-drawboard-clear (onClearDrawboard)="handleClearDrawingboard($event)"></app-drawboard-clear>
+        <app-drawboard-clear *ngIf="isArtist" (onClearDrawboard)="handleClearDrawingboard($event)"></app-drawboard-clear>
       </div>
 
       <div fxFlex="33"
@@ -39,13 +38,13 @@
     <div fxLayout="row" fxLayoutWrap>
       <app-guess-form fxFlex="80"
                       fxFlex.xs="100%"
-                      *ngIf="isGuessing"
+                      *ngIf="!isArtist"
                       (onGuess)="handleGuess($event)">
       </app-guess-form>
       <app-display-word fxFlex="80"
                         fxFlex.xs="100%"
                         [word]="guessingWord"
-                        *ngIf="!isGuessing">
+                        *ngIf="isArtist">
       </app-display-word>
       <app-display-timer fxFlex
                          fxFlex.xs="100%"

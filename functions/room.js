@@ -2,12 +2,12 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const round = require('./round');
 
-exports.management = functions.database.ref('/rooms/{roomUid}/players').onWrite(event => {
+exports.management = functions.database.ref('/words/{roomUid}/players').onWrite(event => {
   let roomUid = event.params.roomUid;
   getNumberOfPlayersInRoom(roomUid).then(numberOfPlayers => {
     if (numberOfPlayers === 0) {
       console.log(`Room management notice: closed room ${roomUid}, because room is empty`);
-      return remove(roomUid); // cleanup empty rooms
+      return remove(roomUid); // cleanup empty words
     } else {
       round.isInProgress(roomUid).then(roomInProgress => {
         console.log(`Room management notice: round is in progress ${roomInProgress}`);

@@ -5,7 +5,10 @@
   border: 1px solid #c5a2e2;
 
   &__canvas {
-    cursor: crosshair;
+    cursor: not-allowed;
+    &--active {
+      cursor: crosshair;
+    }
 
     &__line {
       fill:none;
