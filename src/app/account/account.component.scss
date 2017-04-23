@@ -1,0 +1,75 @@
+@import '~@angular/material/theming';
+@import "../../theme/pictionary.palette";
+@import "../../theme/pictionary.theme";
+
+$card-header-color: map-get($mat-pictionary-colors, white);
+
+@mixin account-theme($theme) {
+    // Extract whichever individual palettes you need from the theme.
+    $accent: map-get($theme, accent);
+
+    // Use mat-color to extract individual colors from a palette as necessary.
+    .account-card-header {
+        background-color: mat-color($accent);
+    }
+}
+
+@include account-theme($pictionary-theme);
+
+.account {
+    height: 100vh;
+
+    &-card {
+        width: 400px;
+        margin: 0 auto;
+        padding: 0;
+        position: relative;
+        top: 20vh;
+
+        &-header {
+            color: $card-header-color;
+            padding: 30px 50px 10px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 2px;
+        }
+
+        &-title {
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            font-size: rem(2);
+            font-weight: 600;
+        }
+
+        &-subtitle {
+            color: inherit;
+            margin-bottom: 20px;
+            font-size: rem(1.6);
+            font-weight: 300;
+        }
+
+        &-content {
+            padding: 40px 30px 50px;
+        }
+
+    }
+
+    &-score {
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+
+    &-button {
+        width: 216px;
+        margin: 0 auto;
+        font-weight: 300;
+        text-align: left;
+
+        i {
+            margin-right: 16px;
+        }
+    }
+
+    &-label {
+        align-self: center;
+    }
+}

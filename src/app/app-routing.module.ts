@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { RoomComponent } from "./room/room.component";
 import { RoomListComponent } from "./room-list/room-list.component";
+import {AccountComponent} from "./account/account.component";
 
 const routes: Routes = [
 
@@ -13,6 +14,11 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     canActivate: [RedirectGuard]
+  },
+  {
+    path: 'account',
+    component: AccountComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'home',

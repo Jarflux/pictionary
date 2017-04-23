@@ -1,5 +1,9 @@
 export class UserProfile {
-  customThemeColor: string;
-  userUid: string;
-
+    name: string;
+    secure: {
+        guessCount: number;
+        correctGuessCount: number;
+        score: number;
+        accuracy: number; // calculated
+    };
 }

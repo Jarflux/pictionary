@@ -1,11 +1,11 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { AppRoutingModule } from './app-routing.module';
-import { AngularFireModule, AuthMethods } from "angularfire2";
-import { MaterialModule } from '../material';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {HttpModule} from '@angular/http';
+import {AppRoutingModule} from './app-routing.module';
+import {AngularFireModule, AuthMethods} from 'angularfire2';
+import {MaterialModule} from '../material';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { AuthGuard } from './_auth/auth.guard';
@@ -24,19 +24,21 @@ import { RoomItemComponent } from './room-list/room-item/room-item.component';
 import { HomeComponent } from './home/home.component';
 import { DrawboardClearComponent } from './room/drawboard-clear/drawboard-clear.component';
 import { RecognitionComponent } from './room/recognition/recognition.component';
+import {AccountComponent} from './account/account.component';
+import {AccountService} from './account/account.service';
 
 
 // Must export the config
 export const firebaseConfig = {
-  apiKey: environment.apiKey,
-  authDomain: environment.authDomain,
-  databaseURL: environment.databaseURL,
-  storageBucket: environment.storageBucket,
-  messagingSenderId: environment.messagingSenderId
+    apiKey: environment.apiKey,
+    authDomain: environment.authDomain,
+    databaseURL: environment.databaseURL,
+    storageBucket: environment.storageBucket,
+    messagingSenderId: environment.messagingSenderId
 };
 
 const firebaseAuthConfig = {
-  method: AuthMethods.Popup
+    method: AuthMethods.Popup
 };
 
 @NgModule({
@@ -55,7 +57,9 @@ const firebaseAuthConfig = {
     RoomItemComponent,
     HomeComponent,
     DrawboardClearComponent,
-    RecognitionComponent
+    RecognitionComponent,
+      AccountComponent
+
   ],
   imports: [
     BrowserModule,
@@ -68,8 +72,10 @@ const firebaseAuthConfig = {
   ],
   providers: [
     AuthGuard,
-    RedirectGuard
+    RedirectGuard,
+      AccountService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
