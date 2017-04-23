@@ -45,7 +45,7 @@
         <div fxLayout="row" fxLayoutWrap>
           <app-guess-form fxFlex="80"
                           fxFlex.xs="100%"
-                          *ngIf="!isArtist"
+                          *ngIf="!isArtist && gameIsRunning"
                           (onGuess)="handleGuess($event)">
           </app-guess-form>
           <app-display-word fxFlex="80"

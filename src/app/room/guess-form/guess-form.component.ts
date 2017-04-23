@@ -24,15 +24,8 @@ export class GuessFormComponent implements OnInit {
       })
       .subscribe(() => {
         this.onGuess.emit(this.guess);
-        this.showGuess(this.guess);
         this.resetGuess();
       });
-  }
-
-  showGuess(guess: string) {
-    this.snackBar.open('You guessed ' + guess + ".", null, {
-      duration: 2000
-    });
   }
 
   resetGuess() {
