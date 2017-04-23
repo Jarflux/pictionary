@@ -67,12 +67,6 @@ export class RoomService {
 
             })
             .toPromise();
-            // .map(response => {
-            //     if (response.status === 204) {
-            //         return Observable.throw({error: 204});
-            //     }
-            //     return response.json();
-            // });
     }
 
     isCurrentUserTheArtist(room: Room): boolean {
@@ -110,5 +104,17 @@ export class RoomService {
         }
 
         return players;
+    }
+
+    startNextRound(roomUid: string) {
+        return this.http
+            .get(`${ environment.functionsUrl }/round-startTest`, {
+                headers: new Headers({'Access-Control-Allow-Origin': '*'}),
+                params: {
+                    'room': roomUid
+                }
+
+            })
+            .toPromise();
     }
 }

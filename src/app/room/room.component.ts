@@ -169,5 +169,11 @@ export class RoomComponent implements OnInit {
                 });
             });
         }
+
+        if (this.roomService.isCurrentUserTheArtist(room)) {
+            setTimeout(() => {
+                this.roomService.startNextRound(this.roomUid);
+            }, 10000);
+        }
     }
 }
