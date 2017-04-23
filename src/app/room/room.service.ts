@@ -69,12 +69,9 @@ export class RoomService {
     return emptyRoom;
   }
 
-  addPlayerToRoom(players: IArrayByPlayerId<RoomPlayer>, playerUid: string) : IArrayByPlayerId<RoomPlayer>{
+  addPlayerToRoom(players: IArrayByPlayerId<string>, playerUid: string) : IArrayByPlayerId<string>{
     if (isNullOrUndefined(players[playerUid])){
-      let newPlayer = new RoomPlayer();
-      newPlayer.playerUid = playerUid;
-
-      players[playerUid] = newPlayer;
+      players[playerUid] = playerUid;
     }
 
     return players;
