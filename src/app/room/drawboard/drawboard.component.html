@@ -1,5 +1,7 @@
-<div class="drawboard">
-  <svg #drawboard class="drawboard__canvas" viewBox="0 0 1000 618">
-    <svg:polyline *ngFor="let drawnLine of drawnLines" class="drawboard__canvas__line" [attr.points]="generateSvgPath(drawnLine)"  ></svg:polyline>
-  </svg>
+<div fxLayout="row" fxLayoutAlign="center center">
+  <div class="drawboard">
+    <svg #drawboard class="drawboard__canvas" viewBox="0 0 1000 618">
+      <svg:polyline *ngFor="let drawnLine of drawnLines" class="drawboard__canvas__line" [attr.points]="generateSvgPath(drawnLine)"  ></svg:polyline>
+    </svg>
+  </div>
 </div>
