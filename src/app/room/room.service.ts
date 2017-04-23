@@ -3,7 +3,6 @@ import {AngularFire, FirebaseListObservable, FirebaseObjectObservable} from "ang
 import {Room} from "../models/room";
 import {isNullOrUndefined} from "util";
 import {DrawLine} from "../models/draw-line";
-import {RoomPlayer} from "../models/players";
 import {IArrayByPlayerId} from "../models/interfaces";
 
 @Injectable()
