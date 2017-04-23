@@ -42,7 +42,7 @@ export class RecognitionComponent {
 
   private showGuess(guess: string) {
     this.snackBar.open('Google thinks you are drawing a ' + guess + "!", null, {
-      duration: 2000
+      duration: 10000
     });
   }
 
