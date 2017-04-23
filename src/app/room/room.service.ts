@@ -4,6 +4,8 @@ import {Room} from "../models/room";
 import {isNullOrUndefined} from "util";
 import {DrawLine} from "../models/draw-line";
 import {IArrayByPlayerId} from "../models/interfaces";
+import * as firebase from "firebase/app";
+import ThenableReference = firebase.database.ThenableReference;
 
 @Injectable()
 export class RoomService {
@@ -21,9 +23,9 @@ export class RoomService {
     return this.rooms;
   }
 
-  addNewRoom() {
+  addNewRoom() : any {
     const emptyRoom: Room = this.generateEmptyRoom();
-    this.rooms.push(emptyRoom);
+    return this.rooms.push(emptyRoom);
   }
 
   getRoomById(key: string): FirebaseObjectObservable<Room> {
@@ -58,7 +60,15 @@ export class RoomService {
   }
 
   isRoomInPlayingMode(room: Room): boolean {
-    return !isNullOrUndefined(room) && room.gameSate === "RUNNING";
+    return !isNullOrUndefined(room) && room.gameState === "RUNNING";
+  }
+
+  isRoomInStoppedMode(room: Room): boolean {
+    return !isNullOrUndefined(room) && room.gameState === "STOPPED";
+  }
+
+  isRoomInWaitingMode(room: Room): boolean {
+    return !isNullOrUndefined(room) && room.gameState === "WAITING";
   }
 
   private generateEmptyRoom() {
@@ -68,6 +78,7 @@ export class RoomService {
     emptyRoom.currentGameDrawing = [];
     emptyRoom.createdOn = new Date();
     emptyRoom.createdBy = this.currentUserId;
+    emptyRoom.gameState = "WAITING";
     emptyRoom.players = this.addPlayerToRoom(emptyRoom.players, this.currentUserId);
 
     return emptyRoom;

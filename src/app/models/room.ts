@@ -4,7 +4,7 @@ import {IArrayByPlayerId} from "./interfaces";
 
 export class Room {
   name: string;
-  gameSate: string;
+  gameState: string;
   artistUid: string;
   winnerUid: string;
   wordUid: string;

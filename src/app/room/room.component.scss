@@ -2,10 +2,22 @@
 
 .room {
   min-height: 100vh;
+  padding: 50px 0;
+}
 
-  &__container {
-    max-width: 1000px;
-    width: 100%;
-    border: 1px solid #c5a2e2;
+md-card {
+  padding: 0;
+  width: 100%;
+  max-width: 1000px;
+
+  .mat-card-header-text { margin: 0;}
+
+}
+.icon{
+  &--big {
+    width: 36px;
+    height: 36px;
+    font-size: 36px;
+    line-height: 36px;
   }
 }
