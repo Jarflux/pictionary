@@ -1,0 +1,32 @@
+@import '~@angular/material/theming';
+@import "../../theme/pictionary.theme";
+
+@mixin room-list-theme($theme) {
+  // Extract whichever individual palettes you need from the theme.
+  $accent: map-get($theme, accent);
+
+  // Use mat-color to extract individual colors from a palette as necessary.
+  .mat-card {
+    background-color: mat-color($accent);
+    color:white;
+  }
+}
+
+@include room-list-theme($pictionary-theme);
+
+
+md-card {
+  border-bottom: 1px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+
+  div {
+    margin-top: 8px;
+    margin-bottom: 5px;
+  }
+}
+
+
+.room-list {
+  height: 100vh;
+}

@@ -1,5 +1,15 @@
-<app-room-create></app-room-create>
+<div class="pictionary-bg room-list">
 
-<div fxLayout="row" fxLayoutWrap fxLayoutAlign="center">
-  <app-room-item fxFlex="60" *ngFor="let room of rooms$ | async" [room]="room"></app-room-item>
+
+  <div fxLayout="row" fxLayoutWrap fxLayoutAlign="center">
+    <md-card fxFlex="60">
+      <md-card-header fxLayout="row">
+        <div fxFlex="45">Room ID</div>
+        <div fxFlex="35">Players</div>
+        <app-room-create fxFlex></app-room-create>
+      </md-card-header>
+    </md-card>
+
+    <app-room-item fxFlex="60" *ngFor="let room of rooms$ | async" [room]="room"></app-room-item>
+  </div>
 </div>
