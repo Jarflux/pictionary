@@ -9,6 +9,10 @@ body {
   margin: 0;
 }
 
+.mat-sidenav {
+  min-width: inherit;
+}
+
 .loader-view {
   height: 100vh;
 }

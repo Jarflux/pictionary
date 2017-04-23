@@ -5,11 +5,11 @@
 
 export const environment = {
   production: false,
-  apiKey: 'AIzaSyAuOMgXGRzwJ06VLk3pZ_6BjrJkC2PdeZ4',
-  authDomain: 'pictionary-dev-32247.firebaseapp.com',
-  databaseURL: 'https://pictionary-dev-32247.firebaseio.com',
-  storageBucket: 'pictionary-dev-32247.appspot.com',
-  messagingServerKey: 'AAAAFQEng14:APA91bHuJtuJVdKEf-p6jkmVUEZk4GBxUZTbRwKqDyt7saStwBuYbHqlPSogdl2xPfD4vPSAMMaji1SKubRm7uokevY-rVsa9jDUO96hz2WCdjn3afg_NM_Pq4d0GBqP5qTxRSCa40J7',
-  messagingLegacyServerKey: 'AIzaSyDXq-xSip5kgUoR00oiVTs2248r22MeCGo',
-  messagingSenderId: '90213679966'
+  apiKey: 'AIzaSyDQSKmGrbBNNvqEKemAcddzSgC_2EqS1EY',
+  authDomain: 'pictionary-develop.firebaseapp.com',
+  databaseURL: 'https://pictionary-develop.firebaseio.com',
+  storageBucket: 'pictionary-develop.appspot.com',
+  messagingServerKey: 'AAAA0gYEYAk:APA91bGop1FoCLNoeROJi8igkEBKV5FQhuic4hnRx-x7KLJNV4yn2n9nTjiY5Cf56IZeTEupJ737OoXrjoyIIBi-Ya3LAjz9YBt0hX6llT304dB937H5iVPQ4vpTZ6TSSuI_Ktr03Nr5',
+  messagingLegacyServerKey: 'AIzaSyCXrQ1zH3a2GKVCBkdREel6yBDRh2ppngU',
+  messagingSenderId: '902044082185'
 };

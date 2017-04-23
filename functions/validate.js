@@ -1,7 +1,7 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 
-exports.guess = functions.database.ref('/rooms/{roomUid}/players/{playerUid}/lastGuess').onWrite(event => {
+exports.guess = functions.database.ref('/rooms/{roomUid}/guesses/{playerUid}').onWrite(event => {
   const guess = event.data.val();
   console.log('Retrieved guess: ', guess);
 
@@ -11,7 +11,7 @@ exports.guess = functions.database.ref('/rooms/{roomUid}/players/{playerUid}/las
   return admin.database().ref(`/rooms/${roomUid}`).once('value')
     .then(snapshot => snapshot.val())
     .then(value => {
-      return isCorrectAnswer(value.secure.wordUid, guess);
+      return isCorrectAnswer(value.wordUid, guess);
     }).then((isCorrectAnswer) => {
       return updateRoom(roomUid, isCorrectAnswer, playerUid)
         .then(() => {
@@ -24,7 +24,8 @@ exports.guess = functions.database.ref('/rooms/{roomUid}/players/{playerUid}/las
 function updateRoom(roomUid, isCorrectAnswer, playerUid) {
   if (isCorrectAnswer) {
     let roomUpdates = {
-      winnerUid: playerUid
+      winnerUid: playerUid,
+      gamestate: "STOPPED"
     };
     return admin.database().ref(`/rooms/${roomUid}`).update(roomUpdates)
       .then(() => {
