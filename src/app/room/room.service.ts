@@ -58,7 +58,7 @@ export class RoomService {
   }
 
   isRoomInPlayingMode(room: Room): boolean {
-    return !isNullOrUndefined(room) && !isNullOrUndefined(room.startRoundTimestamp);
+    return !isNullOrUndefined(room) && room.gameSate === "RUNNING";
   }
 
   private generateEmptyRoom() {

@@ -4,8 +4,10 @@ import {IArrayByPlayerId} from "./interfaces";
 
 export class Room {
   name: string;
+  gameSate: string;
   artistUid: string;
   winnerUid: string;
+  wordUid: string;
 
   startRoundTimestamp: Date;
 
@@ -16,7 +18,6 @@ export class Room {
 
   createdOn: Date;
   createdBy: string;
-
 
   constructor(){
     this.players = {};
