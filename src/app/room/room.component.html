@@ -1,57 +1,65 @@
 <div class="room pictionary-bg" fxLayout="row" fxLayoutAlign="center start">
-  <div *ngIf="room" class="room__container">
-    <div>
-      <div fxLayout="row" fxLayoutWrap fxLayoutAlign="center">
-        <div fxFlex="33"
-             fxFlex.xs="100%">
+  <md-card>
+    <md-card-content>
+      <div *ngIf="room" class="room__container">
+        <app-recognition *ngIf="isArtist"></app-recognition>
+        <div fxLayout="row">
+          <div fxFlex.xs="100%">
+            <app-display-game-state
+              [gameStateRunningArtist]="gameIsRunning && isArtist"
+              [gameStateRunningGuesser]="gameIsRunning && !isArtist"
+              [gameStateStopped]="gameIsStopped"
+              [gameStateWaiting]="gameIsWaiting"
+            ></app-display-game-state>
+          </div>
 
-        <pre>
-          isArtist: {{ isArtist }}
-          currentUserId: {{currentUserId}}
-        </pre>
+          <div fxFlex.xs="100%">
+            <app-drawboard-clear *ngIf="isArtist"
+                                 (onClearDrawboard)="handleClearDrawingboard($event)"></app-drawboard-clear>
+          </div>
 
-          <button (click)="leaveRoom()">leave</button>
+          <div fxFlex.xs="100%">
+              <div fxLayout="row" fxLayoutAlign="end center">
+                <button
+                  (click)="leaveRoom()"
+                  md-icon-button
 
-          <app-display-game-state></app-display-game-state>
+                  color="accent"
+                  disableRipple="true"
+                  mdTooltip="Leave room"
+                  mdTooltipPosition="left">
+                  <md-icon class="icon--big">exit_to_app</md-icon>
+                </button>
+              </div>
+          </div>
         </div>
 
-        <div fxFlex="33"
-             fxFlex.xs="100%">
-          <app-drawboard-clear *ngIf="isArtist"
-                               (onClearDrawboard)="handleClearDrawingboard($event)"></app-drawboard-clear>
+        <div fxLayout="row" fxLayoutAlign="center">
+          <app-drawboard fxFlex
+                         [inDrawingMode]="isArtist"
+                         [drawnLines]="drawLines"
+                         (onDrawing)="handleDrawing($event)"
+                         (onLineDrawn)="handleLineDrawn($event)"></app-drawboard>
         </div>
 
-        <div fxFlex="33"
-             fxFlex.xs="100%">
-          <app-recognition *ngIf="isArtist"></app-recognition>
-        </div>
-      </div>
-
-      <div fxLayout="row" fxLayoutAlign="center">
-        <app-drawboard fxFlex
-                       [inDrawingMode]="isArtist"
-                       [drawnLines]="drawLines"
-                       (onDrawing)="handleDrawing($event)"
-                       (onLineDrawn)="handleLineDrawn($event)"></app-drawboard>
-      </div>
-
-      <div fxLayout="row" fxLayoutWrap>
-        <app-guess-form fxFlex="80"
-                        fxFlex.xs="100%"
-                        *ngIf="!isArtist"
-                        (onGuess)="handleGuess($event)">
-        </app-guess-form>
-        <app-display-word fxFlex="80"
+        <div fxLayout="row" fxLayoutWrap>
+          <app-guess-form fxFlex="80"
                           fxFlex.xs="100%"
-                          [word]="guessingWord"
-                          *ngIf="isArtist">
-        </app-display-word>
-        <app-display-timer fxFlex
-                           fxFlex.xs="100%"
-                           [endTimestamp]="endTimeStamp"
-                           (onTimerEnded)="handleTimerRanOut()">
-        </app-display-timer>
+                          *ngIf="!isArtist"
+                          (onGuess)="handleGuess($event)">
+          </app-guess-form>
+          <app-display-word fxFlex="80"
+                            fxFlex.xs="100%"
+                            [word]="guessingWord"
+                            *ngIf="isArtist">
+          </app-display-word>
+          <app-display-timer fxFlex
+                             fxFlex.xs="100%"
+                             [endTimestamp]="endTimeStamp"
+                             (onTimerEnded)="handleTimerRanOut()">
+          </app-display-timer>
+        </div>
       </div>
-    </div>
-  </div>
+    </md-card-content>
+  </md-card>
 </div>

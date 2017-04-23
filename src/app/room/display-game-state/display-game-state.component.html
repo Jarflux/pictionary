@@ -1,3 +1,4 @@
-<p>
-  display-game-state works!
-</p>
+<h3 *ngIf="gameStateRunningArtist">Drawing</h3>
+<h3 *ngIf="gameStateRunningGuesser">Guessing</h3>
+<h3 *ngIf="gameStateStopped">Stopped</h3>
+<h3 *ngIf="gameStateWaiting">Waiting for more users</h3>

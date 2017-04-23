@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {RoomService} from "./room.service";
 import {Room} from "../models/room";
 import {FirebaseObjectObservable} from "angularfire2";
@@ -17,6 +17,10 @@ import {WordService} from "./word.service";
 })
 export class RoomComponent implements OnInit {
   private isArtist: boolean = false;
+  private gameIsStopped: boolean = false;
+  private gameIsRunning: boolean = false;
+  private gameIsWaiting: boolean = true;
+
   private drawLines: DrawLine[];
 
   private roomUid: string;
@@ -33,7 +37,8 @@ export class RoomComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private roomService: RoomService,
-              private wordService: WordService) {
+              private wordService: WordService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -56,6 +61,7 @@ export class RoomComponent implements OnInit {
         }
 
         this.room = room;
+        this.setCorrectGameState(this.room);
       });
 
 
@@ -86,6 +92,9 @@ export class RoomComponent implements OnInit {
 
   leaveRoom() {
     this.roomService.leaveRoom(this.roomUid);
+
+    let detailUrl = this.router.createUrlTree(['/room']);
+    this.router.navigateByUrl(detailUrl);
   }
 
   private getToGuessWord(wordUid: string) {
@@ -97,11 +106,18 @@ export class RoomComponent implements OnInit {
 
   private enterRoom(roomUid: string) {
     this.roomService.enterRoom(roomUid);
+
+
+  }
+
+  private setCorrectGameState(room: Room){
+    this.gameIsRunning = this.roomService.isRoomInPlayingMode(room);
+    this.gameIsStopped = this.roomService.isRoomInStoppedMode(room);
+    this.gameIsWaiting = this.roomService.isRoomInWaitingMode(room);
   }
 
   private checkIfRoomStartsGame(newRoom: Room) {
     this.currentUserId = this.roomService.currentUserId;
-
 
     if ((isNullOrUndefined(this.room) || !this.roomService.isRoomInPlayingMode(this.room)) && this.roomService.isRoomInPlayingMode(newRoom)) {
       this.isArtist = this.roomService.isCurrentUserTheArtist(newRoom);

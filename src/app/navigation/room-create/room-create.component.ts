@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {RoomService} from "../../room/room.service";
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -10,13 +11,18 @@ import {RoomService} from "../../room/room.service";
 })
 export class RoomCreateComponent implements OnInit {
 
-  constructor(private roomService: RoomService) {
+  constructor(private roomService: RoomService, private router: Router) {
   }
 
   ngOnInit() {
+
   }
 
   addRoom(){
-    this.roomService.addNewRoom();
+    let newRoomRef = this.roomService.addNewRoom();
+
+    let detailUrl = this.router.createUrlTree(['/room', newRoomRef.key]);
+;
+    this.router.navigateByUrl(detailUrl);
   }
 }
