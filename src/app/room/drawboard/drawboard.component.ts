@@ -74,7 +74,7 @@ export class DrawboardComponent implements OnInit {
       .map((event: MouseEvent | Touch): DrawPoint => this.generateLine(event));
 
     inputDown$
-    //.skipWhile(() => this._inDrawingMode.getValue() === false)
+      .skipWhile(() => this._inDrawingMode.getValue() === false)
       .switchMapTo(inputMove$)
       .subscribe((drawPoint: DrawPoint) => this.drawPoint(drawPoint));
 
@@ -84,7 +84,8 @@ export class DrawboardComponent implements OnInit {
   }
 
   private createNewPolyLine() {
-    if (this.drawnLines[this.drawnLines.length - 1].points.length > 0) {
+
+    if (isNullOrUndefined(this.drawnLines[this.drawnLines.length - 1]) || this.drawnLines[this.drawnLines.length - 1].points.length > 0) {
       this.drawnLines.push(new DrawLine());
     }
   }
@@ -114,6 +115,9 @@ export class DrawboardComponent implements OnInit {
   }
 
   private drawPoint(drawPoint: DrawPoint): void {
+    if (this.drawnLines.length == 0) {
+      this.createNewPolyLine();
+    }
     this.drawnLines[this.drawnLines.length - 1].points.push(drawPoint);
 
     this.onDrawing.emit(this.drawnLines);
