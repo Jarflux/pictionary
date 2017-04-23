@@ -18,7 +18,7 @@ export class RoomItemComponent implements OnInit {
 
   ngOnChanges(changes:SimpleChanges){
     if(changes.room){
-      this.playerCount = Object.keys(changes.room.currentValue.players).length;
+      this.playerCount = Object.keys(changes.room.currentValue.players || []).length;
     }
   }
 
