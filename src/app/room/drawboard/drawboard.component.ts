@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 
 import {Observable} from "rxjs/Observable";
 import 'rxjs/add/observable/fromEvent';
@@ -7,6 +7,7 @@ import 'rxjs/add/operator/pairwise';
 import 'rxjs/add/operator/switchMapTo';
 import 'rxjs/add/operator/distinctUntilChanged';
 import {DrawboardLine} from "../../models/drawboard-line";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 @Component({
   selector: 'app-drawboard',
@@ -16,6 +17,24 @@ import {DrawboardLine} from "../../models/drawboard-line";
 
 export class DrawboardComponent implements OnInit {
   @ViewChild('drawboard') drawboardRef: ElementRef;
+  @Output() onDrawing: EventEmitter<string[]> = new EventEmitter();
+
+
+  private _inDrawingMode = new BehaviorSubject<boolean>(false);
+  // change data to use getter and setter
+  @Input()
+  set inDrawingMode(value) {
+    // set the latest value for _data BehaviorSubject
+    this._inDrawingMode.next(value);
+  };
+
+  get inDrawingMode() {
+    // get the latest value from _data BehaviorSubject
+    return this._inDrawingMode.getValue();
+  }
+
+  @Input() drawnLines: string[];
+
 
   //ToDo: viewbox dynamic shizzle
   private defaultViewBoxSize: number = 1000;
@@ -57,10 +76,12 @@ export class DrawboardComponent implements OnInit {
       .map((event: MouseEvent | Touch): DrawboardLine => this.generateLine(event));
 
     inputDown$
+      .skipWhile(() => this._inDrawingMode.getValue() === false)
       .switchMapTo(inputMove$)
       .subscribe((line: DrawboardLine) => this.drawLine(line));
 
     inputUp$
+      .skipWhile(() => this._inDrawingMode.getValue() === false)
       .subscribe(() => this.createNewPolyLine());
   }
 
@@ -93,5 +114,8 @@ export class DrawboardComponent implements OnInit {
   private drawLine(line: DrawboardLine) : void{
     let lastIndex = this.polyLines.length - 1;
     this.polyLines[lastIndex] = this.polyLines[lastIndex].concat(line.toSvgLine() + ' ');
+
+
+    this.onDrawing.emit(this.polyLines);
   }
 }

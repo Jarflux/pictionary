@@ -17,7 +17,7 @@ before_script:
   - cd ..
 
 script:
-  - ng build --$TRAVIS_BRANCH
+  - ng build --env=$TRAVIS_BRANCH
 
 after_success:
   - echo "Deploying to firebase project with alias '$TRAVIS_BRANCH'"

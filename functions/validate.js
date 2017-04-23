@@ -11,7 +11,7 @@ exports.guess = functions.database.ref('/rooms/{roomUid}/players/{playerUid}/las
   return admin.database().ref(`/rooms/${roomUid}`).once('value')
     .then(snapshot => snapshot.val())
     .then(value => {
-      return isCorrectAnswer(value.secure.word, guess);
+      return isCorrectAnswer(value.secure.wordUid, guess);
     }).then((isCorrectAnswer) => {
       return updateRoom(roomUid, isCorrectAnswer, playerUid)
         .then(() => {
@@ -24,10 +24,9 @@ exports.guess = functions.database.ref('/rooms/{roomUid}/players/{playerUid}/las
 function updateRoom(roomUid, isCorrectAnswer, playerUid) {
   if (isCorrectAnswer) {
     let roomUpdates = {
-      winner: playerUid,
-      finished: true
+      winnerUid: playerUid
     };
-    return admin.database().ref(`/rooms/${roomUid}/secure`).update(roomUpdates)
+    return admin.database().ref(`/rooms/${roomUid}`).update(roomUpdates)
       .then(() => {
         return Promise.resolve(true);
       });
