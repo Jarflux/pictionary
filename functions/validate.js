@@ -1,5 +1,6 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const user = require('./user');
 
 exports.guess = functions.database.ref('/rooms/{roomUid}/guesses/{playerUid}').onWrite(event => {
   const guess = event.data.val();
@@ -18,14 +19,13 @@ exports.guess = functions.database.ref('/rooms/{roomUid}/guesses/{playerUid}').o
           return updateUser(playerUid, isCorrectAnswer)
         });
     });
-})
-;
+});
 
 function updateRoom(roomUid, isCorrectAnswer, playerUid) {
   if (isCorrectAnswer) {
     let roomUpdates = {
       winnerUid: playerUid,
-      gamestate: "STOPPED"
+      gameState: "STOPPED"
     };
     return admin.database().ref(`/rooms/${roomUid}`).update(roomUpdates)
       .then(() => {
@@ -41,18 +41,13 @@ function updateUser(playerUid, isCorrectAnswer) {
     .once('value')
     .then(snapshot => snapshot.val())
     .then(userObject => {
-
-      let userUpdates = {
-        guessCount: userObject.guessCount + 1
-      };
-
+      let score = 50;
+      let guessCountIncrease = 1;
+      let correctGuessCountIncrease = 0;
       if (isCorrectAnswer) {
-        userUpdates.correctGuessCount = userObject.correctGuessCount + 1;
+        correctGuessCountIncrease = correctGuessCountIncrease + 1;
       }
-
-      return admin.database()
-        .ref(`/playerInfo/${playerUid}/secure`)
-        .update(userUpdates);
+      return user.update(playerUid, guessCountIncrease, correctGuessCountIncrease, score);
     });
 }
 

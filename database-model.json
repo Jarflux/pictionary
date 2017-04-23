@@ -18,15 +18,13 @@
       "winnerUid": null,
       "startRoundTimestamp": 222222,
       "wordUid": 123456789,
+      "guesses": {
+        "$uid": "blaaspijp",
+        "$2uid": "blabla"
+      },
       "players": {
-        "$uid": {
-          "lastGuess": "blowpipe",
-          "lastActive": 123456
-        },
-        "$uid2": {
-          "lastGuess": "blowpipe",
-          "lastActive": 123456
-        }
+        "$uid": "$uid",
+        "$2uid": "$2uid"
       }
     },
     "$uid2": {
@@ -34,15 +32,13 @@
       "winnerUid": null,
       "startRoundTimestamp": 222222,
       "wordUid": 123456789,
+      "guesses": {
+        "$uid": "blaaspijp",
+        "$2uid": "blabla"
+      },
       "players": {
-        "$uid": {
-          "lastGuess": "blowpipe",
-          "lastActive": 123456
-        },
-        "$uid2": {
-          "lastGuess": "blowpipe",
-          "lastActive": 123456
-        }
+        "$uid": "$uid",
+        "$2uid": "$2uid"
       }
     }
   },
