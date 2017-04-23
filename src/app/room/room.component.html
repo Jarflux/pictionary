@@ -1,57 +1,55 @@
-<div *ngIf="room">
+<div class="room pictionary-bg" fxLayout="column">
+  <div *ngIf="room" fxFlex="1">
+    <div fxLayout="row" fxLayoutWrap fxLayoutAlign="center">
+      <div fxFlex="33"
+           fxFlex.xs="100%">
 
-  <div fxLayout="row" fxLayoutWrap fxLayoutAlign="center">
-    <div fxFlex="33"
-         fxFlex.xs="100%">
+        <pre>
+          isGuessing: {{ isGuessing }}
+          isArtist: {{ isArtist }}
+          currentUserId: {{currentUserId}}
+        </pre>
 
+        <button (click)="leaveRoom()">leave</button>
+      </div>
+
+      <div fxFlex="33"
+           fxFlex.xs="100%">
+        <app-drawboard-clear (onClearDrawboard)="handleClearDrawingboard($event)"></app-drawboard-clear>
+      </div>
+
+      <div fxFlex="33"
+           fxFlex.xs="100%">
+        <app-recognition *ngIf="isArtist"></app-recognition>
+      </div>
     </div>
 
-    <div fxFlex="33"
-         fxFlex.xs="100%">
-      <app-drawboard-clear *ngIf="isArtist" (onClearDrawboard)="handleClearDrawingboard($event)"></app-drawboard-clear>
-    </div>
-
-    <div fxFlex="33"
-         fxFlex.xs="100%">
-      <app-recognition *ngIf="isArtist"></app-recognition>
+    <div fxLayout="row" fxLayoutAlign="center">
+      <app-drawboard fxFlex
+                     [inDrawingMode]="isArtist"
+                     [drawnLines]="drawLines"
+                     (onDrawing)="handleDrawing($event)"
+                     (onLineDrawn)="handleLineDrawn($event)"></app-drawboard>
     </div>
   </div>
 
-
-  <div fxLayout="row" fxLayoutAlign="center">
-    <app-drawboard fxFlex
-                   [inDrawingMode]="isArtist"
-                   [drawnLines]="drawLines"
-                   (onDrawing)="handleDrawing($event)"
-                   (onLineDrawn)="handleLineDrawn($event)"></app-drawboard>
-
-  </div>
-
-  <div fxLayout="row" fxLayoutWrap>
-    <app-guess-form fxFlex="80"
-                    fxFlex.xs="100%"
-                    *ngIf="isGuessing"
-                    (onGuess)="handleGuess($event)">
-    </app-guess-form>
-    <app-display-word fxFlex="80"
+  <footer>
+    <div fxLayout="row" fxLayoutWrap>
+      <app-guess-form fxFlex="80"
                       fxFlex.xs="100%"
-                      [word]="guessingWord"
-                      *ngIf="!isGuessing">
-    </app-display-word>
-    <app-display-timer fxFlex
-                       fxFlex.xs="100%"
-                       [endTimestamp]="endTimeStamp"
-                       (onTimerEnded)="handleTimerRanOut()">
-    </app-display-timer>
-  </div>
-
-  <pre>
-    isGuessing: {{ isGuessing }}
-    isArtist: {{ isArtist }}
-    currentUserId: {{currentUserId}}
-  </pre>
-
-  <button (click)="leaveRoom()">leave</button>
-
-
+                      *ngIf="isGuessing"
+                      (onGuess)="handleGuess($event)">
+      </app-guess-form>
+      <app-display-word fxFlex="80"
+                        fxFlex.xs="100%"
+                        [word]="guessingWord"
+                        *ngIf="!isGuessing">
+      </app-display-word>
+      <app-display-timer fxFlex
+                         fxFlex.xs="100%"
+                         [endTimestamp]="endTimeStamp"
+                         (onTimerEnded)="handleTimerRanOut()">
+      </app-display-timer>
+    </div>
+  </footer>
 </div>
