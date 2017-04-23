@@ -1,5 +1,36 @@
 <div class="login pictionary-bg">
-  <md-card class="login-card">
+
+  <!-- Welcome -->
+  <md-card class="login-card animated"
+           [ngClass]="{'bounceInDown': animateIn, 'bounceOutDown': animateOut}" *ngIf="!showLogin">
+    <md-card-header class="login-card-header">
+      <md-card-title align="center"
+                     class="login-card-title">
+        Welcome to Pictionary!
+      </md-card-title>
+      <md-card-subtitle align="center"
+                        class="login-card-subtitle">
+        Play together with you friends and make custom rooms to compete with others.
+      </md-card-subtitle>
+    </md-card-header>
+    <md-card-content class="login-card-content">
+      <div fxLayout="column"
+           fxLayoutGap="30px">
+
+        <img src="http://placehold.it/340x200" alt="placeholder image">
+
+        <button md-raised-button
+                color="accent"
+                class=""
+                (click)="showLoginCard()">
+          Get Started
+        </button>
+      </div>
+    </md-card-content>
+  </md-card>
+
+  <!-- Login -->
+  <md-card class="login-card animated" [ngClass]="{'bounceInDown': showLogin}" *ngIf="showLogin">
     <md-card-header class="login-card-header">
       <md-card-title align="center"
                      class="login-card-title">
@@ -7,7 +38,7 @@
       </md-card-title>
       <md-card-subtitle align="center"
                         class="login-card-subtitle">
-        Play together with you friends and make custom rooms to compete with others.
+        Please choose your favorite platform to sign in.
       </md-card-subtitle>
     </md-card-header>
     <md-card-content class="login-card-content">
