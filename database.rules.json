@@ -1,7 +1,7 @@
 {
   "rules": {
     "words": {
-      ".read": false,
+      ".read": true,
       ".write": false
     },
     "rooms": {
@@ -26,7 +26,7 @@
         ".write": "$uid === auth.uid"
       }
     },
-    "profileInfo": {
+    "playerInfo": {
       "$uid": {
         ".read": "$uid === auth.uid",
         ".write": "$uid === auth.uid",
