@@ -61,7 +61,11 @@ export class RoomComponent implements OnInit {
   }
 
   handleDrawing(drawLines: DrawLine[]) {
-    this.roomService.updateLastDrawingLine(this.room$, drawLines);
+    this.roomService.updateCurrentGameDrawing(this.room$, drawLines);
+  }
+
+  handleClearDrawingboard() {
+    this.roomService.clearCurrentGameDrawing(this.room$);
   }
 
   handleGuess(guess: string) {

@@ -1,3 +1,11 @@
 <div fxLayout="row" fxLayoutAlign="center center">
-  <md-icon class="icon--big icon--cursor-pointer">remove_from_queue</md-icon>
+  <button
+    (click)="clearDrawboard()"
+    md-icon-button
+    color="accent"
+    disableRipple="true"
+    md-tooltip="Clear drawing"
+    md-tooltip-position="below">
+    <md-icon>remove_from_queue</md-icon>
+  </button>
 </div>

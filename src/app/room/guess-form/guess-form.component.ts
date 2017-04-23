@@ -1,6 +1,7 @@
 import {Component, OnInit, Output, EventEmitter, ViewChild} from '@angular/core';
 import {Observable} from 'rxjs';
 
+
 @Component({
     selector: 'app-guess-form',
     templateUrl: './guess-form.component.html',

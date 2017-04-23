@@ -1,9 +1,14 @@
-<div *ngIf="room">room">
+<div *ngIf="room">
 
   <div fxLayout="row" fxLayoutWrap fxLayoutAlign="center">
     <div fxFlex="33"
          fxFlex.xs="100%">
-      <app-drawboard-clear></app-drawboard-clear>
+
+    </div>
+
+    <div fxFlex="33"
+         fxFlex.xs="100%">
+      <app-drawboard-clear *ngIf="isArtist" (onClearDrawboard)="handleClearDrawingboard($event)"></app-drawboard-clear>
     </div>
 
     <div fxFlex="33"

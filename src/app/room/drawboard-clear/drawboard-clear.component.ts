@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Observable} from "rxjs/Observable";
+import 'rxjs/add/observable/fromEvent';
 
 @Component({
   selector: 'app-drawboard-clear',
@@ -6,10 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./drawboard-clear.component.scss']
 })
 export class DrawboardClearComponent implements OnInit {
+  @Output() onClearDrawboard: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
 
+  clearDrawboard() {
+    this.onClearDrawboard.emit({});
+  }
 }
