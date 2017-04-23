@@ -1,11 +1,10 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from "@angular/router";
 import {RoomService} from "./room.service";
 import {Room} from "../models/room";
 import {FirebaseObjectObservable} from "angularfire2";
 import {isNullOrUndefined} from "util";
 import {DrawLine} from "../models/draw-line";
-import {RecognitionComponent} from "./recognition/recognition.component";
 
 @Component({
   selector: 'app-room',
@@ -25,9 +24,6 @@ export class RoomComponent implements OnInit {
   private guessingWord: string = 'banaan';
   private endTimeStamp: number;
   private currentUserId: string = "";
-
-  @ViewChild(RecognitionComponent)
-  private recognitionComponent: RecognitionComponent;
 
   constructor(private route: ActivatedRoute,
               private roomService: RoomService) {
@@ -56,9 +52,6 @@ export class RoomComponent implements OnInit {
       });
   }
 
-  handleLineDrawn() {
-    this.recognitionComponent.processDrawing(this.drawLines);
-  }
 
   handleDrawing(drawLines: DrawLine[]) {
     this.roomService.updateLastDrawingLine(this.room$, drawLines);
@@ -87,14 +80,12 @@ export class RoomComponent implements OnInit {
     if ((isNullOrUndefined(this.room) || !this.roomService.isRoomInPlayingMode(this.room)) && this.roomService.isRoomInPlayingMode(newRoom)) {
       this.isGuessing = true;
       this.isArtist = this.roomService.isCurrentUserTheArtist(newRoom);
-
-      newRoom.startRoundTimestamp = new Date();
-      this.endTimeStamp = this.getEndTimeStamp(newRoom.startRoundTimestamp).getTime();
-    } else {
+      this.endTimeStamp = this.getEndTimeStamp(new Date(newRoom.startRoundTimestamp)).getTime();
+    } else if (!this.roomService.isRoomInPlayingMode(newRoom)) {
       this.isGuessing = false;
       this.isArtist = false;
       this.endTimeStamp = undefined;
-      //this.drawLines = [];
+      this.drawLines = [];
     }
   }
 

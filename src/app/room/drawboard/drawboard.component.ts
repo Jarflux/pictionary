@@ -9,6 +9,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import {DrawLine, DrawPoint} from "../../models/draw-line";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {isNullOrUndefined} from "util";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-drawboard',
@@ -38,7 +39,7 @@ export class DrawboardComponent implements OnInit {
   @ViewChild('drawboard') drawboardRef: ElementRef;
 
   //ToDo: viewbox dynamic shizzle
-  private defaultViewBoxSize: number = 1000;
+  private defaultViewBoxWidth: number = environment.drawboardCanvasWidth;
 
   private drawboardOffsetTop: number;
   private drawboardOffsetLeft: number;
@@ -76,7 +77,7 @@ export class DrawboardComponent implements OnInit {
       .map((event: MouseEvent | Touch): DrawPoint => this.generateLine(event));
 
     inputDown$
-    //.skipWhile(() => this._inDrawingMode.getValue() === false)
+      .skipWhile(() => this._inDrawingMode.getValue() === false)
       .switchMapTo(inputMove$)
       .subscribe((drawPoint: DrawPoint) => this.drawPoint(drawPoint));
 
@@ -87,7 +88,8 @@ export class DrawboardComponent implements OnInit {
   }
 
   private createNewPolyLine() {
-    if (this.drawnLines[this.drawnLines.length - 1].points.length > 0) {
+
+    if (isNullOrUndefined(this.drawnLines[this.drawnLines.length - 1]) || this.drawnLines[this.drawnLines.length - 1].points.length > 0) {
       this.drawnLines.push(new DrawLine());
     }
   }
@@ -106,7 +108,7 @@ export class DrawboardComponent implements OnInit {
   private updateDrawboard(drawboardEl: HTMLElement) {
     this.drawboardOffsetTop = drawboardEl.getBoundingClientRect().top || 0;
     this.drawboardOffsetLeft = drawboardEl.getBoundingClientRect().left || 0;
-    this.drawboardScaleFactor = drawboardEl.getBoundingClientRect().width / this.defaultViewBoxSize;
+    this.drawboardScaleFactor = drawboardEl.getBoundingClientRect().width / this.defaultViewBoxWidth;
   }
 
   private generateLine(event: MouseEvent | Touch): DrawPoint {
@@ -117,6 +119,9 @@ export class DrawboardComponent implements OnInit {
   }
 
   private drawPoint(drawPoint: DrawPoint): void {
+    if (this.drawnLines.length == 0) {
+      this.createNewPolyLine();
+    }
     this.drawnLines[this.drawnLines.length - 1].points.push(drawPoint);
 
     this.onDrawing.emit(this.drawnLines);
