@@ -1,6 +1,40 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 
+function stop(roomUid) {
+  let roomUpdates = {
+    winnerUid: null,
+    startRoundTimestamp: 0,
+    wordUid: null,
+    gameState: "STOPPED",
+  };
+  return admin.database().ref(`/rooms/${roomUid}`).update(roomUpdates);
+}
+
+function wait(roomUid) {
+  let roomUpdates = {
+    winnerUid: null,
+    startRoundTimestamp: 0,
+    wordUid: null,
+    gameState: "WAITING",
+  };
+  return admin.database().ref(`/rooms/${roomUid}`).update(roomUpdates);
+}
+
+
+function restart(roomUid) {
+  return stop(roomUid)
+    .then(() => {start(roomUid)});
+}
+
+function isInProgress(roomUid) {
+  return admin.database().ref(`/rooms/${roomUid}`).once('value')
+    .then(snapshot => snapshot.val())
+    .then(roomObject => {
+      return roomObject.gameState === "RUNNING";
+    });
+}
+
 function start(roomUid) {
   return admin.database().ref(`/rooms/${roomUid}`).once('value')
     .then(snapshot => snapshot.val())
@@ -12,9 +46,9 @@ function start(roomUid) {
             winnerUid: null,
             startRoundTimestamp: Math.floor(Date.now()),
             artistUid: nextArtistUid,
-            secure: {
-              wordUid: randomWordUid
-            }
+            wordUid: randomWordUid,
+            currentGameDrawing: null,
+            gameState: "RUNNING"
           };
           console.log("room update", roomUpdates);
           return admin.database().ref(`/rooms/${roomUid}`).update(roomUpdates);
@@ -22,62 +56,39 @@ function start(roomUid) {
     });
 }
 
-function stop(roomUid) {
-  let roomUpdates = {
-    winnerUid: null,
-    startRoundTimestamp: 0,
-    secure: {
-      wordUid: null
-    }
-  };
-  return admin.database().ref(`/rooms/${roomUid}`).update(roomUpdates);
-}
-
 function getNextArtistUid(roomObject) {
-  let i = 0;
-  console.log("players", roomObject.players);
   let playerUids = Object.keys(roomObject.players);
   let rand = Math.floor(Math.random() * playerUids.length);
   let artistUid = playerUids[rand];
-  console.log("new artist", artistUid);
   return artistUid;
 }
 
 function getRandomWordUid() {
   return admin.database().ref(`/words`).once('value')
     .then(words => {
-
-      // let i = 0;
-      // console.log("words", words.val());
-      // let wordUids = Object.keys(words.val());
-      // let rand = Math.floor(Math.random() * wordUids.length);
-      // let randomWordUid = wordUids[rand];
-      // console.log("new random word", randomWordUid);
-      // return randomWordUid;
-
-      let i = 0;
-      let rand = Math.floor(Math.random() * words.numChildren());
-      let newWordUid;
-      words.forEach(function (word) {
-        if (i == rand) {
-          console.log("new word", word.key);
-          newWordUid = word.key;
-        }
-        i++;
-      });
-      return newWordUid;
+      let wordUids = Object.keys(words.val());
+      let rand = Math.floor(Math.random() * wordUids.length);
+      let randomWordUid = wordUids[rand];
+      return randomWordUid;
     });
 }
 
 exports.start = start;
 exports.stop = stop;
+exports.wait = wait;
+exports.restart = restart;
+exports.isInProgress = isInProgress;
 
-exports.testStart = functions.https.onRequest((request, response) => {
-  return start(request.query.room);
+exports.startTest = functions.https.onRequest((request, response) => {
+  start(request.query.room).then(() => {response.status(200).send()});
 });
 
-exports.testStop = functions.https.onRequest((request, response) => {
-  return stop(request.query.room);
+exports.stopTest = functions.https.onRequest((request, response) => {
+  stop(request.query.room).then(() => {response.status(200).send()});
+});
+
+exports.restartTest = functions.https.onRequest((request, response) => {
+  restart(request.query.room).then(() => {response.status(200).send()});
 });
 
 

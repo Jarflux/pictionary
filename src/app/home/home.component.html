@@ -1,5 +1,26 @@
 <div class="home pictionary-bg">
-  <p>
-    home works!
-  </p>
+  <div fxLayout="row"
+       fxLayoutAlign="center center"
+       fxLayoutGap="50px"
+       fxLayoutGap.xs="0"
+       fxLayoutWrap
+       class="home-row">
+    <div fxFlex="30" fxFlex.xs="100">
+      <button md-raised-button
+              color="accent"
+              class="home-button">
+        <span class="home-button-label">Quick Play</span>
+        <md-icon class="home-button-icon">videogame_asset</md-icon>
+      </button>
+    </div>
+    <div fxFlex="30" fxFlex.xs="100">
+      <button md-raised-button
+              color="accent"
+              class="home-button"
+              routerLink="/room">
+        <span class="home-button-label">Search Lobby</span>
+        <md-icon class="home-button-icon">people</md-icon>
+      </button>
+    </div>
+  </div>
 </div>

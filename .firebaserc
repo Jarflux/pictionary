@@ -1,7 +1,7 @@
 {
   "projects": {
     "dev": "pictionary-dev-32247",
-    "develop": "pictionary-dev-32247",
+    "develop": "pictionary-develop",
     "master": "pictionary-9dca6"
   }
 }

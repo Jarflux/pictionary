@@ -17,6 +17,7 @@
       "artistUid": 123456789,
       "winnerUid": null,
       "startRoundTimestamp": 222222,
+      "wordUid": 123456789,
       "players": {
         "$uid": {
           "lastGuess": "blowpipe",
@@ -26,15 +27,13 @@
           "lastGuess": "blowpipe",
           "lastActive": 123456
         }
-      },
-      "secure": {
-        "wordUid": 123456789
       }
     },
     "$uid2": {
       "artistUid": 123456789,
       "winnerUid": null,
       "startRoundTimestamp": 222222,
+      "wordUid": 123456789,
       "players": {
         "$uid": {
           "lastGuess": "blowpipe",
@@ -44,9 +43,6 @@
           "lastGuess": "blowpipe",
           "lastActive": 123456
         }
-      },
-      "secure": {
-        "wordUid": 123456789
       }
     }
   },

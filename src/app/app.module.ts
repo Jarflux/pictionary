@@ -9,6 +9,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { AuthGuard } from './_auth/auth.guard';
+import { RedirectGuard } from './_auth/redirect.guard';
 import { DrawboardComponent } from './room/drawboard/drawboard.component';
 import { DisplayWordComponent } from './room/display-word/display-word.component';
 import { LoginComponent } from './login/login.component';
@@ -61,7 +62,10 @@ const firebaseAuthConfig = {
     MaterialModule,
     FlexLayoutModule
   ],
-  providers: [AuthGuard],
+  providers: [
+    AuthGuard,
+    RedirectGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
