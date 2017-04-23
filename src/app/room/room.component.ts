@@ -6,23 +6,25 @@ import {FirebaseObjectObservable} from "angularfire2";
 import {isNullOrUndefined} from "util";
 import {DrawLine} from "../models/draw-line";
 import {RecognitionComponent} from "./recognition/recognition.component";
+import {Word} from "../models/word";
+import {WordService} from "./word.service";
 
 @Component({
   selector: 'app-room',
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.scss'],
-  providers: [RoomService]
+  providers: [RoomService, WordService]
 })
 export class RoomComponent implements OnInit {
-  private isGuessing: boolean = false;
   private isArtist: boolean = false;
   private drawLines: DrawLine[];
 
   private roomUid: string;
   private room: Room;
   private room$: FirebaseObjectObservable<Room>;
+  private word$: FirebaseObjectObservable<Word>;
 
-  private guessingWord: string = 'banaan';
+  private guessingWord: string;
   private endTimeStamp: number;
   private currentUserId: string = "";
 
@@ -30,7 +32,8 @@ export class RoomComponent implements OnInit {
   private recognitionComponent: RecognitionComponent;
 
   constructor(private route: ActivatedRoute,
-              private roomService: RoomService) {
+              private roomService: RoomService,
+              private wordService: WordService) {
   }
 
   ngOnInit() {
@@ -54,14 +57,22 @@ export class RoomComponent implements OnInit {
 
         this.room = room;
       });
+
+
   }
 
   handleLineDrawn() {
-    this.recognitionComponent.processDrawing(this.drawLines);
+    if (this.isArtist) {
+      this.recognitionComponent.processDrawing(this.drawLines);
+    }
   }
 
   handleDrawing(drawLines: DrawLine[]) {
-    this.roomService.updateLastDrawingLine(this.room$, drawLines);
+    this.roomService.updateCurrentGameDrawing(this.room$, drawLines);
+  }
+
+  handleClearDrawingboard() {
+    this.roomService.clearCurrentGameDrawing(this.room$);
   }
 
   handleGuess(guess: string) {
@@ -77,6 +88,13 @@ export class RoomComponent implements OnInit {
     this.roomService.leaveRoom(this.roomUid);
   }
 
+  private getToGuessWord(wordUid: string) {
+    this.word$ = this.wordService.getWordById(wordUid);
+    this.word$.subscribe((word: Word) => {
+      this.guessingWord = word.word;
+    });
+  }
+
   private enterRoom(roomUid: string) {
     this.roomService.enterRoom(roomUid);
   }
@@ -84,12 +102,14 @@ export class RoomComponent implements OnInit {
   private checkIfRoomStartsGame(newRoom: Room) {
     this.currentUserId = this.roomService.currentUserId;
 
+
     if ((isNullOrUndefined(this.room) || !this.roomService.isRoomInPlayingMode(this.room)) && this.roomService.isRoomInPlayingMode(newRoom)) {
-      this.isGuessing = true;
       this.isArtist = this.roomService.isCurrentUserTheArtist(newRoom);
+      if (this.isArtist) {
+        this.getToGuessWord(newRoom.wordUid);
+      }
       this.endTimeStamp = this.getEndTimeStamp(new Date(newRoom.startRoundTimestamp)).getTime();
     } else if (!this.roomService.isRoomInPlayingMode(newRoom)) {
-      this.isGuessing = false;
       this.isArtist = false;
       this.endTimeStamp = undefined;
       this.drawLines = [];

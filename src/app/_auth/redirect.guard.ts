@@ -13,7 +13,7 @@ export class RedirectGuard implements CanActivate {
 
     this.af.auth.subscribe(auth => {
       if (auth) {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/room']);
         redirect = false;
       }
     });

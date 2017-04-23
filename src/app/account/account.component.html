@@ -1,0 +1,44 @@
+<div class="account pictionary-bg" *ngIf="user">
+
+    <!-- account -->
+    <md-card class="account-card animated bounceInDown">
+        <md-card-header class="account-card-header">
+            <md-card-title align="center"
+                           class="account-card-title">
+                {{ user?.name }}
+            </md-card-title>
+            <md-card-subtitle
+                    class="account-card-subtitle">
+                <div>You have <span class="account-score">{{ user?.secure?.score || 0 }}</span> points.</div>
+                <div *ngIf="!user?.secure?.score || user?.secure?.score === 0">Start playing!</div>
+            </md-card-subtitle>
+        </md-card-header>
+        <md-card-content class="account-card-content">
+            <div fxLayout="column"
+                 fxLayoutGap="30px">
+
+                <div fxFlexLayout="row" fxFlexAlign="left center" *ngIf="user?.secure?.score">
+                    <div class="account-label" fxFlex="60">Score</div>
+                    <md-chip-list fxFlex>
+                        <md-chip *ngIf="user?.secure?.score">{{ user?.secure?.score}}</md-chip>
+                    </md-chip-list>
+                </div>
+
+                <div fxFlexLayout="row" fxFlexAlign="left center">
+                    <div class="account-label" fxFlex="60">Correct Guesses</div>
+                    <md-chip-list fxFlex>
+                        <md-chip *ngIf="user?.secure?.correctGuessCount">{{ user?.secure?.correctGuessCount}}</md-chip>
+                    </md-chip-list>
+                </div>
+
+                <div fxFlexLayout="row" fxFlexAlign="left center">
+                    <div class="account-label" fxFlex="60">Total Guesses</div>
+                    <md-chip-list fxFlex>
+                        <md-chip *ngIf="user?.secure?.guessCount">{{ user?.secure?.guessCount}}</md-chip>
+                    </md-chip-list>
+                </div>
+
+            </div>
+        </md-card-content>
+    </md-card>
+</div>

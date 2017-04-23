@@ -2,7 +2,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const user = require('./user');
 
-exports.guess = functions.database.ref('/rooms/{roomUid}/guesses/{playerUid}').onWrite(event => {
+exports.guess = functions.database.ref('/words/{roomUid}/guesses/{playerUid}').onWrite(event => {
   const guess = event.data.val();
   console.log('Retrieved guess: ', guess);
 

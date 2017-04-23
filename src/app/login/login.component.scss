@@ -19,12 +19,16 @@ $card-header-color: map-get($mat-pictionary-colors, white);
 .login {
   height: 100vh;
 
+  .logo {
+    display: block;
+    margin: 0 auto;
+  }
+
   &-card {
     width: 400px;
     margin: 0 auto;
     padding: 0;
     position: relative;
-    top: 20vh;
 
     &-header {
       color: $card-header-color;

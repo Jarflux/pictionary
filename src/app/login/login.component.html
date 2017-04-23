@@ -1,7 +1,10 @@
 <div class="login pictionary-bg">
 
+  <img class="logo" src="./assets/images/logo-full.svg" height="140" alt="logo"
+       [ngClass]="{'bounceInDown': animateIn}">
+
   <!-- Welcome -->
-  <md-card class="login-card animated"
+  <md-card class="login-card"
            [ngClass]="{'bounceInDown': animateIn, 'bounceOutDown': animateOut}" *ngIf="!showLogin">
     <md-card-header class="login-card-header">
       <md-card-title align="center"
@@ -17,7 +20,7 @@
       <div fxLayout="column"
            fxLayoutGap="30px">
 
-        <img src="http://placehold.it/340x200" alt="placeholder image">
+        <img src="./assets/images/login-steps.svg" alt="steps">
 
         <button md-raised-button
                 color="accent"

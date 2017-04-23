@@ -10,7 +10,7 @@ export class RecognitionService {
 
   private googleGuessUrl = 'https://inputtools.google.com/request?ime=handwriting&app=quickdraw&dbg=1&cs=1&oe=UTF-8';
 
-  getGuess(trace, canvasWidth: number, canvasHeight: number): Observable<String[]> {
+  getGuess(trace, canvasWidth: number, canvasHeight: number): Observable<String> {
 
     const data = JSON.stringify({
       "options": "enable_pre_space",
@@ -29,7 +29,7 @@ export class RecognitionService {
 
     return this.http.post(this.googleGuessUrl, data, options)
       .map(result => {
-        return result.json()[1][0][1];
+        return result.json()[1][0][1][0];
       })
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
