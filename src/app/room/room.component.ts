@@ -12,12 +12,13 @@ import {isNullOrUndefined} from "util";
   styleUrls: ['./room.component.scss'],
   providers: [RoomService]
 })
-export class RoomComponent implements OnInit, OnDestroy {
+export class RoomComponent implements OnInit{
   private isGuessing: boolean = false;
   private isArtist: boolean = false;
+  private drawLines: string[];
 
   private room: Room;
-  private roomSubscription$: Subscription;
+  private room$: FirebaseObjectObservable<Room>;
 
   private guessingWord: string = 'banaan';
   private endTimeStamp: number;
@@ -28,19 +29,18 @@ export class RoomComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.roomSubscription$ = this.route.params
-      .switchMap((params: Params) => this.roomService.getRoomById(params['id']))
+    this.room$ = this.roomService.getRoomById(this.route.snapshot.params['id']);
+    this.room$
       .subscribe((room: Room) => {
-        console.log("Room info", room);
         this.checkIfRoomStartsGame(room);
         this.room = room;
       });
   }
 
-  ngOnDestroy() {
-    this.roomSubscription$.unsubscribe();
-  }
 
+  handleDrawing(drawLines: string[]) {
+    this.roomService.updateDrawings(this.room$, drawLines);
+  }
 
   handleGuess(guess: string) {
     console.log('someone guessed', guess);
@@ -59,7 +59,6 @@ export class RoomComponent implements OnInit, OnDestroy {
 
       newRoom.startRoundTimestamp = new Date();
       this.endTimeStamp = this.getEndTimeStamp(newRoom.startRoundTimestamp).getTime();
-
     } else {
       console.log("Nope...");
       this.isGuessing = false;

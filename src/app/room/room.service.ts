@@ -28,6 +28,13 @@ export class RoomService {
     return this.af.database.object('/rooms/' + key);
   }
 
+  updateDrawings(room: FirebaseObjectObservable<Room>, drawLines: string[]){
+    room.update({
+      currentGameDrawing: drawLines
+    });
+
+  }
+
 
   isCurrentUserTheArtist(room: Room): boolean{
     return room.artistUid === this.currentUserId;

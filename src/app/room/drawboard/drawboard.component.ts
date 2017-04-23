@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 
 import {Observable} from "rxjs/Observable";
 import 'rxjs/add/observable/fromEvent';
@@ -17,8 +17,8 @@ import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 export class DrawboardComponent implements OnInit {
   @ViewChild('drawboard') drawboardRef: ElementRef;
+  @Output() onDrawing: EventEmitter<string[]> = new EventEmitter();
 
-  //@Input() inDrawingMode: boolean = false;
 
   private _inDrawingMode = new BehaviorSubject<boolean>(false);
   // change data to use getter and setter
@@ -114,5 +114,8 @@ export class DrawboardComponent implements OnInit {
   private drawLine(line: DrawboardLine) : void{
     let lastIndex = this.polyLines.length - 1;
     this.polyLines[lastIndex] = this.polyLines[lastIndex].concat(line.toSvgLine() + ' ');
+
+
+    this.onDrawing.emit(this.polyLines);
   }
 }

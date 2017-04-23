@@ -1,6 +1,6 @@
 <div *ngIf="room">
   <div fxLayout="row" fxLayoutAlign="center">
-    <app-drawboard fxFlex [inDrawingMode]="isArtist"></app-drawboard>
+    <app-drawboard fxFlex [inDrawingMode]="isArtist" [drawnLines]="room.currentGameDrawing" (onDrawing)="handleDrawing($event)"></app-drawboard>
 
   </div>
 
