@@ -1,4 +1,12 @@
 <div *ngIf="room">
+
+  <div fxLayout="row" fxLayoutWrap fxLayoutAlign="center">
+    <div fxFlex="33"
+         fxFlex.xs="100%">
+      <app-drawboard-clear></app-drawboard-clear>
+    </div>
+
+  </div>
   <div fxLayout="row" fxLayoutAlign="center">
     <app-drawboard fxFlex [inDrawingMode]="isArtist" [drawnLines]="drawLines" (onDrawing)="handleDrawing($event)"></app-drawboard>
 
