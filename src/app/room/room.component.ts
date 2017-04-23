@@ -1,10 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Params} from "@angular/router";
 import {RoomService} from "./room.service";
 import {Room} from "../models/room";
 import {FirebaseObjectObservable} from "angularfire2";
 import {isNullOrUndefined} from "util";
 import {DrawLine} from "../models/draw-line";
+import {RecognitionComponent} from "./recognition/recognition.component";
 
 @Component({
   selector: 'app-room',
@@ -24,6 +25,9 @@ export class RoomComponent implements OnInit {
   private guessingWord: string = 'banaan';
   private endTimeStamp: number;
   private currentUserId: string = "";
+
+  @ViewChild(RecognitionComponent)
+  private recognitionComponent: RecognitionComponent;
 
   constructor(private route: ActivatedRoute,
               private roomService: RoomService) {
@@ -52,9 +56,18 @@ export class RoomComponent implements OnInit {
       });
   }
 
+  handleLineDrawn() {
+    if (this.isArtist) {
+      this.recognitionComponent.processDrawing(this.drawLines);
+    }
+  }
 
   handleDrawing(drawLines: DrawLine[]) {
-    this.roomService.updateLastDrawingLine(this.room$, drawLines);
+    this.roomService.updateCurrentGameDrawing(this.room$, drawLines);
+  }
+
+  handleClearDrawingboard() {
+    this.roomService.clearCurrentGameDrawing(this.room$);
   }
 
   handleGuess(guess: string) {

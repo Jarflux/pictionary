@@ -3,7 +3,6 @@ import {AngularFire, FirebaseListObservable, FirebaseObjectObservable} from "ang
 import {Room} from "../models/room";
 import {isNullOrUndefined} from "util";
 import {DrawLine} from "../models/draw-line";
-import {RoomPlayer} from "../models/players";
 import {IArrayByPlayerId} from "../models/interfaces";
 
 @Injectable()
@@ -31,7 +30,12 @@ export class RoomService {
     return this.af.database.object('/rooms/' + key);
   }
 
-  updateLastDrawingLine(room: FirebaseObjectObservable<Room>, drawLines: DrawLine[]) {
+  clearCurrentGameDrawing(room: FirebaseObjectObservable<Room>) {
+    room.update({
+      currentGameDrawing: []
+    });  }
+
+  updateCurrentGameDrawing(room: FirebaseObjectObservable<Room>, drawLines: DrawLine[]) {
     room.update({
       currentGameDrawing: drawLines
     });
@@ -69,12 +73,9 @@ export class RoomService {
     return emptyRoom;
   }
 
-  addPlayerToRoom(players: IArrayByPlayerId<RoomPlayer>, playerUid: string) : IArrayByPlayerId<RoomPlayer>{
+  addPlayerToRoom(players: IArrayByPlayerId<string>, playerUid: string) : IArrayByPlayerId<string>{
     if (isNullOrUndefined(players[playerUid])){
-      let newPlayer = new RoomPlayer();
-      newPlayer.playerUid = playerUid;
-
-      players[playerUid] = newPlayer;
+      players[playerUid] = playerUid;
     }
 
     return players;

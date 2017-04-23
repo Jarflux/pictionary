@@ -3,7 +3,7 @@ const admin = require('firebase-admin');
 
 exports.createProfile = functions.auth.user().onCreate(event => {
   console.log('login userdata', event.data);
-  let userId = event.data.uid;
+  let playerUid = event.data.uid;
   let userData = {
     name: event.data.displayName || "",
     secure: {
@@ -12,7 +12,7 @@ exports.createProfile = functions.auth.user().onCreate(event => {
     }
   };
   return admin.database()
-    .ref(`/playerInfo/${userId}`)
+    .ref(`/playerInfo/${playerUid}`)
     .update(userData);
 });
 
@@ -33,7 +33,7 @@ function update(playerUid, guessCountIncrease, correctGuessCountIncrease, scoreI
           score: score
         }
       };
-      return admin.database().ref(`/playerInfo/${userId}`).update(playerUpdates);
+      return admin.database().ref(`/playerInfo/${playerUid}`).update(playerUpdates);
     });
 }
 
