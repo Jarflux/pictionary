@@ -2,7 +2,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const round = require('./round');
 
-exports.management = functions.database.ref('/words/{roomUid}/players').onWrite(event => {
+exports.management = functions.database.ref('/rooms/{roomUid}/players').onWrite(event => {
   let roomUid = event.params.roomUid;
   getNumberOfPlayersInRoom(roomUid).then(numberOfPlayers => {
     if (numberOfPlayers === 0) {
