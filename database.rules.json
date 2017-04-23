@@ -19,7 +19,7 @@
           }
         },
         "secure": {
-          ".read": "data.artistUid === auth.uid",
+          ".read": "$uid === auth.uid",
           ".write": false
         },
         "drawing": {

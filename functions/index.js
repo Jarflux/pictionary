@@ -3,7 +3,7 @@ const functions = require('firebase-functions');
 admin.initializeApp(functions.config().firebase);
 
 exports.validate = require('./validate');
-
+exports.round = require('./round');
 
 // TODO FUNCTIONS
 // on lastGuess change:
