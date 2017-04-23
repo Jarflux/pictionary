@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './_auth/auth.guard';
+import { RedirectGuard } from './_auth/redirect.guard';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { RoomComponent } from "./room/room.component";
@@ -10,8 +11,8 @@ const routes: Routes = [
 
   {
     path: 'login',
-    component: LoginComponent
-    // Todo: If user is logged in redirect to home
+    component: LoginComponent,
+    canActivate: [RedirectGuard]
   },
   {
     path: 'home',
