@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {AngularFire, FirebaseListObservable, FirebaseObjectObservable} from "angularfire2";
 import {Room} from "../models/room";
 import {isNullOrUndefined} from "util";
+import {DrawLine} from "../models/draw-line";
 
 @Injectable()
 export class RoomService {
@@ -28,11 +29,10 @@ export class RoomService {
     return this.af.database.object('/rooms/' + key);
   }
 
-  updateDrawings(room: FirebaseObjectObservable<Room>, drawLines: string[]){
+  updateLastDrawingLine(room: FirebaseObjectObservable<Room>, drawLines: DrawLine[]){
     room.update({
       currentGameDrawing: drawLines
     });
-
   }
 
 
