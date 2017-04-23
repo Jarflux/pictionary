@@ -4,6 +4,7 @@ import {Room} from "../models/room";
 import {isNullOrUndefined} from "util";
 import {DrawLine} from "../models/draw-line";
 import {RoomPlayer} from "../models/players";
+import {IArrayByPlayerId} from "../models/interfaces";
 
 @Injectable()
 export class RoomService {
@@ -58,17 +59,24 @@ export class RoomService {
 
   private generateEmptyRoom() {
     let emptyRoom = new Room();
+
     emptyRoom.name = '-';
     emptyRoom.currentGameDrawing = [];
-
     emptyRoom.createdOn = new Date();
     emptyRoom.createdBy = this.currentUserId;
-
-    emptyRoom.players = [];
-    let currentPlayer = new RoomPlayer();
-    currentPlayer.playerUid = this.currentUserId;
-    emptyRoom.players.push(currentPlayer);
+    emptyRoom.players = this.addPlayerToRoom(emptyRoom.players, this.currentUserId);
 
     return emptyRoom;
+  }
+
+  addPlayerToRoom(players: IArrayByPlayerId<RoomPlayer>, playerUid: string) : IArrayByPlayerId<RoomPlayer>{
+    if (isNullOrUndefined(players[playerUid])){
+      let newPlayer = new RoomPlayer();
+      newPlayer.playerUid = playerUid;
+
+      players[playerUid] = newPlayer;
+    }
+
+    return players;
   }
 }

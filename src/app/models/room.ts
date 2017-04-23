@@ -1,6 +1,8 @@
 import {RoomPlayer} from "./players";
 import {DrawLine} from "./draw-line";
 import {Guess} from "./guess";
+import {IArrayByPlayerId} from "./interfaces";
+
 
 export class Room {
   name: string;
@@ -9,11 +11,19 @@ export class Room {
 
   startRoundTimestamp: Date;
 
-  players: RoomPlayer[];
-  guesses: Guess[];
+  players: IArrayByPlayerId<RoomPlayer>;
+  guesses: IArrayByPlayerId<Guess>;
 
   currentGameDrawing: DrawLine[];
 
   createdOn: Date;
   createdBy: string;
+
+
+  constructor(){
+    this.players = {};
+    this.guesses = {};
+    this.currentGameDrawing = [];
+    this.createdOn = new Date();
+  }
 }
