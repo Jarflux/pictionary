@@ -1,6 +1,8 @@
 import {Component, OnInit, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {RecognitionService} from './recognition.service';
 import {DrawLine} from "../../models/draw-line";
+import {environment} from "../../../environments/environment"
+import {MdSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-recognition',
@@ -10,12 +12,11 @@ import {DrawLine} from "../../models/draw-line";
 })
 export class RecognitionComponent {
 
-  public guesses: String[];
-
-  constructor(private recognitionService: RecognitionService) {
+  constructor(private recognitionService: RecognitionService, private snackBar: MdSnackBar) {
   }
 
   processDrawing(drawing: DrawLine[]) {
+
     let trace = [];
 
     for (let line of drawing) {
@@ -31,13 +32,18 @@ export class RecognitionComponent {
       trace.push([tempX, tempY])
     }
 
-    this.recognitionService.getGuess(trace, 1000, 618).subscribe(
-      (guesses: String[]) => this.guesses = guesses,
+    this.recognitionService.getGuess(trace, environment.drawboardCanvasWidth, environment.drawboardCanvasHeight).subscribe(
+      (guess: string) => this.showGuess(guess),
       error => {
         console.log(error);
       }
     );
   }
 
+  private showGuess(guess: string) {
+    this.snackBar.open('Google thinks you are drawing a ' + guess + "!", null, {
+      duration: 2000
+    });
+  }
 
 }

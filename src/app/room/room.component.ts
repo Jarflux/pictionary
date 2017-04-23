@@ -57,7 +57,9 @@ export class RoomComponent implements OnInit {
   }
 
   handleLineDrawn() {
-    this.recognitionComponent.processDrawing(this.drawLines);
+    if (this.isArtist) {
+      this.recognitionComponent.processDrawing(this.drawLines);
+    }
   }
 
   handleDrawing(drawLines: DrawLine[]) {
