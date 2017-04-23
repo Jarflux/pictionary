@@ -64,6 +64,7 @@ export class RoomComponent implements OnInit {
 
                 this.room = room;
                 this.setCorrectGameState(this.room);
+                this.checkWinner(this.room);
             });
 
 
@@ -157,5 +158,16 @@ export class RoomComponent implements OnInit {
         endTimestamp.setMinutes(startTimestamp.getMinutes() + 1);
 
         return endTimestamp;
+    }
+
+    private checkWinner(room: Room) {
+        if (room.winnerUid && room.winnerUid !== this.roomService.currentUserId) {
+            this.word$ = this.wordService.getWordById(room.wordUid);
+            this.word$.subscribe((word: Word) => {
+                this.snackBar.open('You are out of luck, the word was ' + word.word + '!', null, {
+                    duration: 5000
+                });
+            });
+        }
     }
 }
