@@ -1,8 +1,7 @@
 .drawboard {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1000px;
   background: white;
-  border: 1px solid #c5a2e2;
 
   &__canvas {
     cursor: not-allowed;

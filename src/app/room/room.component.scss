@@ -2,4 +2,10 @@
 
 .room {
   min-height: 100vh;
+
+  &__container {
+    max-width: 1000px;
+    width: 100%;
+    border: 1px solid #c5a2e2;
+  }
 }
