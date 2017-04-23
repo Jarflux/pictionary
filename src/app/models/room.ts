@@ -1,4 +1,4 @@
-import {RoomPlayer} from "./players";
+import {Guess, RoomPlayer} from "./players";
 import {DrawLine} from "./draw-line";
 
 export class Room {
@@ -9,6 +9,7 @@ export class Room {
   startRoundTimestamp: Date;
 
   players: RoomPlayer[];
+  guesses: Guess[]
 
   currentGameDrawing: DrawLine[];
 

@@ -1,5 +1,9 @@
 export class RoomPlayer {
   playerUid: string;
-  lastGuess: string;
   lastActive: Date;
+}
+
+export class Guess {
+  playerUid: string;
+  lastGuess: string;
 }

@@ -3,6 +3,7 @@ import {AngularFire, FirebaseListObservable, FirebaseObjectObservable} from "ang
 import {Room} from "../models/room";
 import {isNullOrUndefined} from "util";
 import {DrawLine} from "../models/draw-line";
+import {RoomPlayer} from "../models/players";
 
 @Injectable()
 export class RoomService {
@@ -62,6 +63,11 @@ export class RoomService {
 
     emptyRoom.createdOn = new Date();
     emptyRoom.createdBy = this.currentUserId;
+
+    emptyRoom.players = [];
+    let currentPlayer = new RoomPlayer();
+    currentPlayer.playerUid = this.currentUserId;
+    emptyRoom.players.push(currentPlayer);
 
     return emptyRoom;
   }
