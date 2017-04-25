@@ -1,4 +1,5 @@
 export const environment = {
+  production: false,
   apiKey: 'AIzaSyD7z0dHePWHBlqvz0cfUv2qZDlZbMVlbEU',
   authDomain: 'pictionary-f117a.firebaseapp.com',
   databaseURL: 'https://pictionary-f117a.firebaseio.com',
