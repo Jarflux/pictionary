@@ -7,7 +7,6 @@ node_js:
 branches:
   only:
     - master
-    - develop
 
 before_script:
   - npm install -g firebase-tools
@@ -17,11 +16,10 @@ before_script:
   - cd ..
 
 script:
-  - ng build --env=$TRAVIS_BRANCH
+  - ng build
 
 after_success:
-  - echo "Deploying to firebase project with alias '$TRAVIS_BRANCH'"
-  - firebase use $TRAVIS_BRANCH
+  - firebase use pictionary-f117a
   - firebase deploy --token $FIREBASE_TOKEN
 
 notifications:
