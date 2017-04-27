@@ -4,69 +4,95 @@ const round = require('./round');
 
 exports.management = functions.database.ref('/rooms/{roomUid}/players').onWrite(event => {
   let roomUid = event.params.roomUid;
-  getNumberOfPlayersInRoom(roomUid).then(numberOfPlayers => {
-    if (numberOfPlayers === 0) {
-      console.log(`Room management notice: closed room ${roomUid}, because room is empty`);
-      return remove(roomUid); // cleanup empty words
-    } else {
-      round.isInProgress(roomUid).then(roomInProgress => {
-        console.log(`Room management notice: round is in progress ${roomInProgress}`);
-        if (roomInProgress) {
+
+  return admin.database().ref(`/rooms/${roomUid}`).once('value')
+    .then(roomRef => roomRef.val())
+    .then(room => {
+      let numberOfPlayers = countPlayers(room.players);
+      if (numberOfPlayers == 0) {
+        console.log(`Room management notice: remove room ${roomUid}, player count ${numberOfPlayers}`);
+        roomRef.remove();
+      } else {
+        if (isInProgress(room)) {
           if (numberOfPlayers > 2) {
-            return artistIsInRoom(roomUid).then(artistIsInRoom => {
-              if (!artistIsInRoom) {
-                console.log(`Room management notice: round restarted in room ${roomUid} because artist left and round is in progress`);
-                return round.restart(roomUid);
-              }
-            });
+            let artistIsInRoom = ArtistIsInRoom(roomRef);
+            if (!artistIsInRoom) {
+              console.log(`Room management notice: round restarted in room ${roomUid} because artist left and round is in progress`);
+              restartRound(roomRef);
+            }
           } else {
             console.log(`Room management notice: waiting for players in room ${roomUid}, player count ${numberOfPlayers}`);
-            return round.wait(roomUid);
+            setStatusToWaitForPlayers(roomRef);
           }
         } else {
           if (numberOfPlayers > 2) {
             console.log(`Room management notice: round started in room ${roomUid} because enough players and no round is in progress`);
-            return round.start(roomUid);
+            startRound(roomRef);
           }
         }
-      })
-    }
-  });
+      }
+    });
 });
 
-function getNumberOfPlayersInRoom(roomUid) {
-  return admin.database().ref(`/rooms/${roomUid}/players`).once('value')
-    .then(snapshot => snapshot.val())
-    .then(players => {
-        if (players) {
-          let playersUids = Object.keys(players);
-          return playersUids.length;
-        } else {
-          return 0;
-        }
-      }
-    );
+function isInProgress(roomObject) {
+  return roomObject.gameState === "RUNNING";
 }
 
-function artistIsInRoom(roomUid) {
-  return admin.database().ref(`/rooms/${roomUid}/players`).once('value')
-    .then(snapshot => snapshot.val())
-    .then(players => {
-      return getArtistUid(roomUid).then(artistUid => {
-        let playersUids = Object.keys(players);
-        return playersUids.includes(artistUid);
-      });
-    });
+function countPlayers(playersObject) {
+  if (playersObject) {
+    let playersUids = Object.keys(playersObject);
+    return playersUids.length;
+  } else {
+    return 0;
+  }
 }
 
-function getArtistUid(roomUid) {
-  return admin.database().ref(`/rooms/${roomUid}`).once('value')
-    .then(snapshot => snapshot.val())
-    .then(roomObject => {
-      return roomObject.artistUid
-    });
+function restartRound(roomRef) {
+  let roomUpdates = {
+    winnerUid: null,
+    startRoundTimestamp: 0,
+    wordUid: null,
+    gameState: "RUNNING",
+  };
+  roomRef.update(roomUpdates);
 }
 
-function remove(roomUid) {
-  return admin.database().ref(`/rooms/${roomUid}`).remove();
+function stopRound(roomRef) {
+  let roomUpdates = {
+    winnerUid: null,
+    startRoundTimestamp: 0,
+    wordUid: null,
+    gameState: "STOPPED",
+  };
+  roomRef.update(roomUpdates);
+}
+
+function startRound(roomRef) {
+  let roomUpdates = {
+    winnerUid: null,
+    startRoundTimestamp: 0,
+    wordUid: null,
+    gameState: "RUNNING",
+  };
+  roomRef.update(roomUpdates);
+}
+
+
+function setStatusToWaitForPlayers(roomRef) {
+  let roomUpdates = {
+    winnerUid: null,
+    startRoundTimestamp: 0,
+    wordUid: null,
+    gameState: "WAITING",
+  };
+  roomRef.update(roomUpdates);
+}
+
+function artistIsInRoom(roomRef) {
+  let artistUid = getArtistUid(roomRef);
+  return roomRef.child(`players/${artistUid}`).exists();
+}
+
+function getArtistUid(roomRef) {
+  return roomRef.child('artistUid').val();
 }
