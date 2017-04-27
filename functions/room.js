@@ -14,7 +14,7 @@ exports.management = functions.database.ref('/rooms/{roomUid}/players').onWrite(
       } else {
         if (isInProgress(roomSnapshot)) {
           if (numberOfPlayers > 2) {
-            let artistIsInRoom = artistIsInRoom(roomSnapshot);
+            let artistIsInRoom = isArtistInPlayers(roomSnapshot);
             if (!artistIsInRoom) {
               console.log(`Room management notice: round restarted in room ${roomUid} because artist left and round is in progress`);
               return restartRound(roomSnapshot);
@@ -75,7 +75,6 @@ function startRound(roomSnapshot) {
   return roomSnapshot.ref.update(roomUpdates);
 }
 
-
 function setStatusToWaitForPlayers(roomSnapshot) {
   let roomUpdates = {
     winnerUid: null,
@@ -86,9 +85,12 @@ function setStatusToWaitForPlayers(roomSnapshot) {
   return roomSnapshot.ref.update(roomUpdates);
 }
 
-function artistIsInRoom(roomSnapshot) {
-  let artistUid = getArtistUid(roomSnapshot);
-  return roomSnapshot.child(`players/${artistUid}`).exists();
+function isArtistInPlayers(roomSnapshot) {
+  if(roomSnapshot.child('artistUid').exists()){
+    let artistUid = roomSnapshot.child('artistUid').val();
+    return roomSnapshot.child(`players/${artistUid}`).exists();
+  }
+  return false;
 }
 
 function getArtistUid(roomSnapshot) {

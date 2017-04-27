@@ -37,14 +37,47 @@ function update(playerUid, guessCountIncrease, correctGuessCountIncrease, scoreI
     });
 }
 
-function calculateNewValue(oldValue, increment){
+function calculateNewValue(oldValue, increment) {
   let newValue;
-  if(newValue && newValue!=null){
+  if (newValue && newValue != null) {
     newValue = newValue + increment;
-  }else{
+  } else {
     newValue = increment;
   }
   return newValue;
 }
 
 exports.update = update;
+
+function addDrawingToHistory(playerSnapshot, wordUid) {
+  let amount = 1;
+  if (playerSnapshot.child(`/drawings/${wordUid}`).exists()) {
+    let amount = playerSnapshot.child(`/drawings/${wordUid}`).val()
+  }
+  playerSnapshot.child(`/drawings/${wordUid}`).set(amount);
+}
+
+function addGuess(playerSnapshot) {
+  let amount = 1;
+  if (playerSnapshot.child(`/guesses`).exists()) {
+    let amount = playerSnapshot.child(`/guesses`).val() + 1;
+  }
+  playerSnapshot.child(`/guesses`).set(amount);
+}
+
+function addCorrectGuess(playerSnapshot) {
+  let amount = 1;
+  if (playerSnapshot.child(`/correctGuesses`).exists()) {
+    let amount = playerSnapshot.child(`/correctGuesses`).val() + 1;
+  }
+  playerSnapshot.child(`/correctGuesses`).set(amount);
+}
+
+function addScore(playerSnapshot, score) {
+  let amount = score;
+  if (playerSnapshot.child(`/score`).exists()) {
+    let amount = playerSnapshot.child(`/score`).val() + score;
+  }
+  playerSnapshot.child(`/score`).set(amount);
+}
+
