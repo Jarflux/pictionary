@@ -55,11 +55,10 @@ function restartRound(roomSnapshot) {
   return roomSnapshot.ref.update(roomUpdates);
 }
 
-function stopRound(roomSnapshot) {
+function stopRound(roomSnapshot, winnerUid) {
   let roomUpdates = {
-    winnerUid: null,
+    winnerUid: winnerUid,
     startRoundTimestamp: 0,
-    wordUid: null,
     gameState: "STOPPED",
   };
   return roomSnapshot.ref.update(roomUpdates);
@@ -96,3 +95,9 @@ function isArtistInPlayers(roomSnapshot) {
 function getArtistUid(roomSnapshot) {
   return roomSnapshot.child('artistUid').val();
 }
+
+exports.restartRound = restartRound;
+exports.stopRound = stopRound;
+exports.startRound = startRound;
+exports.setStatusToWaitForPlayers = setStatusToWaitForPlayers;
+

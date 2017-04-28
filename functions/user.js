@@ -47,37 +47,43 @@ function calculateNewValue(oldValue, increment) {
   return newValue;
 }
 
-exports.update = update;
-
 function addDrawingToHistory(playerSnapshot, wordUid) {
   let amount = 1;
   if (playerSnapshot.child(`/drawings/${wordUid}`).exists()) {
-    let amount = playerSnapshot.child(`/drawings/${wordUid}`).val()
+    amount = playerSnapshot.child(`/drawings/${wordUid}`).val()
   }
-  playerSnapshot.child(`/drawings/${wordUid}`).set(amount);
+  playerSnapshot.child(`/drawings/${wordUid}`).ref.set(amount);
 }
 
 function addGuess(playerSnapshot) {
   let amount = 1;
-  if (playerSnapshot.child(`/guesses`).exists()) {
-    let amount = playerSnapshot.child(`/guesses`).val() + 1;
+  if (playerSnapshot.child(`/guessCount`).exists()) {
+    amount = playerSnapshot.child(`/guessCount`).val() + 1;
   }
-  playerSnapshot.child(`/guesses`).set(amount);
+  playerSnapshot.child(`/guessCount`).ref.set(amount);
 }
 
 function addCorrectGuess(playerSnapshot) {
   let amount = 1;
-  if (playerSnapshot.child(`/correctGuesses`).exists()) {
-    let amount = playerSnapshot.child(`/correctGuesses`).val() + 1;
+  if (playerSnapshot.child(`/correctGuessCount`).exists()) {
+    amount = playerSnapshot.child(`/correctGuessCount`).val() + 1;
   }
-  playerSnapshot.child(`/correctGuesses`).set(amount);
+  playerSnapshot.child(`/correctGuessCount`).ref.set(amount);
 }
 
 function addScore(playerSnapshot, score) {
   let amount = score;
   if (playerSnapshot.child(`/score`).exists()) {
-    let amount = playerSnapshot.child(`/score`).val() + score;
+    amount = playerSnapshot.child(`/score`).val() + score;
   }
-  playerSnapshot.child(`/score`).set(amount);
+  playerSnapshot.child(`/score`).ref.set(amount);
 }
+
+exports.update = update;
+exports.addDrawingToHistory = addDrawingToHistory;
+exports.addGuess = addGuess;
+exports.addCorrectGuess = addCorrectGuess;
+exports.addScore = addScore;
+
+
 

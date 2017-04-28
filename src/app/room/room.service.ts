@@ -107,14 +107,14 @@ export class RoomService {
     }
 
     startNextRound(roomUid: string) {
-        return this.http
-            .get(`${ environment.functionsUrl }/round-startTest`, {
-                headers: new Headers({'Access-Control-Allow-Origin': '*'}),
-                params: {
-                    'room': roomUid
-                }
-
-            })
-            .toPromise();
+        // return this.http
+        //     .get(`${ environment.functionsUrl }/round-startTest`, {
+        //         headers: new Headers({'Access-Control-Allow-Origin': '*'}),
+        //         params: {
+        //             'room': roomUid
+        //         }
+        //
+        //     })
+        //     .toPromise();
     }
 }
