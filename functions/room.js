@@ -65,13 +65,16 @@ function stopRound(roomSnapshot, winnerUid) {
 }
 
 function startRound(roomSnapshot) {
-  let roomUpdates = {
-    winnerUid: null,
-    startRoundTimestamp: 0,
-    wordUid: null,
-    gameState: "RUNNING",
-  };
-  return roomSnapshot.ref.update(roomUpdates);
+  return getRandomWordUid().then(randomWordUid => {
+    let roomUpdates = {
+      winnerUid: null,
+      artistUid: getNextArtistUid(roomSnapshot),
+      startRoundTimestamp: Math.floor(Date.now()),
+      wordUid: randomWordUid,
+      gameState: "RUNNING",
+    };
+    return roomSnapshot.ref.update(roomUpdates);
+  });
 }
 
 function setStatusToWaitForPlayers(roomSnapshot) {
@@ -96,6 +99,40 @@ function getArtistUid(roomSnapshot) {
   return roomSnapshot.child('artistUid').val();
 }
 
+function getNextArtistUid(roomSnapshot) {
+  let currentArtistUid = roomSnapshot.child(`artistUid`).val();
+  let nextArtistUid = undefined;
+  let currentArtistIsPreviousPLayer = false;
+  roomSnapshot.child(`players`).forEach(playerSnaphot => {
+    if(!nextArtistUid){
+      nextArtistUid = playerSnaphot.val();
+    }
+    if(currentArtistIsPreviousPLayer){
+      nextArtistUid = playerSnaphot.val();
+      return true;
+    }
+    if(currentArtistUid ===  playerSnaphot.val()){
+      currentArtistIsPreviousPLayer = true;
+    }
+  });
+  return nextArtistUid;
+}
+
+function getRandomWordUid() {
+  return admin.database().ref(`/words`).once('value')
+    .then(words => {
+      let wordUids = Object.keys(words.val());
+      let rand = Math.floor(Math.random() * wordUids.length);
+      let randomWordUid = wordUids[rand];
+      return randomWordUid;
+    });
+}
+
+function roundInProgress(roomSnapshot){
+  return roomSnapshot.child('gameState').exists() && roomSnapshot.child('gameState').val() == "RUNNING";
+}
+
+exports.roundInProgress = roundInProgress;
 exports.restartRound = restartRound;
 exports.stopRound = stopRound;
 exports.startRound = startRound;

@@ -15,17 +15,19 @@ exports.guessHttp = functions.https.onRequest((request, response) => {
     return admin.database().ref(`/rooms/${roomUid}`).once('value')
       .then(snapshot => {
         let roomSnapshot = snapshot;
-        return isCorrectAnswer(snapshot.child(`wordUid`).val(), guess)
-          .then((isCorrectAnswer) => {
-            updateRoom(roomSnapshot, isCorrectAnswer, playerUid);
-            return updateUser(playerUid, isCorrectAnswer).then(() => {
-              if (isCorrectAnswer) {
-                response.status(200).send();
-              } else {
-                response.status(204).send();
-              }
+        if (room.roundInProgress(roomSnapshot)) {
+          return isCorrectAnswer(snapshot.child(`wordUid`).val(), guess)
+            .then((isCorrectAnswer) => {
+              updateRoom(roomSnapshot, isCorrectAnswer, playerUid);
+              return updateUser(playerUid, isCorrectAnswer).then(() => {
+                if (isCorrectAnswer) {
+                  response.status(200).send();
+                } else {
+                  response.status(204).send();
+                }
+              });
             });
-          });
+        }
       });
   });
 });
