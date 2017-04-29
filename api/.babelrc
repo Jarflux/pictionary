@@ -1,0 +1,16 @@
+{
+  "plugins": ["transform-runtime"],
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "node": 4.3
+        },
+        "loose": true,
+        "modules": false
+      }
+    ]
+  ],
+  "compact" : false
+}

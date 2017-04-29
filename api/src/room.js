@@ -33,6 +33,10 @@ exports.management = functions.database.ref('/rooms/{roomUid}/players').onWrite(
     });
 });
 
+
+function treeShaker(){
+  console.log("blaaaaaat");
+}
 function isInProgress(roomSnapshot) {
   return roomSnapshot.child('gameState').val() === "RUNNING";
 }

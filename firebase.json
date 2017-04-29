@@ -2,8 +2,11 @@
   "database": {
     "rules": "database.rules.json"
   },
+  "functions": {
+    "source": "api/dist"
+  },
   "hosting": {
-    "public": "dist",
+    "public": "app/dist",
     "rewrites": [
       {
         "source": "**",

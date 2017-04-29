@@ -1,12 +1,3 @@
-const admin = require('firebase-admin');
-const functions = require('firebase-functions');
-admin.initializeApp(functions.config().firebase);
-
-exports.validate = require('./validate');
-exports.user = require('./user');
-exports.round = require('./round');
-exports.room = require('./room');
-
 // TODO FUNCTIONS
 //
 // on winner change:
