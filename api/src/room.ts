@@ -2,10 +2,7 @@ import * as firebaseFunctions from 'firebase-functions';
 import * as firebase from 'firebase/app'
 import * as firebaseAdmin from 'firebase-admin';
 
-export let management = () => {
-  let roomPlayersRef = firebaseFunctions.database.ref('/rooms/{roomUid}/players');
-
-  roomPlayersRef.onWrite(async event => {
+export let management = firebaseFunctions.database.ref('/rooms/{roomUid}/players').onWrite(async event => {
 
     let roomsRef = getParentReference(event.data.ref);
     let roomUid: string = event.params['roomUid'];
@@ -32,8 +29,7 @@ export let management = () => {
       console.log(`Room management notice: waiting for players in room ${roomUid}, player count ${numberOfPlayers}`);
       return setStatusToWaitForPlayers(roomSnapshot);
     }
-  });
-};
+});
 
 export let restartRound = async (roomSnapshot: firebase.database.DataSnapshot) => {
   let roomUpdates = {

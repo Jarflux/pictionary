@@ -14,7 +14,7 @@ const productEnv = ["production", "prd", "prod"];
 module.exports = function (env) {
   const webpackPlugins = (productEnv.indexOf(env) > -1) ? [
     new webpack.LoaderOptionsPlugin({
-      minimize: true,
+      minimize: false,
       debug: false
     }),
     new BabiliPlugin(babiliOptions)
