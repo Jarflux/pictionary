@@ -6,7 +6,7 @@ const BabiliPlugin = require("babili-webpack-plugin");
 
 const babiliOptions = [];
 const SRC_DIR = './src';
-path.join(__dirname, 'src');
+const POLYFILL_DIR = "./polyfills";
 const OUT_DIR = path.join(__dirname, 'dist');
 const productEnv = ["production", "prd", "prod"];
 
@@ -27,18 +27,14 @@ module.exports = function (env) {
     module: {
       rules: [
         {
-          test: /\.ts$/,
+          test: /\.(js|ts)$/,
           exclude: /node_modules/,
           use: [
-            {
-              loader: 'babel-loader',
-              //options: babelOptions
-            },
             {
               loader: 'awesome-typescript-loader'
             }
           ]
-        }, {
+        }/*, {
           test: /\.js$/,
           exclude: /node_modules/,
           use: [
@@ -47,7 +43,7 @@ module.exports = function (env) {
               //options: babelOptions
             }
           ]
-        }
+        }*/
       ]
     },
     plugins: webpackPlugins,
