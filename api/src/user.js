@@ -37,14 +37,53 @@ function update(playerUid, guessCountIncrease, correctGuessCountIncrease, scoreI
     });
 }
 
-function calculateNewValue(oldValue, increment){
+function calculateNewValue(oldValue, increment) {
   let newValue;
-  if(newValue && newValue!=null){
+  if (newValue && newValue != null) {
     newValue = newValue + increment;
-  }else{
+  } else {
     newValue = increment;
   }
   return newValue;
 }
 
+function addDrawingToHistory(playerSnapshot, wordUid) {
+  let amount = 1;
+  if (playerSnapshot.child(`/drawings/${wordUid}`).exists()) {
+    amount = playerSnapshot.child(`/drawings/${wordUid}`).val()
+  }
+  playerSnapshot.child(`/drawings/${wordUid}`).ref.set(amount);
+}
+
+function addGuess(playerSnapshot) {
+  let amount = 1;
+  if (playerSnapshot.child(`/guessCount`).exists()) {
+    amount = playerSnapshot.child(`/guessCount`).val() + 1;
+  }
+  playerSnapshot.child(`/guessCount`).ref.set(amount);
+}
+
+function addCorrectGuess(playerSnapshot) {
+  let amount = 1;
+  if (playerSnapshot.child(`/correctGuessCount`).exists()) {
+    amount = playerSnapshot.child(`/correctGuessCount`).val() + 1;
+  }
+  playerSnapshot.child(`/correctGuessCount`).ref.set(amount);
+}
+
+function addScore(playerSnapshot, score) {
+  let amount = score;
+  if (playerSnapshot.child(`/score`).exists()) {
+    amount = playerSnapshot.child(`/score`).val() + score;
+  }
+  playerSnapshot.child(`/score`).ref.set(amount);
+}
+
 exports.update = update;
+exports.addDrawingToHistory = addDrawingToHistory;
+exports.addGuess = addGuess;
+exports.addCorrectGuess = addCorrectGuess;
+exports.addScore = addScore;
+
+
+

@@ -21,6 +21,7 @@
                     <div class="account-label" fxFlex="60">Score</div>
                     <md-chip-list fxFlex>
                         <md-chip *ngIf="user?.secure?.score">{{ user?.secure?.score}}</md-chip>
+                        <md-chip *ngIf="!user?.secure?.score"> 0 </md-chip>
                     </md-chip-list>
                 </div>
 
@@ -28,13 +29,15 @@
                     <div class="account-label" fxFlex="60">Correct Guesses</div>
                     <md-chip-list fxFlex>
                         <md-chip *ngIf="user?.secure?.correctGuessCount">{{ user?.secure?.correctGuessCount}}</md-chip>
+                        <md-chip *ngIf="!user?.secure?.correctGuessCount"> 0 </md-chip>
                     </md-chip-list>
                 </div>
 
                 <div fxFlexLayout="row" fxFlexAlign="left center">
                     <div class="account-label" fxFlex="60">Total Guesses</div>
                     <md-chip-list fxFlex>
-                        <md-chip *ngIf="user?.secure?.guessCount">{{ user?.secure?.guessCount}}</md-chip>
+                        <md-chip *ngIf="user?.secure?.guessCount">{{ user?.secure?.guessCount }}</md-chip>
+                      <md-chip *ngIf="!user?.secure?.guessCount"> 0 </md-chip>
                     </md-chip-list>
                 </div>
 
