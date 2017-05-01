@@ -1,0 +1,23 @@
+{
+  "name": "Pictionary",
+  "description": "General package.json for some awesome scripts",
+  "scripts": {
+    "install": "npm run install:api && npm run install:app",
+    "install:api": "cd api && yarn",
+    "install:app": "cd app && yarn",
+    "develop:api": "cd api && npm run develop",
+    "develop:app": "cd app && ng serve",
+    "build:api": "cd api && npm run build",
+    "build:app": "cd app && ng build",
+    "build": "npm run build:api && npm run build:app",
+    "deploy:api": "firebase deploy --only functions",
+    "deploy": "firebase deploy ",
+    "build-deploy:api": "npm run build:api && npm run deploy:functions",
+    "build-deploy": "npm run build && npm run deploy"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "private": true
+}
