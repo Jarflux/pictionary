@@ -1,11 +1,11 @@
-import * as room from './room'
-import * as validate from './validate.js'
-import * as user from './user.js'
-import * as round from './round.js'
+import * as Room from './room'
+import * as Validate from './validate'
+import * as User from './user'
+import * as Round from './round'
 
 export {
-  room,
-  round,
-  user,
-  validate
+  Room,
+  Validate,
+  User,
+  Round
 }
