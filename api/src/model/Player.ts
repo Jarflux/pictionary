@@ -8,7 +8,8 @@ export class Player{
   private _guessCount: number;
   private _correctGuessCount: number;
   private _score: number;
- // private _oldPlayer: Player; for future delta calcualtion purpose
+  // TODO Optimize with delta calculation before update
+  // private _oldPlayer: Player; for future
 
   getUid(): string {
     return this._uid;

@@ -88,11 +88,17 @@ export class Room{
   }
 
   getNextArtistUid(): string{
-    return this._players.next(this._artistUid);
+    return this._players.getNext(this._artistUid);
   }
 
   stopRound(winnerUid: string) {
     this.setWinnerUid(winnerUid);
+    this.setStartRoundTimestamp(0);
+    this.setGameState(GameState.Stopped);
+  }
+
+  stopRoundWithoutWinner() {
+    this.setWinnerUid(null);
     this.setStartRoundTimestamp(0);
     this.setGameState(GameState.Stopped);
   }

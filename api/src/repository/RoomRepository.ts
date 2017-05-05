@@ -15,4 +15,7 @@ export class RoomRepository {
     firebaseAdmin.database().ref(`/rooms/${room.getUid()}`).update(RoomMapper.toObject(room));
   }
 
+  static remove(room: Room): void{
+    firebaseAdmin.database().ref(`/rooms/${room.getUid()}`).remove();
+  }
 }

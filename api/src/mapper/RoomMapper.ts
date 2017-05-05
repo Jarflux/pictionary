@@ -12,7 +12,8 @@ export class RoomMapper {
     room.setName(dataSnapShot.child("name").val())
     room.setArtistUid(dataSnapShot.child("artistUid").val())
     room.setWinnerUid(dataSnapShot.child("winnerUid").val())
-    room.setGameState(dataSnapShot.child("gameState").val())
+    //TODO map gameState;
+    //room.setGameState(dataSnapShot.child("gameState").val())
     room.setStartRoundTimestamp(dataSnapShot.child("startRoundTimestamp").val())
     room.setWordUid(dataSnapShot.child("wordUid").val())
     //TODO map playerList;
