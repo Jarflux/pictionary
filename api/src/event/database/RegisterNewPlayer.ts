@@ -9,7 +9,7 @@ import {Player} from "../../model/Player";
 export let createPlayerInfoOnRegister = firebaseFunctions.auth.user().onCreate(async event => {
   let player = new Player();
   player.setUid(event.data['uid']);
-  player.setName(event.data['displayName']);
+  player.setName(event.data['displayName']? event.data['displayName'] : `Guest [${event.data['uid']}]`);
   player.setScore(0);
   player.setCorrectGuessCount(0);
   player.setGuessCount(0);

@@ -9,10 +9,10 @@ export class PlayerMapper {
   static toModel(dataSnapShot: firebase.database.DataSnapshot): Player{
     let player = new Player();
     player.setUid(dataSnapShot.key);
-    player.setName(dataSnapShot.child("name").val())
-    player.setCorrectGuessCount(dataSnapShot.child("secure/correctGuessCount").val())
-    player.setGuessCount(dataSnapShot.child("secure/guessCount").val())
-    player.setScore(dataSnapShot.child("secure/score").val())
+    player.setName(dataSnapShot.child("name").val());
+    player.setCorrectGuessCount(dataSnapShot.child("secure/correctGuessCount").val());
+    player.setGuessCount(dataSnapShot.child("secure/guessCount").val());
+    player.setScore(dataSnapShot.child("secure/score").val());
     return player;
   }
 

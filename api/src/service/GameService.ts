@@ -7,6 +7,8 @@ import {WordRepository} from "../repository/WordRepository";
 import {Word} from "../model/Word";
 import {Player} from "../model/Player";
 import {PlayerRepository} from "../repository/PlayerRepository";
+import {Message} from "../model/Message";
+import {MessageRepository} from "../repository/MessageRepository";
 
 export class GameService {
 
@@ -18,15 +20,17 @@ export class GameService {
         PlayerRepository.findByUid(playerUid).then(player => {
           player.setGuessCount(player.getGuessCount() + 1);
           if (isCorrectGuess) {
-            //TODO post message
+            MessageRepository.add(room, new Message(`${player.getName()} guessed ${guess} and was correctly matched to ${word.getWord()}`));
+            MessageRepository.add(room, new Message("System stopped the current round because of a correct guess"));
             room.stopRound(player.getUid());
             RoomRepository.save(room);
-            //TODO post message
+            MessageRepository.add(room, new Message("System starts a new round"));
             room.startRound(word.getUid());
             RoomRepository.save(room);
             player.setCorrectGuessCount(player.getCorrectGuessCount() + 1);
             player.setScore(player.getScore() + 50);
           } else {
+            MessageRepository.add(room, new Message(`${player.getName()} guessed ${guess}`));
             player.setScore(player.getScore() - 10);
           }
           PlayerRepository.save(player);
@@ -42,8 +46,7 @@ export class GameService {
     if (numberOfPlayers > 2) {
       if (room.isInProgress()) {
         if (!room.isArtistStillHere()) {
-          //TODO post message
-          console.log(`Room management notice: round restarted in room ${room.getUid()} because artist left and round is in progress`);
+          MessageRepository.add(room, new Message(`Room management notice: round restarted in room ${room.getUid()} because artist left and round is in progress`));
           WordRepository.findRandom().then(word => {
             room.stopRoundWithoutWinner();
             room.startRound(word.getUid());
@@ -51,20 +54,17 @@ export class GameService {
           });
         }
       } else {
-        //TODO post message
-        console.log(`Room management notice: round started in room ${room.getUid()} because enough players and no round is in progress`);
+        MessageRepository.add(room, new Message(`Room management notice: round started in room ${room.getUid()} because enough players and no round is in progress`));
         WordRepository.findRandom().then(word => {
           room.startRound(word.getUid());
           RoomRepository.save(room);
         });
       }
     } else if (numberOfPlayers === 0) {
-      //TODO post message
-      console.log(`Room management notice: remove room ${room.getUid()}, player count ${numberOfPlayers}`);
+      MessageRepository.add(room, new Message(`Room management notice: remove room ${room.getUid()}, player count ${numberOfPlayers}`));
       RoomRepository.remove(room);
     } else if (room.isInProgress()) {
-      //TODO post message
-      console.log(`Room management notice: waiting for players in room ${room.getUid()}, player count ${numberOfPlayers}`);
+      MessageRepository.add(room, new Message(`Room management notice: waiting for players in room ${room.getUid()}, player count ${numberOfPlayers}`));
       room.waitForPlayers();
       RoomRepository.save(room);
     }
