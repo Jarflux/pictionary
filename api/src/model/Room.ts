@@ -9,6 +9,7 @@ export class Room{
   private _uid: string;
   private _name: number;
   private _artistUid: string;
+  private _winnerUid: string;
   private _gameState: GameState;
   private _wordUid: string;
   private _startRoundTimestamp: number;
@@ -36,6 +37,14 @@ export class Room{
 
   setArtistUid(value: string) {
     this._artistUid = value;
+  }
+
+  getWinnerUid(): string {
+    return this._winnerUid;
+  }
+
+  setWinnerUid(value: string) {
+    this._winnerUid = value;
   }
 
   getGameState(): GameState {
@@ -82,4 +91,24 @@ export class Room{
     return this._players.next(this._artistUid);
   }
 
+  stopRound(winnerUid: string) {
+    this.setWinnerUid(winnerUid);
+    this.setStartRoundTimestamp(0);
+    this.setGameState(GameState.Stopped);
+  }
+
+  startRound(wordUid: string) {
+    this.setWinnerUid(null);
+    this.setArtistUid(this.getNextArtistUid());
+    this.setWordUid(wordUid);
+    this.setGameState(GameState.Running);
+    this.setStartRoundTimestamp(Math.floor(Date.now()));
+  }
+
+  waitForPlayers() {
+    this.setWinnerUid(null);
+    this.setStartRoundTimestamp(0);
+    this.setWordUid(null);
+    this.setGameState(GameState.WaitingForPlayers);
+  }
 }

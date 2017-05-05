@@ -10,7 +10,8 @@ export class WordMapper {
     let word = new Word();
     word.setUid(dataSnapShot.key);
     word.setWord(dataSnapShot.child("word").val())
-    word.setSynonyms(dataSnapShot.child("synonyms").val())
+    //TODO map synonyms;
+    //word.setSynonyms(dataSnapShot.child("synonyms").val())
     return word;
   }
 

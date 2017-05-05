@@ -4,14 +4,12 @@
 import * as firebaseAdmin from 'firebase-admin';
 import {WordMapper} from "../mapper/WordMapper";
 import {Word} from "../model/Word";
-import {List} from "../model/List";
 
 export class WordRepository {
 
-  static findAll(): Promise<List<Word>>{
-    return firebaseAdmin.database().ref(`/words`).once('value').then(snapshot => {
-
-      return WordMapper.toModel(snapshot.val())});
+  static findRandom(): Promise<Word> {
+      let randomUid = Math.floor(Math.random() * 100);
+      return this.findByUid(randomUid.toString());
   }
 
   static findByUid(wordUid: string): Promise<Word> {

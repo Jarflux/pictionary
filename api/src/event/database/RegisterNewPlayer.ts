@@ -14,5 +14,4 @@ export let createPlayerInfoOnRegister = firebaseFunctions.auth.user().onCreate(a
   player.setCorrectGuessCount(0);
   player.setGuessCount(0);
   GameService.createPlayer(player);
-
 });

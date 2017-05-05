@@ -25,8 +25,17 @@ export class List<T> {
     return this.items.indexOf(value) > 0;
   }
 
-  next(value: T): T {
+  getNext(value: T): T {
     let index = this.items.indexOf(value);
     return index + 1 < this.items.length ? this.items[index + 1]: this.items[0];
+  }
+
+  getRandom(): T {
+    let index = Math.floor(Math.random() * this.items.length);
+    return this.items[index];
+  }
+
+  getArray(): Array<T>{
+    return this.items;
   }
 }
