@@ -1,7 +1,8 @@
 {
   "compileOnSave": false,
   "include": [
-    "./src/**/*"
+    "./src/**/*",
+    "./test/**/*"
   ],
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
