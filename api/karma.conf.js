@@ -3,18 +3,37 @@ var webpackConfig = require('./webpack.config');
 module.exports = function (config) {
   config.set({
     basePath: '',
-    frameworks: ['mocha', 'chai', 'sinon'],
+    frameworks: ['jasmine'],
     files: [
-      './test/**/*.ts'
+      'src/service/GameService.spec.ts'
     ],
-    exclude: [
-    ],
+    exclude: [],
     preprocessors: {
-      './test/**/*.ts': ['webpack']
+      'src/service/GameService.spec.ts': ['webpack'],
     },
     webpack: {
-      module: webpackConfig.module,
-      resolve: webpackConfig.resolve
+      resolve: {
+        extensions: ['.js', '.ts', '.tsx']
+      },
+      module: {
+        rules: [
+          {
+            test: /\.(js|ts)$/,
+            exclude: /node_modules/,
+            use: [
+              {
+                loader: 'awesome-typescript-loader'
+              }
+            ]
+          }
+        ]
+      },
+      stats: {
+        colors: true,
+        modules: true,
+        reasons: true,
+        errorDetails: true
+      }
     },
     reporters: ['progress'],
     port: 9876,
