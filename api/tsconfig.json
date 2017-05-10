@@ -1,9 +1,4 @@
 {
-  "compileOnSave": false,
-  "include": [
-    "./src/**/*",
-    "./test/**/*"
-  ],
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
@@ -17,5 +12,8 @@
     "preserveConstEnums": true,
     "sourceMap": false,
     "skipLibCheck": true
-  }
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }

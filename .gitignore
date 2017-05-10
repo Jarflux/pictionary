@@ -43,6 +43,11 @@ testem.log
 /e2e/*.js
 /e2e/*.map
 
+# yarn
+yarn.lock
+/api/yarn.lock
+/app/yarn.lock
+
 # System Files
 .DS_Store
 Thumbs.db

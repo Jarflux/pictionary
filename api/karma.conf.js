@@ -3,45 +3,30 @@ var webpackConfig = require('./webpack.config');
 module.exports = function (config) {
   config.set({
     basePath: '',
-    frameworks: ['jasmine'],
+    frameworks: ['mocha', 'chai', 'sinon'],
     files: [
-      'src/service/GameService.spec.ts'
+      'test/**/*.ts'
     ],
-    exclude: [],
+    exclude: [
+    ],
     preprocessors: {
-      'src/service/GameService.spec.ts': ['webpack'],
+      'test/**/*.ts': ['webpack']
     },
     webpack: {
-      resolve: {
-        extensions: ['.js', '.ts', '.tsx']
-      },
-      module: {
-        rules: [
-          {
-            test: /\.(js|ts)$/,
-            exclude: /node_modules/,
-            use: [
-              {
-                loader: 'awesome-typescript-loader'
-              }
-            ]
-          }
-        ]
-      },
-      stats: {
-        colors: true,
-        modules: true,
-        reasons: true,
-        errorDetails: true
-      }
+      module: webpackConfig.module,
+      resolve: webpackConfig.resolve
+    },
+    webpackMiddleware: {
+      noInfo: true,
+      stats: 'errors-only'
     },
     reporters: ['progress'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
     singleRun: false,
-    concurrency: Infinity
+    concurrency: 1
   })
 }
