@@ -8,6 +8,7 @@
 /api/tmp
 /api/out-tsc
 /api/**/*.js
+/api/.nyc_output
 
 # dependencies
 /node_modules

@@ -1,8 +1,6 @@
 # Pictionary
 ---
 
-
-
 ## Scripts? WHERE ARE THE SCRIPTS???
 ![Where are the scripts?](http://68.media.tumblr.com/030762a0664cc89ab2ab5c1f629e6389/tumblr_inline_oa9ioeZUlm1raprkq_250.gif)
 
@@ -30,6 +28,13 @@ npm run build:app
 
 - everything?
 npm run build
+```
+
+### How to test?
+```
+- api? from api folder
+npm run test
+npm run coverage
 ```
 
 ### How to deploy?

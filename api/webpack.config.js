@@ -34,16 +34,7 @@ module.exports = function (env) {
               loader: 'awesome-typescript-loader'
             }
           ]
-        }/*, {
-         test: /\.js$/,
-         exclude: /node_modules/,
-         use: [
-         {
-         loader: 'babel-loader',
-         //options: babelOptions
-         }
-         ]
-         }*/
+        }
       ],
       loaders: [
         {
@@ -56,9 +47,6 @@ module.exports = function (env) {
     plugins: webpackPlugins,
     target: 'node',
     externals: [nodeExternals()],
-    devtool: 'source-map',
-    devServer: {
-      'hide-modules': true
-    }
+    devtool: 'source-map'
   }
 };

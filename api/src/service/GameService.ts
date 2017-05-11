@@ -84,13 +84,15 @@ export class GameService {
   }
 
   static matchesSingularOrPluralWord(word: string, guess: string): boolean {
+    guess = guess.toLowerCase();
+    word = word.toLowerCase();
     if ("blaaspijp" === guess) {
       return true;
     }
     if (word === guess) {
       return true;
     }
-    if (word.endsWith("o") && ( word.slice(0, -1) + "es") === guess) {
+    if (word.endsWith("o") && (( word + "es") === guess)){
       return true;
     }
     if (word.endsWith("fe") && ( word.slice(0, -2) + "ves") === guess) {
@@ -102,11 +104,7 @@ export class GameService {
     if (word.endsWith("y") && ( word.slice(0, -1) + "ies") === guess) {
       return true;
     }
-    return (!word.endsWith("o")
-    && !word.endsWith("fe")
-    && !word.endsWith("f")
-    && !word.endsWith("y")
-    && ( word + "s") === guess);
+    return ( word + "s") === guess;
   }
 
   static createPlayer(player: Player) {
