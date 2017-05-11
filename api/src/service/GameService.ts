@@ -75,9 +75,11 @@ export class GameService {
     if (this.matchesSingularOrPluralWord(word.getWord(), guess)) {
       return true;
     }
-    for (let synonym in word.getSynonyms().getArray()) {
-      if (this.matchesSingularOrPluralWord(synonym, guess)) {
-        return true;
+    if (word.getSynonyms()) {
+      for (let synonym in word.getSynonyms().getArray()) {
+        if (this.matchesSingularOrPluralWord(synonym, guess)) {
+          return true;
+        }
       }
     }
     return false;
@@ -92,7 +94,7 @@ export class GameService {
     if (word === guess) {
       return true;
     }
-    if (word.endsWith("o") && (( word + "es") === guess)){
+    if (word.endsWith("o") && (( word + "es") === guess)) {
       return true;
     }
     if (word.endsWith("fe") && ( word.slice(0, -2) + "ves") === guess) {

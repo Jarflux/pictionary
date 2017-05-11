@@ -34,10 +34,10 @@ export class RoomMapper {
     return {
       name: room.getName(),
       artistUid: room.getArtistUid(),
-      winnderUid: room.getWinnerUid(),
-      gameState: room.getGameState().valueOf(),
+      winnerUid: room.getWinnerUid(),
+      gameState: room.getGameState(),
       startRoundTimestamp: room.getStartRoundTimestamp(),
-      wordUid: room.getUid()
+      wordUid: room.getWordUid()
     };
   }
 

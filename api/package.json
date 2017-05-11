@@ -4,8 +4,8 @@
   "scripts": {
     "build": "webpack  --progress --colors --env prd",
     "develop": "webpack --progress --colors --watch",
-    "test": "./node_modules/mocha/bin/mocha -R spec",
-    "coverage": "nyc ./node_modules/mocha/bin/mocha -R spec"
+    "test": "./node_modules/mocha/bin/mocha -R spec --recursive",
+    "coverage": "nyc ./node_modules/mocha/bin/mocha -R spec --recursive"
   },
   "dependencies": {
     "cors": "^2.8.3",

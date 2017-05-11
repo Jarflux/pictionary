@@ -1,13 +1,12 @@
 /**
  * Created by Ben on 04/05/2017.
  */
-
 import {List} from "./List";
 import {GameState} from "./GameState";
 
-export class Room{
+export class Room {
   private _uid: string;
-  private _name: number;
+  private _name: string;
   private _artistUid: string;
   private _winnerUid: string;
   private _gameState: GameState;
@@ -23,11 +22,11 @@ export class Room{
     this._uid = value;
   }
 
-  getName(): number {
+  getName(): string {
     return this._name;
   }
 
-  setName(value: number) {
+  setName(value: string) {
     this._name = value;
   }
 
@@ -83,11 +82,11 @@ export class Room{
     return this._players.contains(this._artistUid);
   }
 
-  isInProgress(): boolean{
-   return this._gameState === GameState.Running;
+  isInProgress(): boolean {
+    return this._gameState === GameState.Running;
   }
 
-  getNextArtistUid(): string{
+  getNextArtistUid(): string {
     return this._players.getNext(this._artistUid);
   }
 
@@ -98,17 +97,17 @@ export class Room{
   }
 
   stopRoundWithoutWinner() {
-    this.setWinnerUid(null);
-    this.setStartRoundTimestamp(0);
-    this.setGameState(GameState.Stopped);
+    this.stopRound(null);
   }
 
   startRound(wordUid: string) {
-    this.setWinnerUid(null);
-    this.setArtistUid(this.getNextArtistUid());
-    this.setWordUid(wordUid);
-    this.setGameState(GameState.Running);
-    this.setStartRoundTimestamp(Math.floor(Date.now()));
+    if (this.getPlayers() && this.getPlayers().getArray() && this.getPlayers().getArray().length > 3) {
+      this.setWinnerUid(null);
+      this.setArtistUid(this.getNextArtistUid());
+      this.setWordUid(wordUid);
+      this.setGameState(GameState.Running);
+      this.setStartRoundTimestamp(Math.floor(Date.now()));
+    }
   }
 
   waitForPlayers() {

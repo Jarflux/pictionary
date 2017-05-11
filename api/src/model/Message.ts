@@ -3,20 +3,20 @@
  */
 
 export class Message{
-  private _message: string;
+  private _content: string;
   private _timestamp: number;
 
-  constructor( message: string) {
-    this._message = message;
+  constructor( content: string) {
+    this._content = content;
     this._timestamp = Math.floor(Date.now());
   }
 
-  getMessage(): string {
-    return this._message;
+  getContent(): string {
+    return this._content;
   }
 
-  setMessage(value: string) {
-    this._message = value;
+  setContent(value: string) {
+    this._content = value;
   }
 
   getTimestamp(): number {

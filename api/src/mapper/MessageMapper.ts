@@ -8,7 +8,7 @@ export class MessageMapper {
   static toObject(message: Message): Object{
     return {
       timestamp: message.getTimestamp(),
-      message: message.getMessage()
+      content: message.getContent()
     }
   }
 
