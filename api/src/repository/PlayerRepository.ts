@@ -8,7 +8,7 @@ import {Player} from "../model/Player";
 export class PlayerRepository {
 
   static findByUid(playerUid: string): Promise<Player> {
-    return firebaseAdmin.database().ref(`/playerInfo/${playerUid}`).once('value').then(snapshot => { return PlayerMapper.toModel(snapshot.val())});
+    return firebaseAdmin.database().ref(`/playerInfo/${playerUid}`).once('value').then(snapshot => { return PlayerMapper.toModel(snapshot.toJSON())});
   }
 
   static save(player: Player): void{

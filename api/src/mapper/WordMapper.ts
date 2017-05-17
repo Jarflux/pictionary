@@ -1,33 +1,41 @@
 /**
  * Created by Ben on 04/05/2017.
  */
-import * as firebase from 'firebase/app'
 import {Word} from "../model/Word";
 import {List} from "../model/List";
 
 export class WordMapper {
 
-  static toModel(dataSnapShot: firebase.database.DataSnapshot): Word{
+  static toModel(json: Object): Word{
     let word = new Word();
-    word.setUid(dataSnapShot.key);
-    word.setWord(dataSnapShot.child("word").val());
-    word.setSynonyms(WordMapper.getSynonyms(dataSnapShot.child("synonyms")));
+    word.setUid(json["uid"]);
+    word.setWord(json["word"]);
+    word.setSynonyms(WordMapper.synonymsToModel(json["synonyms"]));
     return word;
   }
 
-  static getSynonyms(dataSnapShot: firebase.database.DataSnapshot): List<string>{
+  static synonymsToModel(json: Object): List<string>{
     let synonyms = new List<string>();
-    dataSnapShot.child("synonyms").forEach(synonym => {
-      synonyms.add(synonym.val());
-      return false;
-    });
+    for (let key in json) {
+      synonyms.add(key);
+    }
     return synonyms;
   }
 
   static toObject(word: Word): Object{
     return {
-      word: word.getWord()
+      uid: word.getUid(),
+      word: word.getWord(),
+      synonyms: this.synonymsToObject(word.getSynonyms())
     }
+  }
+
+  static synonymsToObject(synonyms: List<string>): Object{
+    let obj = {};
+    synonyms.getArray().forEach(function (synonym) {
+        obj[synonyms.getArray().indexOf(synonym)] = synonym;
+    });
+    return obj;
   }
 
 }

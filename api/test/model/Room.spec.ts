@@ -1,8 +1,7 @@
 /**
  * Created by Ben on 11/05/2017.
  */
-
-
+import {} from "mocha";
 import {expect} from "chai";
 import {Room} from "../../src/model/Room";
 import {GameState} from "../../src/model/GameState";
@@ -12,6 +11,22 @@ describe('Room', function () {
 
   describe('isArtistStillHere', function () {
 
+    let room = new Room();
+    let players = new List<string>();
+    players.add("a");
+    players.add("b");
+    players.add("c");
+    room.setPlayers(players);
+
+    it('should return true if artist is still in player list', function () {
+      room.setArtistUid("b");
+      expect(room.isArtistStillHere()).to.be.true;
+     });
+
+    it('should return false if artist is not in player list', function () {
+      room.setArtistUid("d");
+      expect(room.isArtistStillHere()).to.be.false;
+    });
   });
 
   describe('isnInProgress', function () {
@@ -46,7 +61,7 @@ describe('Room', function () {
 
     it('should give random PlayerUid when ArtistUid is empty', function () {
       let nextArtist = room.getNextArtistUid()
-      expect( nextArtist === "a" || nextArtist === "b" || nextArtist === "c").to.be.true;
+      expect(nextArtist === "a" || nextArtist === "b" || nextArtist === "c").to.be.true;
     });
 
     it('should give the next PlayerUid', function () {

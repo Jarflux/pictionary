@@ -2,6 +2,7 @@
  * Created by Ben on 11/05/2017.
  */
 
+import {} from "mocha";
 import {expect} from "chai";
 import {MessageMapper} from "../../src/mapper/MessageMapper";
 import {Message} from "../../src/model/Message";

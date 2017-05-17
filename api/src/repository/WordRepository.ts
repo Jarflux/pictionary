@@ -14,7 +14,7 @@ export class WordRepository {
   }
 
   static findByUid(wordUid: string): Promise<Word> {
-    return firebaseAdmin.database().ref(`/words/${wordUid}`).once('value').then(snapshot => { return WordMapper.toModel(snapshot.val())});
+    return firebaseAdmin.database().ref(`/words/${wordUid}`).once('value').then(snapshot => { return WordMapper.toModel(snapshot.toJSON())});
   }
 
 }

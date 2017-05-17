@@ -8,7 +8,7 @@ import {Room} from "../model/Room";
 export class RoomRepository {
 
   static findByUid(roomUid: string): Promise<Room> {
-    return firebaseAdmin.database().ref(`/rooms/${roomUid}`).once('value').then(snapshot => { return RoomMapper.toModel(snapshot.val())});
+    return firebaseAdmin.database().ref(`/rooms/${roomUid}`).once('value').then(snapshot => { return RoomMapper.toModel(snapshot.toJSON())});
   }
 
   static save(room: Room): void{

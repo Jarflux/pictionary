@@ -1,30 +1,46 @@
 /**
  * Created by Ben on 04/05/2017.
  */
-import * as firebase from 'firebase/app'
 import {Player} from "../model/Player";
+import {MetricsMapper} from "./MetricsMapper";
+import {AchievementMapper} from "./AchievementMapper";
+import {List} from "../model/List";
 
 export class PlayerMapper {
 
-  static toModel(dataSnapShot: firebase.database.DataSnapshot): Player{
+  static toModel(json: Object): Player{
     let player = new Player();
-    player.setUid(dataSnapShot.key);
-    player.setName(dataSnapShot.child("name").val());
-    player.setCorrectGuessCount(dataSnapShot.child("secure/correctGuessCount").val());
-    player.setGuessCount(dataSnapShot.child("secure/guessCount").val());
-    player.setScore(dataSnapShot.child("secure/score").val());
+    player.setUid(json["uid"]);
+    player.setName(json["name"]);
+    player.setScore(json["score"]);
+    player.setMetrics(MetricsMapper.toModelMap(json["metrics"]));
+    player.setAchievements(AchievementMapper.toModelList(json["achievements"]));
     return player;
+  }
+
+  static toModelStringList(json: Object): List<string>{
+    let players = new List<string>();
+    for (let key in json) {
+      players.add(key);
+    }
+    return players;
   }
 
   static toObject(player: Player): Object{
     return {
       name: player.getName(),
-      secure: {
-        correctGuessCount: player.getCorrectGuessCount(),
-        guessCount: player.getGuessCount(),
-        score: player.getScore()
-      }
-    };
+      score: player.getScore(),
+      metrics: MetricsMapper.toObjectMap(player.getMetrics()),
+      achievements: AchievementMapper.toObjectList(player.getAchievements())
+    }
+  }
+
+  static toObjectStringList(players: List<string>): Object{
+    let obj = {};
+    players.getArray().forEach(function (player) {
+      obj[players.getArray().indexOf(player)] = player;
+    });
+    return obj;
   }
 
 }

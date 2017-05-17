@@ -1,33 +1,21 @@
 /**
  * Created by Ben on 04/05/2017.
  */
-import * as firebase from 'firebase/app'
 import {Room} from "../model/Room";
-import {List} from "../model/List";
+import {PlayerMapper} from "./PlayerMapper";
 
 export class RoomMapper {
 
-  static toModel(dataSnapShot: firebase.database.DataSnapshot): Room{
+  static toModel(json: Object): Room{
     let room = new Room();
-    room.setUid(dataSnapShot.key);
-    room.setName(dataSnapShot.child("name").val());
-    room.setArtistUid(dataSnapShot.child("artistUid").val());
-    room.setWinnerUid(dataSnapShot.child("winnerUid").val());
-    //TODO map gameState;
-    //room.setGameState(dataSnapShot.child("gameState").val())
-    room.setStartRoundTimestamp(dataSnapShot.child("startRoundTimestamp").val());
-    room.setWordUid(dataSnapShot.child("wordUid").val());
-    room.setPlayers(RoomMapper.getPlayers(dataSnapShot.child("players")));
+    room.setName(json["name"]);
+    room.setArtistUid(json["artistUid"]);
+    room.setWinnerUid(json["winnerUid"]);
+    room.setGameState(json["gameState"]);
+    room.setStartRoundTimestamp(json["startRoundTimestamp"]);
+    room.setWordUid(json["wordUid"]);
+    room.setPlayers(PlayerMapper.toModelStringList(json["players"]));
     return room;
-  }
-
-  static getPlayers(dataSnapShot: firebase.database.DataSnapshot): List<string>{
-    let synonyms = new List<string>();
-    dataSnapShot.forEach(synonym => {
-      synonyms.add(synonym.val());
-      return false;
-    });
-    return synonyms;
   }
 
   static toObject(room: Room): Object{
@@ -37,7 +25,8 @@ export class RoomMapper {
       winnerUid: room.getWinnerUid(),
       gameState: room.getGameState(),
       startRoundTimestamp: room.getStartRoundTimestamp(),
-      wordUid: room.getWordUid()
+      wordUid: room.getWordUid(),
+      players: PlayerMapper.toObjectStringList(room.getPlayers())
     };
   }
 

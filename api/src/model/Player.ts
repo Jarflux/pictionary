@@ -1,15 +1,15 @@
+import {Achievement} from "./Achievement";
+import {List} from "./List";
+import {Metrics} from "./Metrics";
 /**
  * Created by Ben on 04/05/2017.
  */
 
-export class Player{
+export class Player extends Metrics{
   private _uid: string;
   private _name: string;
-  private _guessCount: number;
-  private _correctGuessCount: number;
   private _score: number;
-  // TODO Optimize with delta calculation before update
-  // private _oldPlayer: Player; for future
+  private _achievements: List<Achievement> = new List<Achievement>();
 
   getUid(): string {
     return this._uid;
@@ -27,27 +27,27 @@ export class Player{
     this._name = value;
   }
 
-  getGuessCount(): number {
-    return this._guessCount;
-  }
-
-  setGuessCount(value: number) {
-    this._guessCount = value;
-  }
-
-  getCorrectGuessCount(): number {
-    return this._correctGuessCount;
-  }
-
-  setCorrectGuessCount(value: number) {
-    this._correctGuessCount = value;
-  }
-
   getScore(): number {
     return this._score;
   }
 
   setScore(value: number) {
     this._score = value;
+  }
+
+  getAchievements(): List<Achievement> {
+    return this._achievements;
+  }
+
+  hasAchievement(value: Achievement): boolean{
+    return this._achievements.contains(value);
+  }
+
+  addAchievement(value: Achievement) {
+    this._achievements.add(value)
+  }
+
+  setAchievements(value: List<Achievement>) {
+    this._achievements = value;
   }
 }

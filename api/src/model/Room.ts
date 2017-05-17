@@ -5,7 +5,6 @@ import {List} from "./List";
 import {GameState} from "./GameState";
 
 export class Room {
-  private _uid: string;
   private _name: string;
   private _artistUid: string;
   private _winnerUid: string;
@@ -13,14 +12,6 @@ export class Room {
   private _wordUid: string;
   private _startRoundTimestamp: number;
   private _players: List<string>;
-
-  getUid(): string {
-    return this._uid;
-  }
-
-  setUid(value: string) {
-    this._uid = value;
-  }
 
   getName(): string {
     return this._name;

@@ -22,7 +22,7 @@ export class List<T> {
   }
 
   contains(value: T): boolean {
-    return this.items.indexOf(value) > 0;
+    return this.items.indexOf(value) > -1;
   }
 
   getNext(value: T): T {
@@ -30,10 +30,10 @@ export class List<T> {
     return index + 1 < this.items.length ? this.items[index + 1]: this.items[0];
   }
 
-  getRandom(): T {
-    let index = Math.floor(Math.random() * this.items.length);
-    return this.items[index];
-  }
+  // getRandom(): T {
+  //   let index = Math.floor(Math.random() * this.items.length);
+  //   return this.items[index];
+  // }
 
   getArray(): Array<T>{
     return this.items;

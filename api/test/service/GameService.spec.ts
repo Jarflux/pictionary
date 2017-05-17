@@ -1,6 +1,7 @@
 /**
  * Created by Ben on 07/05/2017.
  */
+import {} from "mocha";
 import {expect} from "chai";
 import {GameService} from "../../src/service/GameService";
 import {Word} from "../../src/model/Word";

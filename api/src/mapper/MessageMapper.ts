@@ -1,7 +1,8 @@
+import {Message} from "../model/Message";
+
 /**
  * Created by Ben on 04/05/2017.
  */
-import {Message} from "../model/Message";
 
 export class MessageMapper {
 

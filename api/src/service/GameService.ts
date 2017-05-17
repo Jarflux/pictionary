@@ -9,16 +9,18 @@ import {Player} from "../model/Player";
 import {PlayerRepository} from "../repository/PlayerRepository";
 import {Message} from "../model/Message";
 import {MessageRepository} from "../repository/MessageRepository";
+import {Metric} from "../model/Metric";
 
+//TODO Split class in different serivces
 export class GameService {
 
-  // TODO fix return boolean
-  static processGuess(roomUid: string, playerUid: string, guess: string): boolean {
-    RoomRepository.findByUid(roomUid).then(room => {
-      WordRepository.findByUid(room.getWordUid()).then(word => {
+  // TODO refactor method
+  static processGuess(roomUid: string, playerUid: string, guess: string): Promise<boolean> {
+    return RoomRepository.findByUid(roomUid).then(room => {
+      return WordRepository.findByUid(room.getWordUid()).then(word => {
         let isCorrectGuess = GameService.validateGuess(word, guess);
-        PlayerRepository.findByUid(playerUid).then(player => {
-          player.setGuessCount(player.getGuessCount() + 1);
+        return PlayerRepository.findByUid(playerUid).then(player => {
+          player.addMetric(Metric.GUESS_COUNT, 1);
           if (isCorrectGuess) {
             MessageRepository.add(room, new Message(`${player.getName()} guessed ${guess} and was correctly matched to ${word.getWord()}`));
             MessageRepository.add(room, new Message("System stopped the current round because of a correct guess"));
@@ -27,7 +29,7 @@ export class GameService {
             MessageRepository.add(room, new Message("System starts a new round"));
             room.startRound(word.getUid());
             RoomRepository.save(room);
-            player.setCorrectGuessCount(player.getCorrectGuessCount() + 1);
+            player.addMetric(Metric.CORRECT_GUESS_COUNT, 1);
             player.setScore(player.getScore() + 50);
           } else {
             MessageRepository.add(room, new Message(`${player.getName()} guessed ${guess}`));
@@ -38,9 +40,9 @@ export class GameService {
         });
       });
     });
-    return false;
   }
 
+  // TODO refactor method
   static manageRoom(room: Room): void {
     let numberOfPlayers = room.getPlayers().size();
     if (numberOfPlayers > 2) {
