@@ -50,7 +50,13 @@ describe('PlayerMapper', function () {
     });
 
     it('should map all player properties', function () {
+      expect(Player.getUid()).to.be.equal("abc123");
+      expect(Player.getName()).to.be.equal("Elien");
       expect(Player.getScore()).to.be.equal(1000);
+      expect(Player.getMetrics().size).to.be.equal(2);
+      expect(Player.getMetric(Metric.CORRECT_GUESS_COUNT)).to.be.equal(50);
+      expect(Player.getMetric(Metric.GUESS_COUNT)).to.be.equal(100);
+      expect(Player.getAchievements().size()).to.be.equal(1);
     });
 
   });
