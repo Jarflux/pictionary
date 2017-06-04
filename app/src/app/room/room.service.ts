@@ -35,6 +35,14 @@ export class RoomService {
         return this.af.database.object('/rooms/' + key);
     }
 
+    getWinnerUidByRoomId(key: string): FirebaseObjectObservable<string> {
+        return this.af.database.object(`/rooms/${key}/winnerUid`);
+    }
+
+    getGameStateByRoomId(key: string): FirebaseObjectObservable<string> {
+        return this.af.database.object(`/rooms/${key}/gameState`);
+    }
+
     clearCurrentGameDrawing(room: FirebaseObjectObservable<Room>) {
         room.update({
             currentGameDrawing: []

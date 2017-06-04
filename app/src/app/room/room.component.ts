@@ -49,25 +49,32 @@ export class RoomComponent implements OnInit {
         this.room$ = this.roomService.getRoomById(this.roomUid);
         this.room$
             .subscribe((room: Room) => {
-                this.checkIfRoomStartsGame(room);
+                this.checkIfRoomStartsGame(room); // move to gamestate?
 
-                if (!isNullOrUndefined(room.currentGameDrawing)) {
-                    this.drawLines = room.currentGameDrawing.map((rawDrawLine) => {
-                        let drawLine: DrawLine = new DrawLine();
-                        Object.assign(drawLine, rawDrawLine);
-
-                        return drawLine;
-                    });
-                } else {
-                    this.drawLines = [];
-                }
+                this.updateCanvas(room.currentGameDrawing); // move to only drawing observable?
 
                 this.room = room;
-                this.setCorrectGameState(this.room);
-                this.checkWinner(this.room);
+                this.setCorrectGameState(this.room); // move to gamestate?
             });
 
+        this.roomService.getGameStateByRoomId(this.roomUid).map(a => a.$value)
+            .subscribe();
 
+        this.roomService.getWinnerUidByRoomId(this.roomUid).map(a => a.$value)
+            .subscribe((winnerUid: string) => this._checkWinner(winnerUid));
+
+    }
+
+    private updateCanvas(currentGameDrawing: DrawLine[]) {
+        if (!isNullOrUndefined(currentGameDrawing)) {
+            this.drawLines = currentGameDrawing.map((rawDrawLine) => {
+                let drawLine: DrawLine = new DrawLine();
+                Object.assign(drawLine, rawDrawLine);
+                return drawLine;
+            });
+        } else {
+            this.drawLines = [];
+        }
     }
 
     handleLineDrawn() {
@@ -160,20 +167,18 @@ export class RoomComponent implements OnInit {
         return endTimestamp;
     }
 
-    private checkWinner(room: Room) {
-        if (room.winnerUid && room.winnerUid !== this.roomService.currentUserId) {
-            this.word$ = this.wordService.getWordById(room.wordUid);
+    private _checkWinner(winnerUid: string) {
+        if (winnerUid === this.roomService.currentUserId) {
+            this.word$ = this.wordService.getWordById(this.room.wordUid);
             this.word$.subscribe((word: Word) => {
                 this.snackBar.open('You are out of luck, the word was ' + word.word + '!', null, {
                     duration: 5000
                 });
             });
-        }
 
-        if (this.roomService.isCurrentUserTheArtist(room)) {
-            setTimeout(() => {
-                this.roomService.startNextRound(this.roomUid);
-            }, 10000);
+            if (this.roomService.isCurrentUserTheArtist(this.room)) {
+                this.roomService.startNextRound(this.roomUid)
+            }
         }
     }
 }
