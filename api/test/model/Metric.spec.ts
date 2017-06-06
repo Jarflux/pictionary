@@ -3,9 +3,6 @@
  */
 import {} from "mocha";
 import {expect} from "chai";
-import {Room} from "../../src/model/Room";
-import {GameState} from "../../src/model/GameState";
-import {List} from "../../src/model/List";
 import {Metric} from "../../src/model/Metric";
 
 describe('Metric', function () {
