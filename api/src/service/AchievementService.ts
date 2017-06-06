@@ -4,14 +4,13 @@
 import {Player} from "../model/Player";
 import {AchievementRepository} from "../repository/AchievementRepository";
 import {Achievement} from "../model/Achievement";
-import {Metric} from "../model/Metric";
 
 export class AchievementService {
 
   static awardAchievements(player: Player) {
     AchievementRepository.findAll().then(achievementsList =>
       achievementsList.getArray().forEach(function (achievement) {
-        if (this.playerMeetsRequiredMetricsForAchievement(player, achievement)) {
+        if (AchievementService.playerMeetsRequiredMetricsForAchievement(player, achievement)) {
           player.addAchievement(achievement);
         }
       })
