@@ -11,6 +11,19 @@ import {AchievementService} from "../../src/service/AchievementService";
 
 describe('AchievementService', function () {
 
+  describe('awardAchievements', function () {
+
+    //TODO How do you mock a call that returns a promise.
+
+    // AchievementRepository.findAll()
+    // stub = sinon.stub(GameService, "matchesSingularOrPluralWord").returns();
+
+    // it('should award achievement to player when that player meets the achievement requirements', function () {
+    //   let player = new Player();
+    //   expect(AchievementService.awardAchievements(player)).to.be.false;
+    // });
+  });
+
   describe('playerMeetsRequiredMetricsForAchievement', function () {
 
     let achievement = new Achievement();

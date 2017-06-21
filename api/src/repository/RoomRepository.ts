@@ -12,10 +12,13 @@ export class RoomRepository {
   }
 
   static save(room: Room): void{
-    firebaseAdmin.database().ref(`/rooms/${room.getUid()}`).update(RoomMapper.toObject(room));
+    RoomRepository.findByUid(room.getUid()).then(original => {
+      firebaseAdmin.database().ref(`/rooms/${room.getUid()}`).update(RoomMapper.calculateDeltaJson(original, room));
+    });
   }
 
   static remove(room: Room): void{
     firebaseAdmin.database().ref(`/rooms/${room.getUid()}`).remove();
   }
+
 }

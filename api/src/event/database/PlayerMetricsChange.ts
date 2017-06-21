@@ -3,9 +3,11 @@
  */
 
 import * as firebaseFunctions from 'firebase-functions';
-import {PlayerMapper} from "../../mapper/PlayerMapper";
 import {AchievementService} from "../../service/AchievementService";
+import {PlayerRepository} from "../../repository/PlayerRepository";
 
 export let awardAchievements = firebaseFunctions.database.ref('/playerInfo/{playerUid}/metrics').onWrite(async event => {
-  AchievementService.awardAchievements(PlayerMapper.toModel(event.data.adminRef.parent.toJSON()));
+  let playerUid = event.params['playerUid'];
+  console.log('Metrics changed for player ' + playerUid);
+  AchievementService.awardAchievements(await PlayerRepository.findByUid(playerUid));
 });

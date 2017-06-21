@@ -4,8 +4,10 @@
 
 import * as firebaseFunctions from 'firebase-functions';
 import {GameService} from "../../service/GameService";
-import {RoomMapper} from "../../mapper/RoomMapper";
+import {RoomRepository} from "../../repository/RoomRepository";
 
 export let management = firebaseFunctions.database.ref('/rooms/{roomUid}/players').onWrite(async event => {
-  GameService.manageRoom(RoomMapper.toModel(event.data.adminRef.parent.toJSON()));
+  let roomUid = event.params['roomUid'];
+  console.log('Users list changed for room ' + roomUid);
+  GameService.manageRoom(await RoomRepository.findByUid(roomUid));
 });
